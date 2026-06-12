@@ -1,157 +1,206 @@
-<html lang="es"><head>
+<!DOCTYPE html>
+<html lang="es">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Prode Mundial 2026</title>
+<meta name="theme-color" content="#0b0f1a">
+<title>⚽ Prode Mundial 2026</title>
 <style>
+:root{
+  --bg:#0b0f1a;--bg2:#111827;--bg3:#1a2535;--bg4:#0f1826;
+  --border:#1e2d3d;--green:#22c55e;--green-dim:#14532d;
+  --gold:#f59e0b;--silver:#9ca3af;--bronze:#b45309;
+  --text:#f9fafb;--text2:#9ca3af;--text3:#4b5563;
+  --r:10px
+}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{background:#0d1117;color:#f2f2f7;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;min-height:100vh;max-width:480px;margin:0 auto}
-.hdr{background:#161b27;border-bottom:1px solid #252d3d;padding:10px 16px 0;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.4)}
-.htitle{font-size:15px;font-weight:700;padding-bottom:10px}
-.tabs{display:flex;border-bottom:2px solid #252d3d}
-.tb{flex:1;background:none;border:none;color:#8e8e93;font-size:13px;font-weight:600;padding:10px 4px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s}
-.tb.on{color:#f0b429;border-bottom-color:#f0b429}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;min-height:100vh;max-width:480px;margin:0 auto}
+
+/* ── HEADER ───────────────────────────────────── */
+.hdr{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 16px 0;position:sticky;top:0;z-index:100;box-shadow:0 4px 16px rgba(0,0,0,.6)}
+.htitle{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px}
+.htitle-left{display:flex;align-items:center;gap:8px}
+.htitle-icon{font-size:20px;line-height:1}
+.htitle-text{display:flex;flex-direction:column}
+.htitle-main{font-size:13px;font-weight:900;letter-spacing:.8px;text-transform:uppercase;color:var(--text)}
+.htitle-sub{font-size:10px;font-weight:600;color:var(--green);letter-spacing:.3px;margin-top:1px}
+.htitle-badge{background:var(--green-dim);color:var(--green);border-radius:5px;padding:3px 8px;font-size:10px;font-weight:800;letter-spacing:.5px}
+.tabs{display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:2px solid var(--border)}
+.tabs::-webkit-scrollbar{display:none}
+.tb{flex:1;background:none;border:none;color:var(--text3);font-size:12px;font-weight:600;padding:10px 4px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s,border-color .15s;white-space:nowrap}
+.tb.on{color:var(--green);border-bottom-color:var(--green)}
 .panel{display:none}.panel.on{display:block}
-/* TABLA */
-.tp-wrap{padding:10px 12px 32px}
-.tp-meta{display:flex;justify-content:space-between;align-items:center;padding:6px 0 12px;font-size:11px;color:#636366}
-.tp-table{width:100%;border-collapse:collapse;background:#161b27;border-radius:10px;overflow:hidden;border:1px solid #252d3d}
-.tp-table th{background:#1e2736;font-size:11px;color:#8e8e93;padding:8px 6px;text-align:center;font-weight:600}
-.tp-table th:nth-child(2){text-align:left}
-.tp-table td{padding:10px 6px;font-size:12px;text-align:center;border-bottom:1px solid #1e2736}
-.tp-table td:nth-child(2){text-align:left;font-weight:600}
-.tp-table tr:last-child td{border-bottom:none}
-.rank{font-weight:700;color:#8e8e93}.rank-1{color:#f0b429}.rank-2{color:#c0c0c0}.rank-3{color:#cd7f32}
-.pts{font-weight:800;font-size:15px}
+
+/* ── TABLA ────────────────────────────────────── */
+.tp-wrap{padding:14px 12px 40px}
+.tp-legend{display:flex;gap:12px;justify-content:center;padding:0 0 10px;font-size:11px;color:var(--text3)}
+.tp-bar{display:flex;justify-content:space-between;align-items:center;padding:0 2px 12px;font-size:11px;color:var(--text3)}
 .tag-ex{display:inline-block;background:#14532d;color:#22c55e;border-radius:3px;padding:1px 5px;font-size:10px;font-weight:700}
 .tag-re{display:inline-block;background:#1c2e4a;color:#60a5fa;border-radius:3px;padding:1px 5px;font-size:10px;font-weight:700}
-.tp-legend{display:flex;gap:14px;justify-content:center;padding:4px 0 10px;font-size:11px;color:#636366}
-/* RESULTADOS */
-.res-wrap{padding:8px 12px 32px}
-.res-meta{text-align:center;font-size:11px;color:#636366;padding:6px 0 10px}
-.res-grp{background:#161b27;border-radius:8px;border:1px solid #252d3d;margin-bottom:10px;overflow:hidden}
-.res-gh{padding:5px 10px;font-size:11px;font-weight:700;letter-spacing:.5px;color:#fff}
-.res-row{display:flex;align-items:center;padding:7px 10px;border-bottom:1px solid #1e2736;gap:4px}
+.rank-card{display:flex;align-items:center;border-radius:var(--r);padding:13px 14px;margin-bottom:7px;gap:11px;border:1px solid var(--border);background:var(--bg2);position:relative;overflow:hidden}
+.rank-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
+.rank-1::before{background:var(--gold)}
+.rank-2::before{background:var(--silver)}
+.rank-3::before{background:var(--bronze)}
+.rank-1{background:linear-gradient(95deg,#1c1208 0%,var(--bg2) 60%);border-color:#78450c}
+.rank-2{background:linear-gradient(95deg,#161b22 0%,var(--bg2) 60%);border-color:#374151}
+.rank-3{background:linear-gradient(95deg,#160e06 0%,var(--bg2) 60%);border-color:#593011}
+.rank-pos{font-size:22px;width:32px;text-align:center;flex-shrink:0;line-height:1}
+.rank-pos-num{font-size:16px;font-weight:800;color:var(--text3);width:32px;text-align:center;flex-shrink:0}
+.rank-name{flex:1;font-size:13px;font-weight:700;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.rank-pts{font-size:26px;font-weight:900;color:var(--green);line-height:1}
+.rank-pts-lbl{font-size:9px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.4px;text-align:center}
+.rank-tags{display:flex;flex-direction:column;gap:3px;align-items:flex-end}
+.rank-tag-row{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text3)}
+
+/* ── RESULTADOS ───────────────────────────────── */
+.res-wrap{padding:10px 12px 40px}
+.res-meta{text-align:center;font-size:11px;color:var(--text3);padding:4px 0 12px}
+.res-grp{background:var(--bg2);border-radius:var(--r);border:1px solid var(--border);margin-bottom:10px;overflow:hidden}
+.res-gh{padding:8px 12px;font-size:11px;font-weight:800;letter-spacing:.8px;color:#fff;display:flex;align-items:center;gap:8px}
+.res-gh-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.res-row{display:flex;align-items:center;padding:9px 12px;border-bottom:1px solid var(--border);gap:5px}
 .res-row:last-child{border-bottom:none}
-.res-num{font-size:10px;color:#636366;width:18px;flex-shrink:0}
+.res-num{font-size:10px;color:var(--text3);width:18px;flex-shrink:0;text-align:center;font-weight:600}
 .res-team{font-size:11px;color:#c9d1e0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:3px}
 .res-team.rt{flex-direction:row-reverse;text-align:right}
-.res-score{font-size:14px;font-weight:800;color:#f0b429;min-width:44px;text-align:center}
-.res-pend{font-size:12px;color:#3a4557;min-width:44px;text-align:center}
-/* PRONOSTICOS */
-.sw{padding:10px 16px;background:#161b27;border-bottom:1px solid #252d3d}
-select{width:100%;background:#252d3d;color:#f2f2f7;border:1px solid #3a4557;border-radius:8px;padding:10px;font-size:14px;font-weight:600;-webkit-appearance:none}
-.ct{padding:10px 8px 32px}
-.pn{font-size:16px;font-weight:700;color:#f0b429;padding:6px 8px 10px;border-bottom:1px solid #252d3d;margin-bottom:10px}
+.res-score{font-size:15px;font-weight:800;color:var(--green);min-width:48px;text-align:center;flex-shrink:0}
+.res-vs{font-size:10px;color:var(--text3);min-width:28px;text-align:center;flex-shrink:0;background:var(--bg3);border-radius:4px;padding:3px 5px;font-weight:600;letter-spacing:.5px}
+
+/* ── PRONÓSTICOS ──────────────────────────────── */
+.sw{padding:12px 16px;background:var(--bg2);border-bottom:1px solid var(--border)}
+select{width:100%;background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:14px;font-weight:600;-webkit-appearance:none}
+.ct{padding:10px 8px 40px}
+.pn{font-size:15px;font-weight:800;color:var(--green);padding:6px 8px 10px;border-bottom:1px solid var(--border);margin-bottom:10px}
 .gr{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
-.gb{background:#161b27;border-radius:8px;overflow:hidden;border:1px solid #252d3d}
-.gh{padding:4px 8px;font-size:10px;font-weight:700;letter-spacing:.5px;color:#fff}
+.gb{background:var(--bg2);border-radius:8px;overflow:hidden;border:1px solid var(--border)}
+.gh{padding:5px 8px;font-size:10px;font-weight:800;letter-spacing:.5px;color:#fff}
 table{width:100%;border-collapse:collapse}
-tr{border-bottom:1px solid #1e2736}tr:last-child{border-bottom:none}
+tr{border-bottom:1px solid var(--border)}tr:last-child{border-bottom:none}
 td{padding:3px 5px;font-size:11px;vertical-align:middle}
-.mn{color:#636366;width:16px;font-size:10px}
+.mn{color:var(--text3);width:16px;font-size:10px}
 .te{color:#c9d1e0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:110px}
 .te img{height:12px;vertical-align:middle;border-radius:1px;margin-right:2px}
 .tr2{text-align:right}.tr2 img{margin-right:0;margin-left:2px}
 .sc2{font-weight:700;font-size:12px;text-align:center;width:34px;white-space:nowrap}
-.scW{color:#22c55e}.scL{color:#ef4444}.scD{color:#f0b429}.scN{color:#636366}
-.bx{background:#161b27;border:1px solid #252d3d;border-radius:8px;padding:10px;margin-top:4px}
-.br{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #1e2736}
+.scW{color:#22c55e}.scL{color:#ef4444}.scD{color:#f59e0b}.scN{color:var(--text3)}
+.bx{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px;margin-top:4px}
+.br{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
 .br:last-child{border-bottom:none}
-.bi{font-size:17px;width:22px;text-align:center}
-.bl{font-size:12px;color:#8e8e93;flex:1}
-.bv{font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px}
+.bi{font-size:18px;width:24px;text-align:center;flex-shrink:0}
+.bl{font-size:12px;color:var(--text2);flex:1}
+.bv{font-size:13px;font-weight:700;display:flex;align-items:center;gap:5px}
 .bv img{height:14px;border-radius:2px}
-/* EN VIVO */
-.tb{font-size:12px}
-.vivo-wrap{padding:10px 12px 32px}
-.vivo-live{background:#161b27;border-radius:10px;border:2px solid #ef4444;margin-bottom:12px;overflow:hidden}
-.vivo-live-hdr{background:#ef4444;padding:6px 12px;font-size:11px;font-weight:800;letter-spacing:1px;display:flex;align-items:center;gap:6px}
-.vivo-dot{width:8px;height:8px;border-radius:50%;background:#fff;animation:blink 1s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
-.vivo-match{padding:16px 10px 10px;display:flex;align-items:center;gap:4px}
-.vivo-team{flex:1;text-align:center;font-size:12px;font-weight:600;line-height:1.4}
-.vivo-score{font-size:32px;font-weight:900;color:#ef4444;min-width:80px;text-align:center;letter-spacing:2px}
-.vivo-block{background:#161b27;border-radius:10px;border:1px solid #252d3d;margin-bottom:10px;overflow:hidden}
-.vivo-blk-hdr{background:#1e2736;padding:6px 12px;font-size:11px;font-weight:700;color:#8e8e93;letter-spacing:.5px}
-.vivo-row{display:flex;align-items:center;padding:10px 12px;border-bottom:1px solid #1e2736}
-.vivo-row:last-child{border-bottom:none}
-.vivo-time{font-size:11px;color:#636366;width:42px;flex-shrink:0}
-.vivo-nodata{text-align:center;padding:40px 20px;color:#636366;font-size:13px;line-height:1.8}
-.vivo-upd{text-align:right;font-size:10px;color:#3a4557;padding:4px 2px 8px}
-.vivo-refresh{color:#f0b429;cursor:pointer;font-size:14px;margin-left:6px}
-/* ADMIN */
-.adm-wrap{padding:10px 12px 32px}
-.adm-grp{background:#161b27;border-radius:10px;border:1px solid #252d3d;margin-bottom:10px;overflow:hidden}
-.adm-gh{background:#1e2736;padding:6px 12px;font-size:11px;font-weight:700;color:#fff;letter-spacing:.5px}
-.adm-row{display:flex;align-items:center;padding:7px 10px;border-bottom:1px solid #1e2736;gap:6px}
+
+/* ── FECHA 1 ──────────────────────────────────── */
+.vivo-wrap{padding:10px 12px 40px}
+.vivo-upd{text-align:right;font-size:10px;color:var(--text3);padding:0 2px 10px}
+.vivo-block{background:var(--bg2);border-radius:var(--r);border:1px solid var(--border);margin-bottom:10px;overflow:hidden}
+.vivo-blk-hdr{background:var(--bg3);padding:9px 14px;font-size:11px;font-weight:700;display:flex;align-items:center;gap:7px;letter-spacing:.5px;border-bottom:1px solid var(--border)}
+.f1-row{display:flex;align-items:center;padding:10px 12px;border-bottom:1px solid var(--border);gap:6px;min-height:44px}
+.f1-row:last-child{border-bottom:none}
+.f1-row.arg{background:rgba(22,197,94,.04);border-left:2px solid var(--green)}
+.f1-time{font-size:12px;color:var(--text3);width:40px;flex-shrink:0;font-weight:700;line-height:1.2}
+.f1-time.arg-t{color:var(--green)}
+.f1-grp{font-size:9px;font-weight:800;letter-spacing:.4px;color:#fff;border-radius:3px;padding:2px 5px;flex-shrink:0;text-align:center;min-width:20px}
+.f1-t{font-size:11px;color:#d1d5db;flex:1;display:flex;align-items:center;gap:3px;overflow:hidden;min-width:0}
+.f1-t.r{flex-direction:row-reverse;text-align:right;justify-content:flex-start}
+.f1-center{display:flex;flex-direction:column;align-items:center;flex-shrink:0;min-width:44px}
+.f1-score{font-size:15px;font-weight:800;color:var(--green);text-align:center;white-space:nowrap}
+.f1-prox{font-size:9px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;border:1px solid var(--border);border-radius:3px;padding:2px 5px;text-align:center;white-space:nowrap}
+
+/* ── ADMIN ────────────────────────────────────── */
+.adm-wrap{padding:10px 12px 40px}
+.adm-note{font-size:10px;color:var(--text3);text-align:center;padding:4px 0 12px;line-height:1.7}
+.adm-grp{background:var(--bg2);border-radius:var(--r);border:1px solid var(--border);margin-bottom:10px;overflow:hidden}
+.adm-gh{background:var(--bg3);padding:7px 12px;font-size:11px;font-weight:800;color:#fff;letter-spacing:.5px;border-bottom:1px solid var(--border)}
+.adm-row{display:flex;align-items:center;padding:7px 10px;border-bottom:1px solid var(--border);gap:6px}
 .adm-row:last-child{border-bottom:none}
-.adm-num{font-size:10px;color:#636366;width:18px;flex-shrink:0;text-align:center}
+.adm-num{font-size:10px;color:var(--text3);width:18px;flex-shrink:0;text-align:center}
 .adm-teams{flex:1;font-size:11px;color:#c9d1e0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.adm-score{width:38px;background:#252d3d;border:1px solid #3a4557;border-radius:6px;color:#f0b429;font-size:15px;font-weight:700;text-align:center;padding:5px 2px;-webkit-appearance:none}
-.adm-score:focus{outline:none;border-color:#f0b429}
-.adm-sep{color:#636366;font-size:13px;font-weight:700;flex-shrink:0}
-.adm-btn{width:100%;background:#f0b429;color:#0d1117;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;margin-top:10px}
-.adm-clear{width:100%;background:none;border:1px solid #3a4557;color:#636366;border-radius:10px;padding:10px;font-size:13px;cursor:pointer;margin-top:6px}
-.adm-export{width:100%;background:#1a472a;border:1px solid #22c55e;color:#22c55e;border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;margin-top:10px}
+.adm-score{width:38px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--green);font-size:15px;font-weight:700;text-align:center;padding:5px 2px;-webkit-appearance:none}
+.adm-score:focus{outline:none;border-color:var(--green)}
+.adm-sep{color:var(--text3);font-size:13px;font-weight:700;flex-shrink:0}
+.adm-btn{width:100%;background:var(--green);color:#0b0f1a;border:none;border-radius:var(--r);padding:14px;font-size:15px;font-weight:800;cursor:pointer;margin-top:10px;letter-spacing:.3px}
+.adm-clear{width:100%;background:none;border:1px solid var(--border);color:var(--text3);border-radius:var(--r);padding:10px;font-size:13px;cursor:pointer;margin-top:6px}
+.adm-export{width:100%;background:var(--green-dim);border:1px solid var(--green);color:var(--green);border-radius:var(--r);padding:12px;font-size:14px;font-weight:700;cursor:pointer;margin-top:10px}
 .adm-msg{text-align:center;font-size:13px;padding:8px;min-height:28px}
-.adm-note{font-size:10px;color:#3a4557;text-align:center;padding:4px 0 10px;line-height:1.6}
 </style>
 </head>
 <body>
+
+<!-- ── HEADER ────────────────────────────────────────────── -->
 <div class="hdr">
-  <div class="htitle">⚽ Prode Mundial 2026</div>
+  <div class="htitle">
+    <div class="htitle-left">
+      <span class="htitle-icon">⚽</span>
+      <div class="htitle-text">
+        <span class="htitle-main">Prode Mundial 2026</span>
+        <span class="htitle-sub">3 países · 48 equipos · 104 partidos</span>
+      </div>
+    </div>
+    <span class="htitle-badge">GRUPO</span>
+  </div>
   <div class="tabs">
-    <button class="tb" onclick="showTab('tab')">Tabla</button>
+    <button class="tb on" onclick="showTab('tab')">Tabla</button>
     <button class="tb" onclick="showTab('res')">Resultados</button>
     <button class="tb" onclick="showTab('pro')">Pronósticos</button>
-    <button class="tb" onclick="showTab('vivo')" style="color:#ef4444">🔴 En Vivo</button>
-    <button class="tb on" onclick="showTab('adm')" style="color:#636366">⚙</button>
+    <button class="tb" onclick="showTab('fecha1')" style="color:#22c55e">📅 Fecha 1</button>
+    <button class="tb" onclick="showTab('adm')" style="color:#4b5563">⚙</button>
   </div>
 </div>
-<div id="panel-tab" class="panel">
+
+<!-- ── TABLA ─────────────────────────────────────────────── -->
+<div id="panel-tab" class="panel on">
   <div class="tp-wrap">
     <div class="tp-legend">
       <span><span class="tag-ex">EX</span> exacto = 3 pts</span>
       <span><span class="tag-re">RE</span> resultado = 1 pt</span>
     </div>
-    <div class="tp-meta">
-      <span id="tp-played">Partidos jugados: 2 / 72</span>
-      <span id="tp-upd" style="text-align:right">Upd: 11/06/2026</span>
+    <div class="tp-bar">
+      <span id="tp-played"></span>
+      <span id="tp-upd"></span>
     </div>
-    <table class="tp-table">
-      <thead><tr><th>#</th><th>Participante</th><th>Pts</th><th>EX</th><th>RE</th><th>PJ</th></tr></thead>
-      <tbody id="tp-body"><tr><td><span class="rank-1">1</span></td><td>Diego Andino</td><td class="pts">4</td><td><span class="tag-ex">1</span></td><td><span class="tag-re">1</span></td><td style="color:#636366;font-size:11px">2</td></tr><tr><td><span class="rank-2">2</span></td><td>Maximiliano Suarez</td><td class="pts">4</td><td><span class="tag-ex">1</span></td><td><span class="tag-re">1</span></td><td style="color:#636366;font-size:11px">2</td></tr><tr><td><span class="rank-3">3</span></td><td>Cosme Fulanito (MMosovich)</td><td class="pts">4</td><td><span class="tag-ex">1</span></td><td><span class="tag-re">1</span></td><td style="color:#636366;font-size:11px">2</td></tr><tr><td><span class="rank">4</span></td><td>Genoveva</td><td class="pts">3</td><td><span class="tag-ex">1</span></td><td><span class="tag-re">0</span></td><td style="color:#636366;font-size:11px">2</td></tr><tr><td><span class="rank">5</span></td><td>Marcelo Lugo</td><td class="pts">2</td><td><span class="tag-ex">0</span></td><td><span class="tag-re">2</span></td><td style="color:#636366;font-size:11px">2</td></tr><tr><td><span class="rank">6</span></td><td>El Che Pibe</td><td class="pts">2</td><td><span class="tag-ex">0</span></td><td><span class="tag-re">2</span></td><td style="color:#636366;font-size:11px">2</td></tr><tr><td><span class="rank">7</span></td><td>Martín Orfila</td><td class="pts">1</td><td><span class="tag-ex">0</span></td><td><span class="tag-re">1</span></td><td style="color:#636366;font-size:11px">2</td></tr><tr><td><span class="rank">8</span></td><td>Ezequiel</td><td class="pts">1</td><td><span class="tag-ex">0</span></td><td><span class="tag-re">1</span></td><td style="color:#636366;font-size:11px">2</td></tr><tr><td><span class="rank">9</span></td><td>Tentaculos</td><td class="pts">1</td><td><span class="tag-ex">0</span></td><td><span class="tag-re">1</span></td><td style="color:#636366;font-size:11px">2</td></tr><tr><td><span class="rank">10</span></td><td>Alejandro Quintana</td><td class="pts">0</td><td><span class="tag-ex">0</span></td><td><span class="tag-re">0</span></td><td style="color:#636366;font-size:11px">2</td></tr><tr><td><span class="rank">11</span></td><td>Martin Guerra</td><td class="pts">0</td><td><span class="tag-ex">0</span></td><td><span class="tag-re">0</span></td><td style="color:#636366;font-size:11px">2</td></tr><tr><td><span class="rank">12</span></td><td>Lucas Alvarez</td><td class="pts">0</td><td><span class="tag-ex">0</span></td><td><span class="tag-re">0</span></td><td style="color:#636366;font-size:11px">0</td></tr></tbody>
-    </table>
+    <div id="tp-body"></div>
   </div>
 </div>
+
+<!-- ── RESULTADOS ─────────────────────────────────────────── -->
 <div id="panel-res" class="panel">
   <div class="res-wrap">
     <div class="res-meta" id="res-upd"></div>
     <div id="res-form"></div>
   </div>
 </div>
-<div id="panel-vivo" class="panel">
+
+<!-- ── FECHA 1 ────────────────────────────────────────────── -->
+<div id="panel-fecha1" class="panel">
   <div class="vivo-wrap">
-    <div class="vivo-upd" id="vivo-upd">Toca para actualizar <span class="vivo-refresh" onclick="loadLiveScores()">↻</span></div>
-    <div id="vivo-content"><div class="vivo-nodata">Cargando...</div></div>
+    <div id="fecha1-content"><div style="text-align:center;padding:40px 20px;color:var(--text3)">Cargando...</div></div>
   </div>
 </div>
-<div id="panel-adm" class="panel on">
+
+<!-- ── ADMIN ──────────────────────────────────────────────── -->
+<div id="panel-adm" class="panel">
   <div class="adm-wrap">
     <div class="adm-note">Los resultados cargados acá se guardan en este dispositivo y tienen prioridad sobre los del sitio.<br>Si el scheduled task actualiza el sitio, tus datos locales se mantienen.</div>
-    <div id="adm-form"><div class="adm-note" style="color:#f0b429">⚠ Usando resultados cargados manualmente en este dispositivo.</div><div class="adm-grp"><div class="adm-gh">GRUPO A</div><div class="adm-row"><span class="adm-num">1</span><span class="adm-teams"><img src="https://flagcdn.com/w20/mx.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">México</span><input type="number" class="adm-score" id="adm-0a" value="2" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-0b" value="0" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Sudáfrica<img src="https://flagcdn.com/w20/za.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">2</span><span class="adm-teams"><img src="https://flagcdn.com/w20/mx.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">México</span><input type="number" class="adm-score" id="adm-1a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-1b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Corea del Sur<img src="https://flagcdn.com/w20/kr.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">3</span><span class="adm-teams"><img src="https://flagcdn.com/w20/mx.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">México</span><input type="number" class="adm-score" id="adm-2a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-2b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">República Checa<img src="https://flagcdn.com/w20/cz.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">4</span><span class="adm-teams"><img src="https://flagcdn.com/w20/za.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Sudáfrica</span><input type="number" class="adm-score" id="adm-3a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-3b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Corea del Sur<img src="https://flagcdn.com/w20/kr.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">5</span><span class="adm-teams"><img src="https://flagcdn.com/w20/za.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Sudáfrica</span><input type="number" class="adm-score" id="adm-4a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-4b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">República Checa<img src="https://flagcdn.com/w20/cz.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">6</span><span class="adm-teams"><img src="https://flagcdn.com/w20/kr.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Corea del Sur</span><input type="number" class="adm-score" id="adm-5a" value="2" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-5b" value="1" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">República Checa<img src="https://flagcdn.com/w20/cz.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div></div><div class="adm-grp"><div class="adm-gh">GRUPO B</div><div class="adm-row"><span class="adm-num">7</span><span class="adm-teams"><img src="https://flagcdn.com/w20/ca.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Canadá</span><input type="number" class="adm-score" id="adm-6a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-6b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Bosnia-Herzegovina<img src="https://flagcdn.com/w20/ba.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">8</span><span class="adm-teams"><img src="https://flagcdn.com/w20/ca.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Canadá</span><input type="number" class="adm-score" id="adm-7a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-7b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Qatar<img src="https://flagcdn.com/w20/qa.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">9</span><span class="adm-teams"><img src="https://flagcdn.com/w20/ca.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Canadá</span><input type="number" class="adm-score" id="adm-8a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-8b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Suiza<img src="https://flagcdn.com/w20/ch.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">10</span><span class="adm-teams"><img src="https://flagcdn.com/w20/ba.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Bosnia-Herzegovina</span><input type="number" class="adm-score" id="adm-9a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-9b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Qatar<img src="https://flagcdn.com/w20/qa.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">11</span><span class="adm-teams"><img src="https://flagcdn.com/w20/ba.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Bosnia-Herzegovina</span><input type="number" class="adm-score" id="adm-10a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-10b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Suiza<img src="https://flagcdn.com/w20/ch.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">12</span><span class="adm-teams"><img src="https://flagcdn.com/w20/qa.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Qatar</span><input type="number" class="adm-score" id="adm-11a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-11b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Suiza<img src="https://flagcdn.com/w20/ch.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div></div><div class="adm-grp"><div class="adm-gh">GRUPO C</div><div class="adm-row"><span class="adm-num">13</span><span class="adm-teams"><img src="https://flagcdn.com/w20/br.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Brasil</span><input type="number" class="adm-score" id="adm-12a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-12b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Marruecos<img src="https://flagcdn.com/w20/ma.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">14</span><span class="adm-teams"><img src="https://flagcdn.com/w20/br.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Brasil</span><input type="number" class="adm-score" id="adm-13a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-13b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Haití<img src="https://flagcdn.com/w20/ht.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">15</span><span class="adm-teams"><img src="https://flagcdn.com/w20/br.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Brasil</span><input type="number" class="adm-score" id="adm-14a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-14b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Escocia<img src="https://flagcdn.com/w20/gb-sct.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">16</span><span class="adm-teams"><img src="https://flagcdn.com/w20/ma.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Marruecos</span><input type="number" class="adm-score" id="adm-15a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-15b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Haití<img src="https://flagcdn.com/w20/ht.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">17</span><span class="adm-teams"><img src="https://flagcdn.com/w20/ma.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Marruecos</span><input type="number" class="adm-score" id="adm-16a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-16b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Escocia<img src="https://flagcdn.com/w20/gb-sct.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">18</span><span class="adm-teams"><img src="https://flagcdn.com/w20/ht.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Haití</span><input type="number" class="adm-score" id="adm-17a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-17b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Escocia<img src="https://flagcdn.com/w20/gb-sct.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div></div><div class="adm-grp"><div class="adm-gh">GRUPO D</div><div class="adm-row"><span class="adm-num">19</span><span class="adm-teams"><img src="https://flagcdn.com/w20/us.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Estados Unidos</span><input type="number" class="adm-score" id="adm-18a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-18b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Paraguay<img src="https://flagcdn.com/w20/py.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">20</span><span class="adm-teams"><img src="https://flagcdn.com/w20/us.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Estados Unidos</span><input type="number" class="adm-score" id="adm-19a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-19b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Australia<img src="https://flagcdn.com/w20/au.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">21</span><span class="adm-teams"><img src="https://flagcdn.com/w20/us.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Estados Unidos</span><input type="number" class="adm-score" id="adm-20a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-20b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Turquía<img src="https://flagcdn.com/w20/tr.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">22</span><span class="adm-teams"><img src="https://flagcdn.com/w20/py.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Paraguay</span><input type="number" class="adm-score" id="adm-21a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-21b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Australia<img src="https://flagcdn.com/w20/au.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">23</span><span class="adm-teams"><img src="https://flagcdn.com/w20/py.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Paraguay</span><input type="number" class="adm-score" id="adm-22a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-22b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Turquía<img src="https://flagcdn.com/w20/tr.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">24</span><span class="adm-teams"><img src="https://flagcdn.com/w20/au.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Australia</span><input type="number" class="adm-score" id="adm-23a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-23b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Turquía<img src="https://flagcdn.com/w20/tr.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div></div><div class="adm-grp"><div class="adm-gh">GRUPO E</div><div class="adm-row"><span class="adm-num">25</span><span class="adm-teams"><img src="https://flagcdn.com/w20/de.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Alemania</span><input type="number" class="adm-score" id="adm-24a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-24b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Curazao<img src="https://flagcdn.com/w20/cw.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">26</span><span class="adm-teams"><img src="https://flagcdn.com/w20/de.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Alemania</span><input type="number" class="adm-score" id="adm-25a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-25b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Costa de Marfil<img src="https://flagcdn.com/w20/ci.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">27</span><span class="adm-teams"><img src="https://flagcdn.com/w20/de.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Alemania</span><input type="number" class="adm-score" id="adm-26a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-26b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Ecuador<img src="https://flagcdn.com/w20/ec.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">28</span><span class="adm-teams"><img src="https://flagcdn.com/w20/cw.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Curazao</span><input type="number" class="adm-score" id="adm-27a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-27b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Costa de Marfil<img src="https://flagcdn.com/w20/ci.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">29</span><span class="adm-teams"><img src="https://flagcdn.com/w20/cw.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Curazao</span><input type="number" class="adm-score" id="adm-28a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-28b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Ecuador<img src="https://flagcdn.com/w20/ec.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">30</span><span class="adm-teams"><img src="https://flagcdn.com/w20/ci.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Costa de Marfil</span><input type="number" class="adm-score" id="adm-29a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-29b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Ecuador<img src="https://flagcdn.com/w20/ec.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div></div><div class="adm-grp"><div class="adm-gh">GRUPO F</div><div class="adm-row"><span class="adm-num">31</span><span class="adm-teams"><img src="https://flagcdn.com/w20/nl.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Países Bajos</span><input type="number" class="adm-score" id="adm-30a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-30b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Japón<img src="https://flagcdn.com/w20/jp.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">32</span><span class="adm-teams"><img src="https://flagcdn.com/w20/nl.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Países Bajos</span><input type="number" class="adm-score" id="adm-31a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-31b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Suecia<img src="https://flagcdn.com/w20/se.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">33</span><span class="adm-teams"><img src="https://flagcdn.com/w20/nl.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Países Bajos</span><input type="number" class="adm-score" id="adm-32a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-32b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Túnez<img src="https://flagcdn.com/w20/tn.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">34</span><span class="adm-teams"><img src="https://flagcdn.com/w20/jp.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Japón</span><input type="number" class="adm-score" id="adm-33a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-33b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Suecia<img src="https://flagcdn.com/w20/se.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">35</span><span class="adm-teams"><img src="https://flagcdn.com/w20/jp.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Japón</span><input type="number" class="adm-score" id="adm-34a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-34b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Túnez<img src="https://flagcdn.com/w20/tn.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">36</span><span class="adm-teams"><img src="https://flagcdn.com/w20/se.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Suecia</span><input type="number" class="adm-score" id="adm-35a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-35b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Túnez<img src="https://flagcdn.com/w20/tn.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div></div><div class="adm-grp"><div class="adm-gh">GRUPO G</div><div class="adm-row"><span class="adm-num">37</span><span class="adm-teams"><img src="https://flagcdn.com/w20/be.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Bélgica</span><input type="number" class="adm-score" id="adm-36a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-36b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Egipto<img src="https://flagcdn.com/w20/eg.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">38</span><span class="adm-teams"><img src="https://flagcdn.com/w20/be.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Bélgica</span><input type="number" class="adm-score" id="adm-37a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-37b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Irán<img src="https://flagcdn.com/w20/ir.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">39</span><span class="adm-teams"><img src="https://flagcdn.com/w20/be.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Bélgica</span><input type="number" class="adm-score" id="adm-38a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-38b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Nueva Zelanda<img src="https://flagcdn.com/w20/nz.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">40</span><span class="adm-teams"><img src="https://flagcdn.com/w20/eg.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Egipto</span><input type="number" class="adm-score" id="adm-39a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-39b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Irán<img src="https://flagcdn.com/w20/ir.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">41</span><span class="adm-teams"><img src="https://flagcdn.com/w20/eg.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Egipto</span><input type="number" class="adm-score" id="adm-40a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-40b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Nueva Zelanda<img src="https://flagcdn.com/w20/nz.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">42</span><span class="adm-teams"><img src="https://flagcdn.com/w20/ir.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Irán</span><input type="number" class="adm-score" id="adm-41a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-41b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Nueva Zelanda<img src="https://flagcdn.com/w20/nz.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div></div><div class="adm-grp"><div class="adm-gh">GRUPO H</div><div class="adm-row"><span class="adm-num">43</span><span class="adm-teams"><img src="https://flagcdn.com/w20/es.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">España</span><input type="number" class="adm-score" id="adm-42a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-42b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Cabo Verde<img src="https://flagcdn.com/w20/cv.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">44</span><span class="adm-teams"><img src="https://flagcdn.com/w20/es.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">España</span><input type="number" class="adm-score" id="adm-43a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-43b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Arabia Saudita<img src="https://flagcdn.com/w20/sa.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">45</span><span class="adm-teams"><img src="https://flagcdn.com/w20/es.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">España</span><input type="number" class="adm-score" id="adm-44a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-44b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Uruguay<img src="https://flagcdn.com/w20/uy.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">46</span><span class="adm-teams"><img src="https://flagcdn.com/w20/cv.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Cabo Verde</span><input type="number" class="adm-score" id="adm-45a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-45b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Arabia Saudita<img src="https://flagcdn.com/w20/sa.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">47</span><span class="adm-teams"><img src="https://flagcdn.com/w20/cv.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Cabo Verde</span><input type="number" class="adm-score" id="adm-46a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-46b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Uruguay<img src="https://flagcdn.com/w20/uy.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">48</span><span class="adm-teams"><img src="https://flagcdn.com/w20/sa.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Arabia Saudita</span><input type="number" class="adm-score" id="adm-47a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-47b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Uruguay<img src="https://flagcdn.com/w20/uy.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div></div><div class="adm-grp"><div class="adm-gh">GRUPO I</div><div class="adm-row"><span class="adm-num">49</span><span class="adm-teams"><img src="https://flagcdn.com/w20/fr.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Francia</span><input type="number" class="adm-score" id="adm-48a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-48b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Senegal<img src="https://flagcdn.com/w20/sn.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">50</span><span class="adm-teams"><img src="https://flagcdn.com/w20/fr.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Francia</span><input type="number" class="adm-score" id="adm-49a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-49b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Irak<img src="https://flagcdn.com/w20/iq.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">51</span><span class="adm-teams"><img src="https://flagcdn.com/w20/fr.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Francia</span><input type="number" class="adm-score" id="adm-50a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-50b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Noruega<img src="https://flagcdn.com/w20/no.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">52</span><span class="adm-teams"><img src="https://flagcdn.com/w20/sn.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Senegal</span><input type="number" class="adm-score" id="adm-51a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-51b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Irak<img src="https://flagcdn.com/w20/iq.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">53</span><span class="adm-teams"><img src="https://flagcdn.com/w20/sn.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Senegal</span><input type="number" class="adm-score" id="adm-52a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-52b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Noruega<img src="https://flagcdn.com/w20/no.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">54</span><span class="adm-teams"><img src="https://flagcdn.com/w20/iq.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Irak</span><input type="number" class="adm-score" id="adm-53a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-53b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Noruega<img src="https://flagcdn.com/w20/no.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div></div><div class="adm-grp"><div class="adm-gh">GRUPO J</div><div class="adm-row"><span class="adm-num">55</span><span class="adm-teams"><img src="https://flagcdn.com/w20/ar.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Argentina</span><input type="number" class="adm-score" id="adm-54a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-54b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Argelia<img src="https://flagcdn.com/w20/dz.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">56</span><span class="adm-teams"><img src="https://flagcdn.com/w20/ar.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Argentina</span><input type="number" class="adm-score" id="adm-55a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-55b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Austria<img src="https://flagcdn.com/w20/at.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">57</span><span class="adm-teams"><img src="https://flagcdn.com/w20/ar.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Argentina</span><input type="number" class="adm-score" id="adm-56a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-56b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Jordania<img src="https://flagcdn.com/w20/jo.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">58</span><span class="adm-teams"><img src="https://flagcdn.com/w20/dz.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Argelia</span><input type="number" class="adm-score" id="adm-57a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-57b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Austria<img src="https://flagcdn.com/w20/at.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">59</span><span class="adm-teams"><img src="https://flagcdn.com/w20/dz.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Argelia</span><input type="number" class="adm-score" id="adm-58a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-58b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Jordania<img src="https://flagcdn.com/w20/jo.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">60</span><span class="adm-teams"><img src="https://flagcdn.com/w20/at.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Austria</span><input type="number" class="adm-score" id="adm-59a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-59b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Jordania<img src="https://flagcdn.com/w20/jo.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div></div><div class="adm-grp"><div class="adm-gh">GRUPO K</div><div class="adm-row"><span class="adm-num">61</span><span class="adm-teams"><img src="https://flagcdn.com/w20/pt.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Portugal</span><input type="number" class="adm-score" id="adm-60a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-60b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Congo DR<img src="https://flagcdn.com/w20/cd.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">62</span><span class="adm-teams"><img src="https://flagcdn.com/w20/pt.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Portugal</span><input type="number" class="adm-score" id="adm-61a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-61b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Uzbekistán<img src="https://flagcdn.com/w20/uz.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">63</span><span class="adm-teams"><img src="https://flagcdn.com/w20/pt.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Portugal</span><input type="number" class="adm-score" id="adm-62a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-62b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Colombia<img src="https://flagcdn.com/w20/co.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">64</span><span class="adm-teams"><img src="https://flagcdn.com/w20/cd.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Congo DR</span><input type="number" class="adm-score" id="adm-63a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-63b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Uzbekistán<img src="https://flagcdn.com/w20/uz.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">65</span><span class="adm-teams"><img src="https://flagcdn.com/w20/cd.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Congo DR</span><input type="number" class="adm-score" id="adm-64a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-64b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Colombia<img src="https://flagcdn.com/w20/co.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">66</span><span class="adm-teams"><img src="https://flagcdn.com/w20/uz.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Uzbekistán</span><input type="number" class="adm-score" id="adm-65a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-65b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Colombia<img src="https://flagcdn.com/w20/co.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div></div><div class="adm-grp"><div class="adm-gh">GRUPO L</div><div class="adm-row"><span class="adm-num">67</span><span class="adm-teams"><img src="https://flagcdn.com/w20/gb-eng.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Inglaterra</span><input type="number" class="adm-score" id="adm-66a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-66b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Croacia<img src="https://flagcdn.com/w20/hr.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">68</span><span class="adm-teams"><img src="https://flagcdn.com/w20/gb-eng.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Inglaterra</span><input type="number" class="adm-score" id="adm-67a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-67b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Ghana<img src="https://flagcdn.com/w20/gh.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">69</span><span class="adm-teams"><img src="https://flagcdn.com/w20/gb-eng.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Inglaterra</span><input type="number" class="adm-score" id="adm-68a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-68b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Panamá<img src="https://flagcdn.com/w20/pa.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">70</span><span class="adm-teams"><img src="https://flagcdn.com/w20/hr.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Croacia</span><input type="number" class="adm-score" id="adm-69a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-69b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Ghana<img src="https://flagcdn.com/w20/gh.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">71</span><span class="adm-teams"><img src="https://flagcdn.com/w20/hr.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Croacia</span><input type="number" class="adm-score" id="adm-70a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-70b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Panamá<img src="https://flagcdn.com/w20/pa.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div><div class="adm-row"><span class="adm-num">72</span><span class="adm-teams"><img src="https://flagcdn.com/w20/gh.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">Ghana</span><input type="number" class="adm-score" id="adm-71a" value="" min="0" max="30" placeholder="-"><span class="adm-sep">-</span><input type="number" class="adm-score" id="adm-71b" value="" min="0" max="30" placeholder="-"><span class="adm-teams" style="text-align:right">Panamá<img src="https://flagcdn.com/w20/pa.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"></span></div></div></div>
-    <div id="adm-msg" class="adm-msg" style="color: rgb(34, 197, 94);">✓ Guardado! La tabla y resultados se actualizaron.</div>
+    <div id="adm-form"></div>
+    <div id="adm-msg" class="adm-msg"></div>
     <button class="adm-btn" onclick="saveAdmin()">💾 Guardar resultados</button>
     <button class="adm-clear" onclick="clearAdmin()">🗑 Borrar datos locales (usar los del sitio)</button>
     <button class="adm-export" onclick="exportHTML()">⬇ Exportar HTML para subir a GitHub</button>
   </div>
 </div>
+
+<!-- ── PRONÓSTICOS ────────────────────────────────────────── -->
 <div id="panel-pro" class="panel">
-  <div class="sw"><select id="ps" onchange="render(+this.value)"><option value="0">Diego Andino</option><option value="1">Martín Orfila</option><option value="2">Alejandro Quintana</option><option value="3">Maximiliano Suarez</option><option value="4">Marcelo Lugo</option><option value="5">Martin Guerra</option><option value="6">Ezequiel</option><option value="7">Tentaculos</option><option value="8">Lucas Alvarez</option><option value="9">El Che Pibe</option><option value="10">Cosme Fulanito (MMosovich)</option><option value="11">Genoveva</option></select></div>
-  <div class="ct" id="ct"><div class="pn">Diego Andino</div><div class="gr"><div class="gb"><div class="gh" style="background:#c0392b">GRUPO A</div><table><tbody><tr><td class="mn">1</td><td class="te"><img src="https://flagcdn.com/w20/mx.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">México</td><td class="sc2 scW">2–1</td><td class="te tr2">Sudáfrica<img src="https://flagcdn.com/w20/za.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">2</td><td class="te"><img src="https://flagcdn.com/w20/mx.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">México</td><td class="sc2 scD">1–1</td><td class="te tr2">Corea del Sur<img src="https://flagcdn.com/w20/kr.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">3</td><td class="te"><img src="https://flagcdn.com/w20/mx.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">México</td><td class="sc2 scL">1–2</td><td class="te tr2">República Checa<img src="https://flagcdn.com/w20/cz.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">4</td><td class="te"><img src="https://flagcdn.com/w20/za.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Sudáfrica</td><td class="sc2 scL">0–2</td><td class="te tr2">Corea del Sur<img src="https://flagcdn.com/w20/kr.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">5</td><td class="te"><img src="https://flagcdn.com/w20/za.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Sudáfrica</td><td class="sc2 scD">1–1</td><td class="te tr2">República Checa<img src="https://flagcdn.com/w20/cz.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">6</td><td class="te"><img src="https://flagcdn.com/w20/kr.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Corea del Sur</td><td class="sc2 scW">2–1</td><td class="te tr2">República Checa<img src="https://flagcdn.com/w20/cz.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr></tbody></table></div><div class="gb"><div class="gh" style="background:#16a34a">GRUPO B</div><table><tbody><tr><td class="mn">7</td><td class="te"><img src="https://flagcdn.com/w20/ca.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Canadá</td><td class="sc2 scW">2–0</td><td class="te tr2">Bosnia-Herzegovina<img src="https://flagcdn.com/w20/ba.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">8</td><td class="te"><img src="https://flagcdn.com/w20/ca.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Canadá</td><td class="sc2 scD">1–1</td><td class="te tr2">Qatar<img src="https://flagcdn.com/w20/qa.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">9</td><td class="te"><img src="https://flagcdn.com/w20/ca.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Canadá</td><td class="sc2 scW">2–1</td><td class="te tr2">Suiza<img src="https://flagcdn.com/w20/ch.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">10</td><td class="te"><img src="https://flagcdn.com/w20/ba.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Bosnia-Herzegovina</td><td class="sc2 scL">1–2</td><td class="te tr2">Qatar<img src="https://flagcdn.com/w20/qa.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">11</td><td class="te"><img src="https://flagcdn.com/w20/ba.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Bosnia-Herzegovina</td><td class="sc2 scL">0–2</td><td class="te tr2">Suiza<img src="https://flagcdn.com/w20/ch.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">12</td><td class="te"><img src="https://flagcdn.com/w20/qa.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Qatar</td><td class="sc2 scW">3–1</td><td class="te tr2">Suiza<img src="https://flagcdn.com/w20/ch.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr></tbody></table></div><div class="gb"><div class="gh" style="background:#1d4ed8">GRUPO C</div><table><tbody><tr><td class="mn">13</td><td class="te"><img src="https://flagcdn.com/w20/br.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Brasil</td><td class="sc2 scW">2–1</td><td class="te tr2">Marruecos<img src="https://flagcdn.com/w20/ma.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">14</td><td class="te"><img src="https://flagcdn.com/w20/br.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Brasil</td><td class="sc2 scW">2–0</td><td class="te tr2">Haití<img src="https://flagcdn.com/w20/ht.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">15</td><td class="te"><img src="https://flagcdn.com/w20/br.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Brasil</td><td class="sc2 scW">3–0</td><td class="te tr2">Escocia<img src="https://flagcdn.com/w20/gb-sct.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">16</td><td class="te"><img src="https://flagcdn.com/w20/ma.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Marruecos</td><td class="sc2 scD">1–1</td><td class="te tr2">Haití<img src="https://flagcdn.com/w20/ht.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">17</td><td class="te"><img src="https://flagcdn.com/w20/ma.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Marruecos</td><td class="sc2 scL">0–2</td><td class="te tr2">Escocia<img src="https://flagcdn.com/w20/gb-sct.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">18</td><td class="te"><img src="https://flagcdn.com/w20/ht.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Haití</td><td class="sc2 scW">2–1</td><td class="te tr2">Escocia<img src="https://flagcdn.com/w20/gb-sct.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr></tbody></table></div><div class="gb"><div class="gh" style="background:#7e22ce">GRUPO D</div><table><tbody><tr><td class="mn">19</td><td class="te"><img src="https://flagcdn.com/w20/us.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Estados Unidos</td><td class="sc2 scW">2–0</td><td class="te tr2">Paraguay<img src="https://flagcdn.com/w20/py.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">20</td><td class="te"><img src="https://flagcdn.com/w20/us.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Estados Unidos</td><td class="sc2 scD">1–1</td><td class="te tr2">Australia<img src="https://flagcdn.com/w20/au.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">21</td><td class="te"><img src="https://flagcdn.com/w20/us.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Estados Unidos</td><td class="sc2 scW">2–0</td><td class="te tr2">Turquía<img src="https://flagcdn.com/w20/tr.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">22</td><td class="te"><img src="https://flagcdn.com/w20/py.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Paraguay</td><td class="sc2 scD">1–1</td><td class="te tr2">Australia<img src="https://flagcdn.com/w20/au.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">23</td><td class="te"><img src="https://flagcdn.com/w20/py.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Paraguay</td><td class="sc2 scL">1–2</td><td class="te tr2">Turquía<img src="https://flagcdn.com/w20/tr.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">24</td><td class="te"><img src="https://flagcdn.com/w20/au.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Australia</td><td class="sc2 scW">4–0</td><td class="te tr2">Turquía<img src="https://flagcdn.com/w20/tr.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr></tbody></table></div><div class="gb"><div class="gh" style="background:#ea580c">GRUPO E</div><table><tbody><tr><td class="mn">25</td><td class="te"><img src="https://flagcdn.com/w20/de.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Alemania</td><td class="sc2 scW">2–0</td><td class="te tr2">Curazao<img src="https://flagcdn.com/w20/cw.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">26</td><td class="te"><img src="https://flagcdn.com/w20/de.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Alemania</td><td class="sc2 scW">2–1</td><td class="te tr2">Costa de Marfil<img src="https://flagcdn.com/w20/ci.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">27</td><td class="te"><img src="https://flagcdn.com/w20/de.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Alemania</td><td class="sc2 scL">0–3</td><td class="te tr2">Ecuador<img src="https://flagcdn.com/w20/ec.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">28</td><td class="te"><img src="https://flagcdn.com/w20/cw.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Curazao</td><td class="sc2 scD">1–1</td><td class="te tr2">Costa de Marfil<img src="https://flagcdn.com/w20/ci.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">29</td><td class="te"><img src="https://flagcdn.com/w20/cw.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Curazao</td><td class="sc2 scL">1–2</td><td class="te tr2">Ecuador<img src="https://flagcdn.com/w20/ec.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">30</td><td class="te"><img src="https://flagcdn.com/w20/ci.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Costa de Marfil</td><td class="sc2 scW">2–0</td><td class="te tr2">Ecuador<img src="https://flagcdn.com/w20/ec.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr></tbody></table></div><div class="gb"><div class="gh" style="background:#0891b2">GRUPO F</div><table><tbody><tr><td class="mn">31</td><td class="te"><img src="https://flagcdn.com/w20/nl.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Países Bajos</td><td class="sc2 scW">2–1</td><td class="te tr2">Japón<img src="https://flagcdn.com/w20/jp.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">32</td><td class="te"><img src="https://flagcdn.com/w20/nl.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Países Bajos</td><td class="sc2 scD">1–1</td><td class="te tr2">Suecia<img src="https://flagcdn.com/w20/se.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">33</td><td class="te"><img src="https://flagcdn.com/w20/nl.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Países Bajos</td><td class="sc2 scD">1–1</td><td class="te tr2">Túnez<img src="https://flagcdn.com/w20/tn.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">34</td><td class="te"><img src="https://flagcdn.com/w20/jp.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Japón</td><td class="sc2 scW">2–1</td><td class="te tr2">Suecia<img src="https://flagcdn.com/w20/se.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">35</td><td class="te"><img src="https://flagcdn.com/w20/jp.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Japón</td><td class="sc2 scD">1–1</td><td class="te tr2">Túnez<img src="https://flagcdn.com/w20/tn.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">36</td><td class="te"><img src="https://flagcdn.com/w20/se.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Suecia</td><td class="sc2 scW">2–0</td><td class="te tr2">Túnez<img src="https://flagcdn.com/w20/tn.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr></tbody></table></div><div class="gb"><div class="gh" style="background:#a16207">GRUPO G</div><table><tbody><tr><td class="mn">37</td><td class="te"><img src="https://flagcdn.com/w20/be.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Bélgica</td><td class="sc2 scD">1–1</td><td class="te tr2">Egipto<img src="https://flagcdn.com/w20/eg.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">38</td><td class="te"><img src="https://flagcdn.com/w20/be.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Bélgica</td><td class="sc2 scW">3–1</td><td class="te tr2">Irán<img src="https://flagcdn.com/w20/ir.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">39</td><td class="te"><img src="https://flagcdn.com/w20/be.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Bélgica</td><td class="sc2 scD">1–1</td><td class="te tr2">Nueva Zelanda<img src="https://flagcdn.com/w20/nz.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">40</td><td class="te"><img src="https://flagcdn.com/w20/eg.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Egipto</td><td class="sc2 scW">2–0</td><td class="te tr2">Irán<img src="https://flagcdn.com/w20/ir.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">41</td><td class="te"><img src="https://flagcdn.com/w20/eg.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Egipto</td><td class="sc2 scW">2–1</td><td class="te tr2">Nueva Zelanda<img src="https://flagcdn.com/w20/nz.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">42</td><td class="te"><img src="https://flagcdn.com/w20/ir.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Irán</td><td class="sc2 scW">3–0</td><td class="te tr2">Nueva Zelanda<img src="https://flagcdn.com/w20/nz.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr></tbody></table></div><div class="gb"><div class="gh" style="background:#be185d">GRUPO H</div><table><tbody><tr><td class="mn">43</td><td class="te"><img src="https://flagcdn.com/w20/es.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">España</td><td class="sc2 scW">2–0</td><td class="te tr2">Cabo Verde<img src="https://flagcdn.com/w20/cv.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">44</td><td class="te"><img src="https://flagcdn.com/w20/es.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">España</td><td class="sc2 scW">2–1</td><td class="te tr2">Arabia Saudita<img src="https://flagcdn.com/w20/sa.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">45</td><td class="te"><img src="https://flagcdn.com/w20/es.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">España</td><td class="sc2 scD">1–1</td><td class="te tr2">Uruguay<img src="https://flagcdn.com/w20/uy.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">46</td><td class="te"><img src="https://flagcdn.com/w20/cv.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Cabo Verde</td><td class="sc2 scL">0–2</td><td class="te tr2">Arabia Saudita<img src="https://flagcdn.com/w20/sa.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">47</td><td class="te"><img src="https://flagcdn.com/w20/cv.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Cabo Verde</td><td class="sc2 scL">1–2</td><td class="te tr2">Uruguay<img src="https://flagcdn.com/w20/uy.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">48</td><td class="te"><img src="https://flagcdn.com/w20/sa.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Arabia Saudita</td><td class="sc2 scD">1–1</td><td class="te tr2">Uruguay<img src="https://flagcdn.com/w20/uy.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr></tbody></table></div><div class="gb"><div class="gh" style="background:#065f46">GRUPO I</div><table><tbody><tr><td class="mn">49</td><td class="te"><img src="https://flagcdn.com/w20/fr.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Francia</td><td class="sc2 scW">3–0</td><td class="te tr2">Senegal<img src="https://flagcdn.com/w20/sn.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">50</td><td class="te"><img src="https://flagcdn.com/w20/fr.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Francia</td><td class="sc2 scW">2–1</td><td class="te tr2">Irak<img src="https://flagcdn.com/w20/iq.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">51</td><td class="te"><img src="https://flagcdn.com/w20/fr.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Francia</td><td class="sc2 scW">2–0</td><td class="te tr2">Noruega<img src="https://flagcdn.com/w20/no.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">52</td><td class="te"><img src="https://flagcdn.com/w20/sn.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Senegal</td><td class="sc2 scL">1–2</td><td class="te tr2">Irak<img src="https://flagcdn.com/w20/iq.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">53</td><td class="te"><img src="https://flagcdn.com/w20/sn.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Senegal</td><td class="sc2 scL">0–3</td><td class="te tr2">Noruega<img src="https://flagcdn.com/w20/no.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">54</td><td class="te"><img src="https://flagcdn.com/w20/iq.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Irak</td><td class="sc2 scW">3–0</td><td class="te tr2">Noruega<img src="https://flagcdn.com/w20/no.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr></tbody></table></div><div class="gb"><div class="gh" style="background:#1e40af">GRUPO J</div><table><tbody><tr><td class="mn">55</td><td class="te"><img src="https://flagcdn.com/w20/ar.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Argentina</td><td class="sc2 scW">2–1</td><td class="te tr2">Argelia<img src="https://flagcdn.com/w20/dz.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">56</td><td class="te"><img src="https://flagcdn.com/w20/ar.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Argentina</td><td class="sc2 scW">3–0</td><td class="te tr2">Austria<img src="https://flagcdn.com/w20/at.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">57</td><td class="te"><img src="https://flagcdn.com/w20/ar.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Argentina</td><td class="sc2 scL">1–2</td><td class="te tr2">Jordania<img src="https://flagcdn.com/w20/jo.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">58</td><td class="te"><img src="https://flagcdn.com/w20/dz.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Argelia</td><td class="sc2 scD">1–1</td><td class="te tr2">Austria<img src="https://flagcdn.com/w20/at.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">59</td><td class="te"><img src="https://flagcdn.com/w20/dz.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Argelia</td><td class="sc2 scW">2–0</td><td class="te tr2">Jordania<img src="https://flagcdn.com/w20/jo.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">60</td><td class="te"><img src="https://flagcdn.com/w20/at.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Austria</td><td class="sc2 scW">3–0</td><td class="te tr2">Jordania<img src="https://flagcdn.com/w20/jo.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr></tbody></table></div><div class="gb"><div class="gh" style="background:#7c2d12">GRUPO K</div><table><tbody><tr><td class="mn">61</td><td class="te"><img src="https://flagcdn.com/w20/pt.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Portugal</td><td class="sc2 scW">2–1</td><td class="te tr2">Congo DR<img src="https://flagcdn.com/w20/cd.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">62</td><td class="te"><img src="https://flagcdn.com/w20/pt.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Portugal</td><td class="sc2 scD">1–1</td><td class="te tr2">Uzbekistán<img src="https://flagcdn.com/w20/uz.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">63</td><td class="te"><img src="https://flagcdn.com/w20/pt.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Portugal</td><td class="sc2 scD">1–1</td><td class="te tr2">Colombia<img src="https://flagcdn.com/w20/co.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">64</td><td class="te"><img src="https://flagcdn.com/w20/cd.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Congo DR</td><td class="sc2 scL">1–2</td><td class="te tr2">Uzbekistán<img src="https://flagcdn.com/w20/uz.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">65</td><td class="te"><img src="https://flagcdn.com/w20/cd.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Congo DR</td><td class="sc2 scL">0–2</td><td class="te tr2">Colombia<img src="https://flagcdn.com/w20/co.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">66</td><td class="te"><img src="https://flagcdn.com/w20/uz.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Uzbekistán</td><td class="sc2 scW">2–1</td><td class="te tr2">Colombia<img src="https://flagcdn.com/w20/co.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr></tbody></table></div><div class="gb"><div class="gh" style="background:#312e81">GRUPO L</div><table><tbody><tr><td class="mn">67</td><td class="te"><img src="https://flagcdn.com/w20/gb-eng.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Inglaterra</td><td class="sc2 scW">3–1</td><td class="te tr2">Croacia<img src="https://flagcdn.com/w20/hr.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">68</td><td class="te"><img src="https://flagcdn.com/w20/gb-eng.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Inglaterra</td><td class="sc2 scW">2–0</td><td class="te tr2">Ghana<img src="https://flagcdn.com/w20/gh.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">69</td><td class="te"><img src="https://flagcdn.com/w20/gb-eng.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Inglaterra</td><td class="sc2 scD">1–1</td><td class="te tr2">Panamá<img src="https://flagcdn.com/w20/pa.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">70</td><td class="te"><img src="https://flagcdn.com/w20/hr.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Croacia</td><td class="sc2 scW">2–0</td><td class="te tr2">Ghana<img src="https://flagcdn.com/w20/gh.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">71</td><td class="te"><img src="https://flagcdn.com/w20/hr.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Croacia</td><td class="sc2 scW">2–0</td><td class="te tr2">Panamá<img src="https://flagcdn.com/w20/pa.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr><tr><td class="mn">72</td><td class="te"><img src="https://flagcdn.com/w20/gh.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-right:2px">Ghana</td><td class="sc2 scN">?–?</td><td class="te tr2">Panamá<img src="https://flagcdn.com/w20/pa.png" style="height:12px;vertical-align:middle;border-radius:1px;margin-left:2px;margin-right:0"></td></tr></tbody></table></div></div><div class="bx"><div class="br"><span class="bi">🥇</span><span class="bl">Campeón</span><span class="bv"><img src="https://flagcdn.com/w20/pt.png" style="height:14px;vertical-align:middle;border-radius:2px;margin-right:4px">Portugal</span></div><div class="br"><span class="bi">🥈</span><span class="bl">Subcampeón</span><span class="bv">—</span></div><div class="br"><span class="bi">🥉</span><span class="bl">Tercero</span><span class="bv"><img src="https://flagcdn.com/w20/fr.png" style="height:14px;vertical-align:middle;border-radius:2px;margin-right:4px">Francia</span></div><div class="br"><span class="bi">⚽</span><span class="bl">Goleador</span><span class="bv">Mbappe</span></div></div></div>
+  <div class="sw"><select id="ps" onchange="render(+this.value)"></select></div>
+  <div class="ct" id="ct"></div>
 </div>
+
 <script>
-var NAMES=["Diego Andino", "Martín Orfila", "Alejandro Quintana", "Maximiliano Suarez", "Marcelo Lugo", "Martin Guerra", "Ezequiel", "Tentaculos", "Lucas Alvarez", "El Che Pibe", "Cosme Fulanito (MMosovich)", "Genoveva"];
+var NAMES=["Diego Andino","Martín Orfila","Alejandro Quintana","Maximiliano Suarez","Marcelo Lugo","Martin Guerra","Ezequiel","Tentaculos","El Che Pibe","Cosme Fulanito (MMosovich)","Genoveva"];
 var FLAGS={
   "México":"mx","Sudáfrica":"za","Corea del Sur":"kr","República Checa":"cz",
   "Canadá":"ca","Bosnia-Herzegovina":"ba","Qatar":"qa","Suiza":"ch",
@@ -176,20 +225,19 @@ var P=[{"g":[2, 1, 1, 1, 1, 2, 0, 2, 1, 1, 2, 1, 2, 0, 1, 1, 2, 1, 1, 2, 0, 2, 3
 {"g":[0, 0, 0, 1, 1, 1, 2, 2, 0, 1, 0, 0, 1, 0, 0, 2, 2, 2, 1, 3, 0, 1, 2, 0, 3, 1, 1, 0, 1, 1, 3, 1, 0, 1, 2, 2, 0, 1, 0, 2, 3, 2, 1, 0, 0, 0, 2, 0, 1, 1, 3, 0, 0, 2, 0, 2, 1, 1, 3, 2, 1, 1, 2, 0, 0, 3, 1, 1, 0, 0, 2, 1, 2, 0, 0, 0, 1, 1, 0, 1, 2, 1, 2, 1, 0, 0, 3, 1, 0, 2, 1, 2, 2, 3, 3, 0, 1, 1, 2, 0, 1, 1, 0, 2, 1, 1, 2, 0, 1, 0, 1, 1, 2, 0, 1, 0, 2, 0, 3, 0, 2, 1, 2, 2, 0, 0, 0, 2, 1, 3, 2, 0, 2, 0, 1, 1, 3, 1, 2, 0, 1, 1, null, null],"c":"Argentina","s":"","t":"Croacia","go":"Messi"},
 {"g":[1, 1, 2, 1, 0, 3, 1, 0, 2, 1, 2, 0, 1, 1, 2, 2, 0, 2, 0, 3, 0, 2, 1, 0, 3, 0, 2, 2, 3, 2, 1, 1, 0, 3, 0, 1, 3, 2, 2, 23, 3, 2, 2, 2, 3, 2, 4, 0, 6, 0, 2, 2, 0, 3, 1, 3, 0, 2, 3, 2, 3, 3, 2, 0, 2, 2, 1, 1, 2, 0, 2, 1, 3, 1, 2, 2, 1, 1, 2, 2, 0, 3, 3, 0, 2, 2, 3, 3, 1, 3, 1, 3, 2, 2, 3, 0, 2, 0, 3, 3, 2, 1, 1, 4, 0, 3, 2, 0, 3, 0, 3, 1, 2, 1, 0, 3, 1, 1, 3, 0, 4, 1, 2, 3, 1, 1, 0, 3, 1, 4, 3, 1, 4, 2, 2, 1, 2, 1, 3, 0, 1, 1, null, null],"c":"Argentina","s":"","t":"Brasil","go":"Messi"},
 {"g":[1, 2, 0, 3, 2, 1, 2, 2, 1, 2, 1, 0, 2, 0, 2, 2, 1, 1, 0, 2, 1, 3, 4, 0, 3, 0, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 2, 2, 1, 2, 2, 1, 1, 3, 0, 2, 1, 1, 1, 0, 2, 0, 3, 2, 2, 2, 1, 1, 1, 3, 0, 2, 1, 1, 1, 2, 0, 3, 1, 3, 0, 2, 1, 2, 0, 1, 1, 0, 2, 3, 0, 3, 1, 2, 2, 0, 0, 0, 2, 1, 2, 2, 2, 3, 0, 2, 1, 3, 0, 2, 0, 1, 1, 2, 0, 2, 1, 3, 1, 0, 1, 1, 0, 2, 1, 3, 0, 4, 1, 2, 2, 0, 1, 0, 2, 1, 2, 2, 2, 1, 1, 3, 0, 2, 1, 2, 0, 3, 0, null, null],"c":"Argentina","s":"","t":"Francia","go":"Inglaterra"},
-{"g":[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],"c":"","s":"","t":"","go":""},
 {"g":[2, 1, 1, 2, 3, 2, 3, 2, 2, 2, 3, 1, 2, 2, 1, 3, 2, 2, 0, 3, 1, 4, 2, 4, 3, 1, 2, 3, 4, 0, 2, 2, 1, 3, 2, 1, 2, 3, 1, 4, 2, 3, 3, 3, 4, 2, 4, 0, 3, 2, 4, 1, 1, 3, 2, 3, 4, 2, 3, 2, 3, 4, 3, 2, 2, 3, 3, 1, 3, 1, 4, 1, 3, 0, 4, 1, 1, 2, 1, 2, 3, 1, 3, 0, 4, 1, 2, 3, 0, 3, 1, 3, 1, 4, 2, 3, 3, 1, 2, 3, 2, 1, 2, 2, 1, 3, 4, 1, 3, 1, 3, 0, 2, 1, 1, 0, 2, 1, 4, 0, 3, 1, 3, 2, 2, 2, 1, 3, 1, 4, 3, 2, 4, 1, 3, 0, 4, 1, 3, 1, 3, 0, null, null],"c":"","s":"","t":"Francia","go":"Messi"},
 {"g":[1, 0, 3, 1, 5, 1, 0, 3, 1, 2, 2, 1, 3, 0, 2, 1, 2, 0, 0, 1, 0, 4, 1, 0, 5, 0, 2, 1, 5, 0, 3, 0, 1, 3, 3, 0, 2, 1, 3, 1, 2, 2, 1, 0, 0, 1, 5, 0, 3, 0, 2, 0, 0, 4, 0, 2, 2, 1, 2, 1, 2, 1, 3, 1, 2, 1, 1, 0, 2, 1, 1, 0, 1, 0, 2, 1, 1, 0, 1, 0, 1, 0, 5, 1, 2, 1, 1, 0, 0, 2, 0, 2, 1, 1, 2, 1, 3, 1, 1, 0, 1, 0, 1, 0, 0, 3, 5, 0, 3, 1, 5, 0, 1, 0, 3, 1, 5, 0, 7, 1, 5, 0, 3, 0, 3, 0, 1, 3, 0, 5, 1, 1, 1, 0, 3, 0, 1, 0, 2, 0, 3, 0, null, null],"c":"Argentina","s":"Francia","t":"España","go":"Kilyan Mbappe"},
 {"g":[2, 0, 1, 0, 2, 1, 0, 2, 0, 1, 1, 1, 1, 0, 2, 0, 0, 1, 2, 0, 0, 1, 0, 2, 1, 0, 3, 0, 2, 0, 2, 0, 1, 1, 0, 2, 1, 0, 2, 0, 1, 1, 1, 0, 1, 1, 0, 2, 3, 0, 2, 0, 1, 0, 0, 2, 0, 3, 1, 1, 2, 1, 1, 0, 2, 0, 1, 1, 2, 0, 1, 1, 2, 1, 2, 0, 3, 0, 1, 1, 2, 0, 0, 1, 3, 0, 2, 0, 1, 1, 1, 2, 0, 2, 0, 1, 2, 1, 3, 0, 1, 2, 2, 0, 1, 1, 0, 2, 2, 0, 1, 0, 3, 0, 1, 1, 0, 1, 2, 0, 2, 0, 2, 0, 1, 1, 3, 3, 0, 2, 0, 2, 1, 0, 2, 0, 3, 0, 1, 0, 2, 0, 2, 0],"c":"España","s":"Francia","t":"Noruega","go":"Michael Olise"}];
 // R_EMBEDDED: actualizado automaticamente por el scheduled task cada 2 horas
-var R_EMBEDDED=[2,0,null,null,null,null,null,null,null,null,2,1,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null];
+var R_EMBEDDED=[2, 0, null, null, null, null, null, null, null, null, 2, 1, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
 var LAST_UPDATE="12/06/2026";
 var R=R_EMBEDDED.slice();
-// Cargar resultados manuales desde localStorage (tienen prioridad)
 (function(){try{var s=localStorage.getItem("prode_R");if(s){var a=JSON.parse(s);if(Array.isArray(a)&&a.length===R_EMBEDDED.length)R=a;}}catch(e){}})();
 
 function f(c,r){var code=FLAGS[c];if(!code)return"";var st=r?"margin-left:2px;margin-right:0":"margin-right:2px";return'<img src="https://flagcdn.com/w20/'+code+'.png" style="height:12px;vertical-align:middle;border-radius:1px;'+st+'">';}
 function fb(c){var code=FLAGS[c];if(!code)return"";return'<img src="https://flagcdn.com/w20/'+code+'.png" style="height:14px;vertical-align:middle;border-radius:2px;margin-right:4px">';}
 function fl(c){var code=FLAGS[c];if(!code)return"";return'<img src="https://flagcdn.com/w20/'+code+'.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">';}
+function flr(c){var code=FLAGS[c];if(!code)return"";return'<img src="https://flagcdn.com/w20/'+code+'.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px">';}
 function sc(a,b){if(a===null)return"scN";if(a>b)return"scW";if(a<b)return"scL";return"scD";}
 function outcome(a,b){if(a>b)return 1;if(a<b)return-1;return 0;}
 function matchPts(pg1,pg2,rg1,rg2){
@@ -198,96 +246,85 @@ function matchPts(pg1,pg2,rg1,rg2){
   if(outcome(pg1,pg2)===outcome(rg1,rg2))return 1;
   return 0;
 }
-var vivoTimer=null;
+
 function showTab(t){
-  ["tab","res","vivo","pro","adm"].forEach(function(id){document.getElementById("panel-"+id).classList.remove("on");});
-  document.querySelectorAll(".tb").forEach(function(b,i){b.classList.remove("on");if(["tab","res","pro","vivo","adm"][i]===t)b.classList.add("on");});
+  ["tab","res","fecha1","pro","adm"].forEach(function(id){document.getElementById("panel-"+id).classList.remove("on");});
+  document.querySelectorAll(".tb").forEach(function(b,i){b.classList.remove("on");if(["tab","res","pro","fecha1","adm"][i]===t)b.classList.add("on");});
   document.getElementById("panel-"+t).classList.add("on");
   if(t==="tab")renderStandings();
   if(t==="res")renderResults();
-  if(t==="adm")renderAdmin();
-  if(t==="vivo"){loadLiveScores();if(vivoTimer)clearInterval(vivoTimer);vivoTimer=setInterval(loadLiveScores,60000);}
-  else{if(vivoTimer){clearInterval(vivoTimer);vivoTimer=null;}}
+  if(t==="adm"){
+    if(!window._admOk){var pw=prompt("🔒 Contraseña Admin:");if(pw!=="mundial26"){alert("Contraseña incorrecta.");showTab("tab");return;}window._admOk=true;}
+    renderAdmin();
+  }
+  if(t==="fecha1")renderFecha1();
   window.scrollTo(0,0);
 }
-var ESPN_FLAG={
-  'MEX':'mx','RSA':'za','KOR':'kr','CZE':'cz','CAN':'ca','BIH':'ba','QAT':'qa','SUI':'ch',
-  'BRA':'br','MAR':'ma','HAI':'ht','SCO':'gb-sct','USA':'us','PAR':'py','AUS':'au','TUR':'tr',
-  'GER':'de','CUW':'cw','CIV':'ci','ECU':'ec','NED':'nl','JPN':'jp','SWE':'se','TUN':'tn',
-  'BEL':'be','EGY':'eg','IRN':'ir','NZL':'nz','ESP':'es','CPV':'cv','KSA':'sa','URU':'uy',
-  'FRA':'fr','SEN':'sn','IRQ':'iq','NOR':'no','ARG':'ar','ALG':'dz','AUT':'at','JOR':'jo',
-  'POR':'pt','COD':'cd','UZB':'uz','COL':'co','ENG':'gb-eng','CRO':'hr','GHA':'gh','PAN':'pa'
-};
-function eflag(abbr){var c=ESPN_FLAG[abbr]||(abbr||'').toLowerCase().slice(0,2);return'<img src="https://flagcdn.com/w20/'+c+'.png" style="height:15px;vertical-align:middle;border-radius:2px;margin:0 3px">';}
-function ename(t){return t.shortDisplayName||t.displayName||'';}
-function loadLiveScores(){
-  var cont=document.getElementById('vivo-content');
-  fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard',{cache:'no-store'})
-    .then(function(r){return r.json();})
-    .then(function(d){renderLive(d.events||[]);})
-    .catch(function(){cont.innerHTML='<div class="vivo-nodata">⚠️ No se pudo cargar la info.<br>Verificá tu conexión.</div>';});
-}
-function renderLive(events){
-  var cont=document.getElementById('vivo-content');
-  var now=new Date();
-  var live=events.filter(function(e){return e.status.type.state==='in';});
-  var pre=events.filter(function(e){return e.status.type.state==='pre';});
-  var post=events.filter(function(e){return e.status.type.state==='post';});
-  document.getElementById('vivo-upd').innerHTML='Upd: '+now.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'})+' <span class="vivo-refresh" onclick="loadLiveScores()">↻</span>';
-  var html='';
-  if(!events.length){html='<div class="vivo-nodata">⚽ No hay partidos hoy</div>';}
-  live.forEach(function(ev){
-    var comp=ev.competitions[0];
-    var home=comp.competitors.find(function(c){return c.homeAway==='home';});
-    var away=comp.competitors.find(function(c){return c.homeAway==='away';});
-    var detail=ev.status.type.shortDetail||ev.status.type.detail||'';
-    html+='<div class="vivo-live"><div class="vivo-live-hdr"><div class="vivo-dot"></div> EN VIVO &nbsp;'+detail+'</div>'
-      +'<div class="vivo-match">'
-      +'<div class="vivo-team">'+eflag(home.team.abbreviation)+'<br>'+ename(home.team)+'</div>'
-      +'<div class="vivo-score">'+home.score+' – '+away.score+'</div>'
-      +'<div class="vivo-team">'+eflag(away.team.abbreviation)+'<br>'+ename(away.team)+'</div>'
-      +'</div></div>';
+
+// ── FECHA 1 ──────────────────────────────────────────────────────
+var F1=[
+  {d:"JUE 11 JUN",g:"A",t1:"México",t2:"Sudáfrica",h:"16:00",s1:2,s2:0},
+  {d:"JUE 11 JUN",g:"A",t1:"Corea del Sur",t2:"República Checa",h:"23:00",s1:2,s2:1},
+  {d:"VIE 12 JUN",g:"B",t1:"Canadá",t2:"Bosnia-Herzegovina",h:"16:00",s1:null,s2:null},
+  {d:"VIE 12 JUN",g:"D",t1:"Estados Unidos",t2:"Paraguay",h:"22:00",s1:null,s2:null},
+  {d:"SÁB 13 JUN",g:"B",t1:"Qatar",t2:"Suiza",h:"16:00",s1:null,s2:null},
+  {d:"SÁB 13 JUN",g:"C",t1:"Brasil",t2:"Marruecos",h:"19:00",s1:null,s2:null},
+  {d:"SÁB 13 JUN",g:"C",t1:"Haití",t2:"Escocia",h:"22:00",s1:null,s2:null},
+  {d:"DOM 14 JUN",g:"D",t1:"Australia",t2:"Turquía",h:"13:00",s1:null,s2:null},
+  {d:"DOM 14 JUN",g:"E",t1:"Alemania",t2:"Curazao",h:"14:00",s1:null,s2:null},
+  {d:"DOM 14 JUN",g:"F",t1:"Países Bajos",t2:"Japón",h:"17:00",s1:null,s2:null},
+  {d:"DOM 14 JUN",g:"E",t1:"Costa de Marfil",t2:"Ecuador",h:"20:00",s1:null,s2:null},
+  {d:"DOM 14 JUN",g:"F",t1:"Suecia",t2:"Túnez",h:"23:00",s1:null,s2:null},
+  {d:"LUN 15 JUN",g:"H",t1:"España",t2:"Cabo Verde",h:"13:00",s1:null,s2:null},
+  {d:"LUN 15 JUN",g:"G",t1:"Bélgica",t2:"Egipto",h:"16:00",s1:null,s2:null},
+  {d:"LUN 15 JUN",g:"H",t1:"Arabia Saudita",t2:"Uruguay",h:"19:00",s1:null,s2:null},
+  {d:"LUN 15 JUN",g:"G",t1:"Irán",t2:"Nueva Zelanda",h:"22:00",s1:null,s2:null},
+  {d:"MAR 16 JUN",g:"I",t1:"Francia",t2:"Senegal",h:"16:00",s1:null,s2:null},
+  {d:"MAR 16 JUN",g:"I",t1:"Irak",t2:"Noruega",h:"19:00",s1:null,s2:null},
+  {d:"MAR 16 JUN",g:"J",t1:"Argentina",t2:"Argelia",h:"22:00",s1:null,s2:null},
+  {d:"MIÉ 17 JUN",g:"J",t1:"Austria",t2:"Jordania",h:"01:00",s1:null,s2:null},
+  {d:"MIÉ 17 JUN",g:"K",t1:"Portugal",t2:"Congo DR",h:"14:00",s1:null,s2:null},
+  {d:"MIÉ 17 JUN",g:"L",t1:"Inglaterra",t2:"Croacia",h:"17:00",s1:null,s2:null},
+  {d:"MIÉ 17 JUN",g:"L",t1:"Ghana",t2:"Panamá",h:"20:00",s1:null,s2:null},
+  {d:"MIÉ 17 JUN",g:"K",t1:"Uzbekistán",t2:"Colombia",h:"23:00",s1:null,s2:null}
+];
+
+function renderFecha1(){
+  var html='<div class="vivo-upd">🕐 Horarios en hora argentina (UTC&#8209;3)</div>';
+  var curDay='';
+  F1.forEach(function(m){
+    if(m.d!==curDay){
+      if(curDay!=='')html+='</div>';
+      var played=(m.s1!==null&&m.s2!==null);
+      var icon=played?'✅':'📅';
+      var hdrCol=played?'color:#22c55e':'color:#9ca3af';
+      html+='<div class="vivo-block"><div class="vivo-blk-hdr" style="'+hdrCol+'">'+icon+' '+m.d+'</div>';
+      curDay=m.d;
+    }
+    var gc=GC[m.g]||'#374151';
+    var played=(m.s1!==null&&m.s2!==null);
+    var isArg=(m.t1==='Argentina'||m.t2==='Argentina');
+    var centerHtml=played
+      ?'<div class="f1-center"><span class="f1-score">'+m.s1+'&ndash;'+m.s2+'</span></div>'
+      :'<div class="f1-center"><span class="f1-prox">VS</span></div>';
+    html+='<div class="f1-row'+(isArg?' arg':'')+'">'
+      +'<div class="f1-time'+(isArg?' arg-t':'')+'">'+m.h+'</div>'
+      +'<span style="background:'+gc+';color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">'+m.g+'</span>'
+      +'<div class="f1-t">'+fl(m.t1)+'<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+m.t1+'</span></div>'
+      +centerHtml
+      +'<div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">'+m.t2+'</span>'+flr(m.t2)+'</div>'
+      +'</div>';
   });
-  if(!live.length&&events.length){html+='<div class="vivo-nodata" style="padding:18px 0 10px">Sin partidos en vivo ahora</div>';}
-  if(pre.length){
-    html+='<div class="vivo-block"><div class="vivo-blk-hdr">📅 PRÓXIMOS HOY</div>';
-    pre.forEach(function(ev){
-      var comp=ev.competitions[0];
-      var home=comp.competitors.find(function(c){return c.homeAway==='home';});
-      var away=comp.competitors.find(function(c){return c.homeAway==='away';});
-      var d=new Date(ev.date);
-      var t=d.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
-      html+='<div class="vivo-row"><div class="vivo-time">'+t+'</div>'
-        +'<div style="flex:1;font-size:12px;display:flex;align-items:center;flex-wrap:wrap;gap:2px">'
-        +eflag(home.team.abbreviation)+ename(home.team)
-        +'<span style="color:#636366;margin:0 5px">vs</span>'
-        +eflag(away.team.abbreviation)+ename(away.team)
-        +'</div></div>';
-    });
-    html+='</div>';
-  }
-  if(post.length){
-    html+='<div class="vivo-block"><div class="vivo-blk-hdr">✅ FINALIZADOS HOY</div>';
-    post.forEach(function(ev){
-      var comp=ev.competitions[0];
-      var home=comp.competitors.find(function(c){return c.homeAway==='home';});
-      var away=comp.competitors.find(function(c){return c.homeAway==='away';});
-      html+='<div class="vivo-row">'
-        +'<div style="flex:1;font-size:12px;display:flex;align-items:center">'+eflag(home.team.abbreviation)+ename(home.team)+'</div>'
-        +'<div style="font-size:14px;font-weight:800;color:#8e8e93;padding:0 10px">'+home.score+' – '+away.score+'</div>'
-        +'<div style="flex:1;font-size:12px;display:flex;align-items:center;justify-content:flex-end">'+ename(away.team)+eflag(away.team.abbreviation)+'</div>'
-        +'</div>';
-    });
-    html+='</div>';
-  }
-  cont.innerHTML=html||'<div class="vivo-nodata">⚽ No hay partidos hoy</div>';
+  html+='</div>';
+  document.getElementById('fecha1-content').innerHTML=html;
 }
+
+// ── TABLA / STANDINGS ──────────────────────────────────────────────
 function renderStandings(){
   var played=0;
   for(var m=0;m<72;m++){var i=m*2;if(R[i]!==null&&R[i+1]!==null)played++;}
   document.getElementById("tp-played").textContent="Partidos jugados: "+played+" / 72";
   document.getElementById("tp-upd").textContent="Upd: "+LAST_UPDATE;
-
   var rows=NAMES.map(function(name,pi){
     var pts=0,exact=0,corr=0,pj=0;
     for(var m=0;m<72;m++){
@@ -301,18 +338,28 @@ function renderStandings(){
     return{name:name,pts:pts,exact:exact,corr:corr,pj:pj};
   });
   rows.sort(function(a,b){return b.pts-a.pts||b.exact-a.exact||b.corr-a.corr;});
+  var medals=['🥇','🥈','🥉'];
+  var rankCls=['rank-1','rank-2','rank-3'];
   var html="";
   rows.forEach(function(r,i){
-    var rc=i===0?"rank-1":i===1?"rank-2":i===2?"rank-3":"rank";
-    html+="<tr><td><span class='"+rc+"'>"+(i+1)+"</span></td>";
-    html+="<td>"+r.name+"</td>";
-    html+='<td class="pts">'+r.pts+"</td>";
-    html+='<td><span class="tag-ex">'+r.exact+"</span></td>";
-    html+='<td><span class="tag-re">'+r.corr+"</span></td>";
-    html+='<td style="color:#636366;font-size:11px">'+r.pj+"</td></tr>";
+    var cls="rank-card"+(i<3?" "+rankCls[i]:"");
+    var posHtml=i<3
+      ?'<div class="rank-pos">'+medals[i]+'</div>'
+      :'<div class="rank-pos-num">'+(i+1)+'</div>';
+    html+='<div class="'+cls+'">'
+      +posHtml
+      +'<div class="rank-name">'+r.name+'</div>'
+      +'<div class="rank-tags">'
+      +'<div class="rank-tag-row"><span class="tag-ex">'+r.exact+'</span> EX</div>'
+      +'<div class="rank-tag-row"><span class="tag-re">'+r.corr+'</span> RE &nbsp;<span style="color:#374151">PJ '+r.pj+'</span></div>'
+      +'</div>'
+      +'<div style="text-align:center"><div class="rank-pts">'+r.pts+'</div><div class="rank-pts-lbl">pts</div></div>'
+      +'</div>';
   });
   document.getElementById("tp-body").innerHTML=html;
 }
+
+// ── RESULTADOS ─────────────────────────────────────────────────────
 function renderResults(){
   document.getElementById("res-upd").textContent="Actualizado: "+LAST_UPDATE;
   var grps={};
@@ -320,20 +367,28 @@ function renderResults(){
   var html="";
   Object.keys(grps).forEach(function(grp){
     var color=GC[grp]||"#374151";
-    html+='<div class="res-grp"><div class="res-gh" style="background:'+color+'">GRUPO '+grp+"</div>";
+    html+='<div class="res-grp">'
+      +'<div class="res-gh" style="background:'+color+'">'
+      +'<span class="res-gh-dot" style="background:rgba(255,255,255,.3)"></span>'
+      +'GRUPO '+grp
+      +'</div>';
     grps[grp].forEach(function(m){
       var i=(m[0]-1)*2;var rg1=R[i],rg2=R[i+1];var played=(rg1!==null&&rg2!==null);
       html+='<div class="res-row">';
-      html+='<span class="res-num">'+m[0]+"</span>";
-      html+='<span class="res-team">'+fl(m[2])+m[2]+"</span>";
-      html+=played?'<span class="res-score">'+rg1+"–"+rg2+"</span>":'<span class="res-pend">vs</span>';
-      html+='<span class="res-team rt">'+m[3]+fl(m[3])+"</span>";
-      html+="</div>";
+      html+='<span class="res-num">'+m[0]+'</span>';
+      html+='<span class="res-team">'+fl(m[2])+m[2]+'</span>';
+      html+=played
+        ?'<span class="res-score">'+rg1+'&ndash;'+rg2+'</span>'
+        :'<span class="res-vs">VS</span>';
+      html+='<span class="res-team rt">'+m[3]+fl(m[3])+'</span>';
+      html+='</div>';
     });
-    html+="</div>";
+    html+='</div>';
   });
   document.getElementById("res-form").innerHTML=html;
 }
+
+// ── PRONÓSTICOS ────────────────────────────────────────────────────
 function render(idx){
   var d=P[idx],goals=d.g;
   var grps={};
@@ -345,30 +400,27 @@ function render(idx){
     grps[grp].forEach(function(m){
       var i=(m[0]-1)*2;var g1=goals[i],g2=goals[i+1];
       var s1=g1===null?"?":g1,s2=g2===null?"?":g2;var cls=sc(g1,g2);
-      html+="<tr>";
-      html+='<td class="mn">'+m[0]+"</td>";
-      html+='<td class="te">'+f(m[2])+m[2]+"</td>";
-      html+='<td class="sc2 '+cls+'">'+s1+"–"+s2+"</td>";
-      html+='<td class="te tr2">'+m[3]+f(m[3],true)+"</td></tr>";
+      html+='<tr><td class="mn">'+m[0]+'</td><td class="te">'+f(m[2])+m[2]+'</td><td class="sc2 '+cls+'">'+s1+'&ndash;'+s2+'</td><td class="te tr2">'+m[3]+f(m[3],true)+'</td></tr>';
     });
-    html+="</table></div>";
+    html+='</table></div>';
   });
-  html+="</div>";
-  html+='<div class="bx">';
-  html+='<div class="br"><span class="bi">🥇</span><span class="bl">Campeón</span><span class="bv">'+(d.c?fb(d.c)+d.c:"—")+"</span></div>";
-  html+='<div class="br"><span class="bi">🥈</span><span class="bl">Subcampeón</span><span class="bv">'+(d.s?fb(d.s)+d.s:"—")+"</span></div>";
-  html+='<div class="br"><span class="bi">🥉</span><span class="bl">Tercero</span><span class="bv">'+(d.t?fb(d.t)+d.t:"—")+"</span></div>";
-  html+='<div class="br"><span class="bi">⚽</span><span class="bl">Goleador</span><span class="bv">'+(d.go||"—")+"</span></div>";
-  html+="</div>";
+  html+='</div><div class="bx">';
+  html+='<div class="br"><span class="bi">🥇</span><span class="bl">Campeón</span><span class="bv">'+(d.c?fb(d.c)+d.c:"—")+'</span></div>';
+  html+='<div class="br"><span class="bi">🥈</span><span class="bl">Subcampeón</span><span class="bv">'+(d.s?fb(d.s)+d.s:"—")+'</span></div>';
+  html+='<div class="br"><span class="bi">🥉</span><span class="bl">Tercero</span><span class="bv">'+(d.t?fb(d.t)+d.t:"—")+'</span></div>';
+  html+='<div class="br"><span class="bi">⚽</span><span class="bl">Goleador</span><span class="bv">'+(d.go||"—")+'</span></div>';
+  html+='</div>';
   document.getElementById("ct").innerHTML=html;
   window.scrollTo(0,0);
 }
+
+// ── ADMIN ──────────────────────────────────────────────────────────
 function renderAdmin(){
   var groups=["A","B","C","D","E","F","G","H","I","J","K","L"];
   var html='';
   var hasLocal=false;
   try{hasLocal=!!localStorage.getItem("prode_R");}catch(e){}
-  if(hasLocal){html+='<div class="adm-note" style="color:#f0b429">&#9888; Usando resultados cargados manualmente en este dispositivo.</div>';}
+  if(hasLocal){html+='<div class="adm-note" style="color:#22c55e">⚠ Usando resultados cargados manualmente en este dispositivo.</div>';}
   groups.forEach(function(g){
     var gm=M.filter(function(m){return m[1]===g;});
     html+='<div class="adm-grp"><div class="adm-gh">GRUPO '+g+'</div>';
@@ -380,7 +432,7 @@ function renderAdmin(){
         +'<span class="adm-num">'+m[0]+'</span>'
         +'<span class="adm-teams">'+fl(m[2])+m[2]+'</span>'
         +'<input type="number" class="adm-score" id="adm-'+idx+'a" value="'+v0+'" min="0" max="30" placeholder="-">'
-        +'<span class="adm-sep">-</span>'
+        +'<span class="adm-sep">–</span>'
         +'<input type="number" class="adm-score" id="adm-'+idx+'b" value="'+v1+'" min="0" max="30" placeholder="-">'
         +'<span class="adm-teams" style="text-align:right">'+m[3]+fl(m[3])+'</span>'
         +'</div>';
@@ -403,7 +455,7 @@ function saveAdmin(){
   try{localStorage.setItem("prode_R",JSON.stringify(R));}catch(e){}
   var msg=document.getElementById('adm-msg');
   msg.style.color='#22c55e';
-  msg.innerHTML='&#10003; Guardado! La tabla y resultados se actualizaron.';
+  msg.innerHTML='✓ Guardado. La tabla y resultados se actualizaron.';
   setTimeout(function(){msg.innerHTML='';},4000);
   renderAdmin();
 }
@@ -414,12 +466,8 @@ function exportHTML(){
   var mm=String(today.getMonth()+1).padStart(2,'0');
   var yyyy=today.getFullYear();
   var dateStr=dd+'/'+mm+'/'+yyyy;
-  // Reemplazar R_EMBEDDED con R actual
-  src=src.replace(/var R_EMBEDDED=\[[^\]]*\]/,
-    'var R_EMBEDDED='+JSON.stringify(R));
-  // Actualizar fecha
-  src=src.replace(/var LAST_UPDATE="[^"]*"/,
-    'var LAST_UPDATE="'+dateStr+'"');
+  src=src.replace(/var R_EMBEDDED=\[[^\]]*\]/,'var R_EMBEDDED='+JSON.stringify(R));
+  src=src.replace(/var LAST_UPDATE="[^"]*"/,'var LAST_UPDATE="'+dateStr+'"');
   var blob=new Blob([src],{type:'text/html'});
   var a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
@@ -427,7 +475,7 @@ function exportHTML(){
   a.click();
   var msg=document.getElementById('adm-msg');
   msg.style.color='#22c55e';
-  msg.innerHTML='&#11015; index.html descargado. Subilo a GitHub como siempre.';
+  msg.innerHTML='⬇ index.html descargado. Subilo a GitHub como siempre.';
   setTimeout(function(){msg.innerHTML='';},5000);
 }
 function clearAdmin(){
@@ -436,14 +484,16 @@ function clearAdmin(){
   R=R_EMBEDDED.slice();
   renderAdmin();
   var msg=document.getElementById('adm-msg');
-  msg.style.color='#636366';
-  msg.innerHTML='&#128465; Datos locales borrados. Usando resultados del sitio.';
+  msg.style.color='#4b5563';
+  msg.innerHTML='🗑 Datos locales borrados. Usando resultados del sitio.';
   setTimeout(function(){msg.innerHTML='';},4000);
 }
+
+// ── INIT ───────────────────────────────────────────────────────────
 var sel=document.getElementById("ps");
-NAMES.forEach(function(n,i){sel.innerHTML+='<option value="'+i+'">'+n+"</option>";});
+NAMES.forEach(function(n,i){sel.innerHTML+='<option value="'+i+'">'+n+'</option>';});
 render(0);
 renderStandings();
 </script>
-
-</body></html>
+</body>
+</html>
