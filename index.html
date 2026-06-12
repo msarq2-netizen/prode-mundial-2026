@@ -63,6 +63,39 @@ td{padding:3px 5px;font-size:11px;vertical-align:middle}
 .bl{font-size:12px;color:#8e8e93;flex:1}
 .bv{font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px}
 .bv img{height:14px;border-radius:2px}
+/* EN VIVO */
+.tb{font-size:12px}
+.vivo-wrap{padding:10px 12px 32px}
+.vivo-live{background:#161b27;border-radius:10px;border:2px solid #ef4444;margin-bottom:12px;overflow:hidden}
+.vivo-live-hdr{background:#ef4444;padding:6px 12px;font-size:11px;font-weight:800;letter-spacing:1px;display:flex;align-items:center;gap:6px}
+.vivo-dot{width:8px;height:8px;border-radius:50%;background:#fff;animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+.vivo-match{padding:16px 10px 10px;display:flex;align-items:center;gap:4px}
+.vivo-team{flex:1;text-align:center;font-size:12px;font-weight:600;line-height:1.4}
+.vivo-score{font-size:32px;font-weight:900;color:#ef4444;min-width:80px;text-align:center;letter-spacing:2px}
+.vivo-block{background:#161b27;border-radius:10px;border:1px solid #252d3d;margin-bottom:10px;overflow:hidden}
+.vivo-blk-hdr{background:#1e2736;padding:6px 12px;font-size:11px;font-weight:700;color:#8e8e93;letter-spacing:.5px}
+.vivo-row{display:flex;align-items:center;padding:10px 12px;border-bottom:1px solid #1e2736}
+.vivo-row:last-child{border-bottom:none}
+.vivo-time{font-size:11px;color:#636366;width:42px;flex-shrink:0}
+.vivo-nodata{text-align:center;padding:40px 20px;color:#636366;font-size:13px;line-height:1.8}
+.vivo-upd{text-align:right;font-size:10px;color:#3a4557;padding:4px 2px 8px}
+.vivo-refresh{color:#f0b429;cursor:pointer;font-size:14px;margin-left:6px}
+/* ADMIN */
+.adm-wrap{padding:10px 12px 32px}
+.adm-grp{background:#161b27;border-radius:10px;border:1px solid #252d3d;margin-bottom:10px;overflow:hidden}
+.adm-gh{background:#1e2736;padding:6px 12px;font-size:11px;font-weight:700;color:#fff;letter-spacing:.5px}
+.adm-row{display:flex;align-items:center;padding:7px 10px;border-bottom:1px solid #1e2736;gap:6px}
+.adm-row:last-child{border-bottom:none}
+.adm-num{font-size:10px;color:#636366;width:18px;flex-shrink:0;text-align:center}
+.adm-teams{flex:1;font-size:11px;color:#c9d1e0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.adm-score{width:38px;background:#252d3d;border:1px solid #3a4557;border-radius:6px;color:#f0b429;font-size:15px;font-weight:700;text-align:center;padding:5px 2px;-webkit-appearance:none}
+.adm-score:focus{outline:none;border-color:#f0b429}
+.adm-sep{color:#636366;font-size:13px;font-weight:700;flex-shrink:0}
+.adm-btn{width:100%;background:#f0b429;color:#0d1117;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;margin-top:10px}
+.adm-clear{width:100%;background:none;border:1px solid #3a4557;color:#636366;border-radius:10px;padding:10px;font-size:13px;cursor:pointer;margin-top:6px}
+.adm-msg{text-align:center;font-size:13px;padding:8px;min-height:28px}
+.adm-note{font-size:10px;color:#3a4557;text-align:center;padding:4px 0 10px;line-height:1.6}
 </style>
 </head>
 <body>
@@ -72,6 +105,8 @@ td{padding:3px 5px;font-size:11px;vertical-align:middle}
     <button class="tb on" onclick="showTab('tab')">Tabla</button>
     <button class="tb" onclick="showTab('res')">Resultados</button>
     <button class="tb" onclick="showTab('pro')">Pron&#243;sticos</button>
+    <button class="tb" onclick="showTab('vivo')" style="color:#ef4444">&#128308; En Vivo</button>
+    <button class="tb" onclick="showTab('adm')" style="color:#636366">&#9881;</button>
   </div>
 </div>
 <div id="panel-tab" class="panel on">
@@ -94,6 +129,21 @@ td{padding:3px 5px;font-size:11px;vertical-align:middle}
   <div class="res-wrap">
     <div class="res-meta" id="res-upd"></div>
     <div id="res-form"></div>
+  </div>
+</div>
+<div id="panel-vivo" class="panel">
+  <div class="vivo-wrap">
+    <div class="vivo-upd" id="vivo-upd">Toca para actualizar <span class="vivo-refresh" onclick="loadLiveScores()">↻</span></div>
+    <div id="vivo-content"><div class="vivo-nodata">Cargando...</div></div>
+  </div>
+</div>
+<div id="panel-adm" class="panel">
+  <div class="adm-wrap">
+    <div class="adm-note">Los resultados cargados acá se guardan en este dispositivo y tienen prioridad sobre los del sitio.<br>Si el scheduled task actualiza el sitio, tus datos locales se mantienen.</div>
+    <div id="adm-form"></div>
+    <div id="adm-msg" class="adm-msg"></div>
+    <button class="adm-btn" onclick="saveAdmin()">&#128190; Guardar resultados</button>
+    <button class="adm-clear" onclick="clearAdmin()">&#128465; Borrar datos locales (usar los del sitio)</button>
   </div>
 </div>
 <div id="panel-pro" class="panel">
@@ -134,6 +184,8 @@ var P=[{"g":[2, 1, 1, 1, 1, 2, 0, 2, 1, 1, 2, 1, 2, 0, 1, 1, 2, 1, 1, 2, 0, 2, 3
 var R_EMBEDDED=[2, 0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
 var LAST_UPDATE="11/06/2026";
 var R=R_EMBEDDED.slice();
+// Cargar resultados manuales desde localStorage (tienen prioridad)
+(function(){try{var s=localStorage.getItem("prode_R");if(s){var a=JSON.parse(s);if(Array.isArray(a)&&a.length===R_EMBEDDED.length)R=a;}}catch(e){}})();
 
 function f(c,r){var code=FLAGS[c];if(!code)return"";var st=r?"margin-left:2px;margin-right:0":"margin-right:2px";return'<img src="https://flagcdn.com/w20/'+code+'.png" style="height:12px;vertical-align:middle;border-radius:1px;'+st+'">';}
 function fb(c){var code=FLAGS[c];if(!code)return"";return'<img src="https://flagcdn.com/w20/'+code+'.png" style="height:14px;vertical-align:middle;border-radius:2px;margin-right:4px">';}
@@ -146,13 +198,89 @@ function matchPts(pg1,pg2,rg1,rg2){
   if(outcome(pg1,pg2)===outcome(rg1,rg2))return 1;
   return 0;
 }
+var vivoTimer=null;
 function showTab(t){
-  ["tab","res","pro"].forEach(function(id){document.getElementById("panel-"+id).classList.remove("on");});
-  document.querySelectorAll(".tb").forEach(function(b,i){b.classList.remove("on");if(["tab","res","pro"][i]===t)b.classList.add("on");});
+  ["tab","res","vivo","pro","adm"].forEach(function(id){document.getElementById("panel-"+id).classList.remove("on");});
+  document.querySelectorAll(".tb").forEach(function(b,i){b.classList.remove("on");if(["tab","res","pro","vivo","adm"][i]===t)b.classList.add("on");});
   document.getElementById("panel-"+t).classList.add("on");
   if(t==="tab")renderStandings();
   if(t==="res")renderResults();
+  if(t==="adm")renderAdmin();
+  if(t==="vivo"){loadLiveScores();if(vivoTimer)clearInterval(vivoTimer);vivoTimer=setInterval(loadLiveScores,60000);}
+  else{if(vivoTimer){clearInterval(vivoTimer);vivoTimer=null;}}
   window.scrollTo(0,0);
+}
+var ESPN_FLAG={
+  'MEX':'mx','RSA':'za','KOR':'kr','CZE':'cz','CAN':'ca','BIH':'ba','QAT':'qa','SUI':'ch',
+  'BRA':'br','MAR':'ma','HAI':'ht','SCO':'gb-sct','USA':'us','PAR':'py','AUS':'au','TUR':'tr',
+  'GER':'de','CUW':'cw','CIV':'ci','ECU':'ec','NED':'nl','JPN':'jp','SWE':'se','TUN':'tn',
+  'BEL':'be','EGY':'eg','IRN':'ir','NZL':'nz','ESP':'es','CPV':'cv','KSA':'sa','URU':'uy',
+  'FRA':'fr','SEN':'sn','IRQ':'iq','NOR':'no','ARG':'ar','ALG':'dz','AUT':'at','JOR':'jo',
+  'POR':'pt','COD':'cd','UZB':'uz','COL':'co','ENG':'gb-eng','CRO':'hr','GHA':'gh','PAN':'pa'
+};
+function eflag(abbr){var c=ESPN_FLAG[abbr]||(abbr||'').toLowerCase().slice(0,2);return'<img src="https://flagcdn.com/w20/'+c+'.png" style="height:15px;vertical-align:middle;border-radius:2px;margin:0 3px">';}
+function ename(t){return t.shortDisplayName||t.displayName||'';}
+function loadLiveScores(){
+  var cont=document.getElementById('vivo-content');
+  fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard',{cache:'no-store'})
+    .then(function(r){return r.json();})
+    .then(function(d){renderLive(d.events||[]);})
+    .catch(function(){cont.innerHTML='<div class="vivo-nodata">⚠️ No se pudo cargar la info.<br>Verificá tu conexión.</div>';});
+}
+function renderLive(events){
+  var cont=document.getElementById('vivo-content');
+  var now=new Date();
+  var live=events.filter(function(e){return e.status.type.state==='in';});
+  var pre=events.filter(function(e){return e.status.type.state==='pre';});
+  var post=events.filter(function(e){return e.status.type.state==='post';});
+  document.getElementById('vivo-upd').innerHTML='Upd: '+now.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'})+' <span class="vivo-refresh" onclick="loadLiveScores()">↻</span>';
+  var html='';
+  if(!events.length){html='<div class="vivo-nodata">⚽ No hay partidos hoy</div>';}
+  live.forEach(function(ev){
+    var comp=ev.competitions[0];
+    var home=comp.competitors.find(function(c){return c.homeAway==='home';});
+    var away=comp.competitors.find(function(c){return c.homeAway==='away';});
+    var detail=ev.status.type.shortDetail||ev.status.type.detail||'';
+    html+='<div class="vivo-live"><div class="vivo-live-hdr"><div class="vivo-dot"></div> EN VIVO &nbsp;'+detail+'</div>'
+      +'<div class="vivo-match">'
+      +'<div class="vivo-team">'+eflag(home.team.abbreviation)+'<br>'+ename(home.team)+'</div>'
+      +'<div class="vivo-score">'+home.score+' – '+away.score+'</div>'
+      +'<div class="vivo-team">'+eflag(away.team.abbreviation)+'<br>'+ename(away.team)+'</div>'
+      +'</div></div>';
+  });
+  if(!live.length&&events.length){html+='<div class="vivo-nodata" style="padding:18px 0 10px">Sin partidos en vivo ahora</div>';}
+  if(pre.length){
+    html+='<div class="vivo-block"><div class="vivo-blk-hdr">📅 PRÓXIMOS HOY</div>';
+    pre.forEach(function(ev){
+      var comp=ev.competitions[0];
+      var home=comp.competitors.find(function(c){return c.homeAway==='home';});
+      var away=comp.competitors.find(function(c){return c.homeAway==='away';});
+      var d=new Date(ev.date);
+      var t=d.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
+      html+='<div class="vivo-row"><div class="vivo-time">'+t+'</div>'
+        +'<div style="flex:1;font-size:12px;display:flex;align-items:center;flex-wrap:wrap;gap:2px">'
+        +eflag(home.team.abbreviation)+ename(home.team)
+        +'<span style="color:#636366;margin:0 5px">vs</span>'
+        +eflag(away.team.abbreviation)+ename(away.team)
+        +'</div></div>';
+    });
+    html+='</div>';
+  }
+  if(post.length){
+    html+='<div class="vivo-block"><div class="vivo-blk-hdr">✅ FINALIZADOS HOY</div>';
+    post.forEach(function(ev){
+      var comp=ev.competitions[0];
+      var home=comp.competitors.find(function(c){return c.homeAway==='home';});
+      var away=comp.competitors.find(function(c){return c.homeAway==='away';});
+      html+='<div class="vivo-row">'
+        +'<div style="flex:1;font-size:12px;display:flex;align-items:center">'+eflag(home.team.abbreviation)+ename(home.team)+'</div>'
+        +'<div style="font-size:14px;font-weight:800;color:#8e8e93;padding:0 10px">'+home.score+' – '+away.score+'</div>'
+        +'<div style="flex:1;font-size:12px;display:flex;align-items:center;justify-content:flex-end">'+ename(away.team)+eflag(away.team.abbreviation)+'</div>'
+        +'</div>';
+    });
+    html+='</div>';
+  }
+  cont.innerHTML=html||'<div class="vivo-nodata">⚽ No hay partidos hoy</div>';
 }
 function renderStandings(){
   var played=0;
@@ -235,10 +363,64 @@ function render(idx){
   document.getElementById("ct").innerHTML=html;
   window.scrollTo(0,0);
 }
+function renderAdmin(){
+  var groups=["A","B","C","D","E","F","G","H","I","J","K","L"];
+  var html='';
+  var hasLocal=false;
+  try{hasLocal=!!localStorage.getItem("prode_R");}catch(e){}
+  if(hasLocal){html+='<div class="adm-note" style="color:#f0b429">&#9888; Usando resultados cargados manualmente en este dispositivo.</div>';}
+  groups.forEach(function(g){
+    var gm=M.filter(function(m){return m[1]===g;});
+    html+='<div class="adm-grp"><div class="adm-gh">GRUPO '+g+'</div>';
+    gm.forEach(function(m){
+      var idx=m[0]-1;
+      var v0=R[idx*2]!==null&&R[idx*2]!==undefined?R[idx*2]:'';
+      var v1=R[idx*2+1]!==null&&R[idx*2+1]!==undefined?R[idx*2+1]:'';
+      html+='<div class="adm-row">'
+        +'<span class="adm-num">'+m[0]+'</span>'
+        +'<span class="adm-teams">'+fl(m[2])+m[2]+'</span>'
+        +'<input type="number" class="adm-score" id="adm-'+idx+'a" value="'+v0+'" min="0" max="30" placeholder="-">'
+        +'<span class="adm-sep">-</span>'
+        +'<input type="number" class="adm-score" id="adm-'+idx+'b" value="'+v1+'" min="0" max="30" placeholder="-">'
+        +'<span class="adm-teams" style="text-align:right">'+m[3]+fl(m[3])+'</span>'
+        +'</div>';
+    });
+    html+='</div>';
+  });
+  document.getElementById('adm-form').innerHTML=html;
+}
+function saveAdmin(){
+  var newR=[];
+  for(var i=0;i<72;i++){
+    var ea=document.getElementById('adm-'+i+'a');
+    var eb=document.getElementById('adm-'+i+'b');
+    var a=(ea&&ea.value!=='')?parseInt(ea.value):null;
+    var b=(eb&&eb.value!=='')?parseInt(eb.value):null;
+    if(a!==null&&!isNaN(a)&&b!==null&&!isNaN(b)){newR.push(a,b);}
+    else{newR.push(null,null);}
+  }
+  R=newR;
+  try{localStorage.setItem("prode_R",JSON.stringify(R));}catch(e){}
+  var msg=document.getElementById('adm-msg');
+  msg.style.color='#22c55e';
+  msg.innerHTML='&#10003; Guardado! La tabla y resultados se actualizaron.';
+  setTimeout(function(){msg.innerHTML='';},4000);
+  renderAdmin();
+}
+function clearAdmin(){
+  if(!confirm('¿Borrar los resultados cargados manualmente y volver a los del sitio?'))return;
+  try{localStorage.removeItem("prode_R");}catch(e){}
+  R=R_EMBEDDED.slice();
+  renderAdmin();
+  var msg=document.getElementById('adm-msg');
+  msg.style.color='#636366';
+  msg.innerHTML='&#128465; Datos locales borrados. Usando resultados del sitio.';
+  setTimeout(function(){msg.innerHTML='';},4000);
+}
 var sel=document.getElementById("ps");
 NAMES.forEach(function(n,i){sel.innerHTML+='<option value="'+i+'">'+n+"</option>";});
 render(0);
 renderStandings();
 </script>
 </body>
-</html
+</html>
