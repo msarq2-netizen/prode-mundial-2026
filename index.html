@@ -477,23 +477,15 @@ function saveAdmin(){
   renderAdmin();
 }
 function exportHTML(){
-  var src=document.documentElement.outerHTML;
-  var today=new Date();
-  var dd=String(today.getDate()).padStart(2,'0');
-  var mm=String(today.getMonth()+1).padStart(2,'0');
-  var yyyy=today.getFullYear();
-  var dateStr=dd+'/'+mm+'/'+yyyy;
-  src=src.replace(/var R_EMBEDDED=\[[^\]]*\]/,'var R_EMBEDDED='+JSON.stringify(R));
-  src=src.replace(/var LAST_UPDATE="[^"]*"/,'var LAST_UPDATE="'+LAST_UPDATE+'"');
-  var blob=new Blob([src],{type:'text/html'});
+  var blob=new Blob([JSON.stringify(R)],{type:'application/json'});
   var a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
-  a.download='index.html';
+  a.download='r.json';
   a.click();
   var msg=document.getElementById('adm-msg');
   msg.style.color='#22c55e';
-  msg.innerHTML='⬇ index.html descargado. Subilo a GitHub como siempre.';
-  setTimeout(function(){msg.innerHTML='';},5000);
+  msg.innerHTML='⬇ r.json descargado. Subilo a GitHub (mismo repo, mismo lugar que index.html).';
+  setTimeout(function(){msg.innerHTML='';},6000);
 }
 function clearAdmin(){
   if(!confirm('¿Borrar los resultados cargados manualmente y volver a los del sitio?'))return;
@@ -511,16 +503,17 @@ var sel=document.getElementById("ps");
 NAMES.forEach(function(n,i){sel.innerHTML+='<option value="'+i+'">'+n+'</option>';});
 render(0);
 renderStandings();
-// Auto-update: detecta nueva versión y recarga
+// Carga r.json siempre fresco (sin caché) para tener resultados actualizados
 (function(){
-  var cur=LAST_UPDATE;
-  fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'})
-    .then(function(r){return r.text();})
-    .then(function(html){
-      var m=html.match(/var LAST_UPDATE="([^"]+)"/);
-      if(m&&m[1]!==cur){location.reload(true);}
+  fetch('r.json?_='+Date.now(),{cache:'no-store'})
+    .then(function(res){return res.json();})
+    .then(function(data){
+      if(Array.isArray(data)&&data.length===144){
+        R=data;
+        renderStandings();
+        renderFecha1();
+      }
     }).catch(function(){});
 })();
 </script>
 </body>
-</html>
