@@ -511,6 +511,16 @@ var sel=document.getElementById("ps");
 NAMES.forEach(function(n,i){sel.innerHTML+='<option value="'+i+'">'+n+'</option>';});
 render(0);
 renderStandings();
+// Auto-update: detecta nueva versión y recarga
+(function(){
+  var cur=LAST_UPDATE;
+  fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'})
+    .then(function(r){return r.text();})
+    .then(function(html){
+      var m=html.match(/var LAST_UPDATE="([^"]+)"/);
+      if(m&&m[1]!==cur){location.reload(true);}
+    }).catch(function(){});
+})();
 </script>
 </body>
 </html>
