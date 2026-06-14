@@ -74,7 +74,7 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
 /* ── PRONÓSTICOS ──────────────────────────────── */
 .sw{padding:12px 16px;background:var(--bg2);border-bottom:1px solid var(--border)}
 select{width:100%;background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:14px;font-weight:600;-webkit-appearance:none}
-.ct{padding:10px 8px 40px}
+.ct{padding:10px 12px 40px}
 .pn{font-size:15px;font-weight:800;color:var(--green);padding:6px 8px 10px;border-bottom:1px solid var(--border);margin-bottom:10px}
 .gr{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
 .gb{background:var(--bg2);border-radius:8px;overflow:hidden;border:1px solid var(--border)}
@@ -400,18 +400,31 @@ function render(idx){
   var d=P[idx],goals=d.g;
   var grps={};
   M.forEach(function(m){if(!grps[m[1]])grps[m[1]]=[];grps[m[1]].push(m);});
-  var html='<div class="pn">'+NAMES[idx]+'</div><div class="gr">';
+  var html='<div class="pn">'+NAMES[idx]+'</div>';
   Object.keys(grps).forEach(function(grp){
     var color=GC[grp]||"#374151";
-    html+='<div class="gb"><div class="gh" style="background:'+color+'">GRUPO '+grp+'</div><table>';
+    html+='<div class="res-grp">'
+      +'<div class="res-gh" style="background:'+color+'">'
+      +'<span class="res-gh-dot" style="background:rgba(255,255,255,.3)"></span>'
+      +'GRUPO '+grp+'</div>';
     grps[grp].forEach(function(m){
-      var i=(m[0]-1)*2;var g1=goals[i],g2=goals[i+1];
-      var s1=g1===null?"?":g1,s2=g2===null?"?":g2;var cls=sc(g1,g2);
-      html+='<tr><td class="mn">'+m[0]+'</td><td class="te">'+f(m[2])+m[2]+'</td><td class="sc2 '+cls+'">'+s1+'&ndash;'+s2+'</td><td class="te tr2">'+m[3]+f(m[3],true)+'</td></tr>';
+      var i=(m[0]-1)*2;
+      var g1=goals[i],g2=goals[i+1];
+      var rg1=R[i],rg2=R[i+1];
+      var played=(rg1!==null&&rg2!==null);
+      var pts=played?matchPts(g1,g2,rg1,rg2):null;
+      var s1=g1===null?"?":g1,s2=g2===null?"?":g2;
+      var scoreColor=pts===3?"#22c55e":pts===1?"#f59e0b":pts===0?"#ef4444":"#4b5563";
+      html+='<div class="res-row">'
+        +'<span class="res-num">'+m[0]+'</span>'
+        +'<span class="res-team">'+fl(m[2])+m[2]+'</span>'
+        +'<span class="res-score" style="color:'+scoreColor+'">'+s1+'&ndash;'+s2+'</span>'
+        +'<span class="res-team rt">'+m[3]+fl(m[3])+'</span>'
+        +'</div>';
     });
-    html+='</table></div>';
+    html+='</div>';
   });
-  html+='</div><div class="bx">';
+  html+='<div class="bx" style="margin:12px 0 40px">';
   html+='<div class="br"><span class="bi">🥇</span><span class="bl">Campeón</span><span class="bv">'+(d.c?fb(d.c)+d.c:"—")+'</span></div>';
   html+='<div class="br"><span class="bi">🥈</span><span class="bl">Subcampeón</span><span class="bv">'+(d.s?fb(d.s)+d.s:"—")+'</span></div>';
   html+='<div class="br"><span class="bi">🥉</span><span class="bl">Tercero</span><span class="bv">'+(d.t?fb(d.t)+d.t:"—")+'</span></div>';
