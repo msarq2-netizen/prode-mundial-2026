@@ -28,10 +28,10 @@ jobs:
           FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
         run: python update_results.py
 
-      - name: Commit and push if r.json changed
+      - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add r.json
+          git add r.json live.json
           git diff --staged --quiet || git commit -m "Auto-update resultados [$(date -u '+%Y-%m-%d %H:%M UTC')]"
           git push
