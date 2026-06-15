@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Auto-update r.json with World Cup 2026 results.
+Auto-update r.json and live.json with World Cup 2026 results.
 Uses football-data.org free API (register at https://www.football-data.org/client/register).
 Runs via GitHub Actions every 30 minutes.
 """
@@ -95,19 +95,23 @@ TEAM_MAP = {
     'Czechia': 'República Checa',
     'Canada': 'Canadá',
     'Bosnia and Herzegovina': 'Bosnia-Herzegovina',
+    'Bosnia-Herzegovina': 'Bosnia-Herzegovina',
     'Qatar': 'Qatar',
     'Switzerland': 'Suiza',
     'Brazil': 'Brasil',
     'Morocco': 'Marruecos',
     'Haiti': 'Haití',
     'Scotland': 'Escocia',
+    'USA': 'Estados Unidos',
     'United States': 'Estados Unidos',
     'Paraguay': 'Paraguay',
     'Australia': 'Australia',
     'Turkey': 'Turquía',
     'Türkiye': 'Turquía',
     'Germany': 'Alemania',
+    'Curacao': 'Curazao',
     'Curaçao': 'Curazao',
+    'Ivory Coast': 'Costa de Marfil',
     "Côte d'Ivoire": 'Costa de Marfil',
     'Ecuador': 'Ecuador',
     'Netherlands': 'Países Bajos',
@@ -140,14 +144,17 @@ TEAM_MAP = {
     'Panama': 'Panamá',
 }
 
+LIVE_STATUSES = {'IN_PLAY', 'PAUSED'}
+DONE_STATUSES = {'FINISHED'}
+UPDATE_STATUSES = LIVE_STATUSES | DONE_STATUSES
+
 def normalize(name):
     return TEAM_MAP.get(name, name)
 
 def get_matches():
     url = "https://api.football-data.org/v4/competitions/WC/matches"
     headers = {"X-Auth-Token": API_KEY}
-    params = {"status": "FINISHED"}
-    r = requests.get(url, headers=headers, params=params, timeout=30)
+    r = requests.get(url, headers=headers, timeout=30)
     r.raise_for_status()
     return r.json()
 
@@ -155,18 +162,29 @@ def main():
     with open('r.json') as f:
         R = json.load(f)
 
-    print("Fetching World Cup 2026 results from football-data.org...")
+    try:
+        with open('live.json') as f:
+            old_live = sorted(json.load(f))
+    except Exception:
+        old_live = []
+
+    print("Fetching World Cup 2026 matches from football-data.org...")
     data = get_matches()
     matches = data.get('matches', [])
 
     if not matches:
-        print(f"No finished matches. Response: {list(data.keys())}")
+        print(f"No matches returned. Response keys: {list(data.keys())}")
         sys.exit(0)
 
-    print(f"Got {len(matches)} finished matches")
+    print(f"Got {len(matches)} total matches")
     updated = False
+    live_matches = []
 
     for match in matches:
+        status = match.get('status', '')
+        if status not in UPDATE_STATUSES:
+            continue
+
         home = normalize(match['homeTeam']['name'])
         away = normalize(match['awayTeam']['name'])
         score = match.get('score', {})
@@ -183,16 +201,28 @@ def main():
                 if R[idx] != home_goals or R[idx+1] != away_goals:
                     R[idx] = home_goals
                     R[idx+1] = away_goals
-                    print(f"  Match {m[0]}: {home} {home_goals}-{away_goals} {away}")
+                    verb = "LIVE" if status in LIVE_STATUSES else "FT"
+                    print(f"  [{verb}] Match {m[0]}: {home} {home_goals}-{away_goals} {away}")
                     updated = True
+                if status in LIVE_STATUSES:
+                    live_matches.append(m[0])
                 break
+
+    live_matches_sorted = sorted(live_matches)
+    if live_matches_sorted != old_live:
+        with open('live.json', 'w') as f:
+            json.dump(live_matches, f)
+        print(f"live.json updated: {live_matches}")
+        updated = True
+    else:
+        print(f"live.json unchanged: {live_matches}")
 
     if updated:
         with open('r.json', 'w') as f:
             json.dump(R, f)
         print("r.json saved.")
     else:
-        print("No changes — r.json already up to date.")
+        print("No changes — everything up to date.")
         sys.exit(0)
 
 if __name__ == '__main__':
