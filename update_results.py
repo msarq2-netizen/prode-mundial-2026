@@ -86,7 +86,6 @@ MATCHES = [
     [72,"L","Ghana","Panamá"],
 ]
 
-# football-data.org team names -> our names
 TEAM_MAP = {
     'Mexico': 'México',
     'South Africa': 'Sudáfrica',
@@ -96,7 +95,6 @@ TEAM_MAP = {
     'Czechia': 'República Checa',
     'Canada': 'Canadá',
     'Bosnia and Herzegovina': 'Bosnia-Herzegovina',
-    'Bosnia-Herzegovina': 'Bosnia-Herzegovina',
     'Qatar': 'Qatar',
     'Switzerland': 'Suiza',
     'Brazil': 'Brasil',
@@ -104,16 +102,13 @@ TEAM_MAP = {
     'Haiti': 'Haití',
     'Scotland': 'Escocia',
     'United States': 'Estados Unidos',
-    'USA': 'Estados Unidos',
     'Paraguay': 'Paraguay',
     'Australia': 'Australia',
     'Turkey': 'Turquía',
     'Türkiye': 'Turquía',
     'Germany': 'Alemania',
     'Curaçao': 'Curazao',
-    'Curacao': 'Curazao',
     "Côte d'Ivoire": 'Costa de Marfil',
-    'Ivory Coast': 'Costa de Marfil',
     'Ecuador': 'Ecuador',
     'Netherlands': 'Países Bajos',
     'Japan': 'Japón',
@@ -137,7 +132,6 @@ TEAM_MAP = {
     'Jordan': 'Jordania',
     'Portugal': 'Portugal',
     'DR Congo': 'Congo DR',
-    'Congo DR': 'Congo DR',
     'Uzbekistan': 'Uzbekistán',
     'Colombia': 'Colombia',
     'England': 'Inglaterra',
@@ -150,7 +144,6 @@ def normalize(name):
     return TEAM_MAP.get(name, name)
 
 def get_matches():
-    # football-data.org: competition code WC = FIFA World Cup
     url = "https://api.football-data.org/v4/competitions/WC/matches"
     headers = {"X-Auth-Token": API_KEY}
     params = {"status": "FINISHED"}
@@ -167,7 +160,7 @@ def main():
     matches = data.get('matches', [])
 
     if not matches:
-        print(f"No finished matches returned. Response keys: {list(data.keys())}")
+        print(f"No finished matches. Response: {list(data.keys())}")
         sys.exit(0)
 
     print(f"Got {len(matches)} finished matches")
@@ -199,7 +192,7 @@ def main():
             json.dump(R, f)
         print("r.json saved.")
     else:
-        print("No changes — r.json is already up to date.")
+        print("No changes — r.json already up to date.")
         sys.exit(0)
 
 if __name__ == '__main__':
