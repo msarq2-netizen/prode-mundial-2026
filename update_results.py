@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Auto-update r.json with World Cup 2026 results from API-Football.
+Auto-update r.json with World Cup 2026 results.
+Uses football-data.org free API (register at https://www.football-data.org/client/register).
 Runs via GitHub Actions every 30 minutes.
 """
 import requests
@@ -8,7 +9,7 @@ import json
 import os
 import sys
 
-API_KEY = os.environ.get('RAPIDAPI_KEY', '')
+API_KEY = os.environ.get('FOOTBALL_DATA_KEY', '')
 
 MATCHES = [
     [1,"A","México","Sudáfrica"],
@@ -85,6 +86,7 @@ MATCHES = [
     [72,"L","Ghana","Panamá"],
 ]
 
+# football-data.org team names -> our names
 TEAM_MAP = {
     'Mexico': 'México',
     'South Africa': 'Sudáfrica',
@@ -101,17 +103,17 @@ TEAM_MAP = {
     'Morocco': 'Marruecos',
     'Haiti': 'Haití',
     'Scotland': 'Escocia',
-    'USA': 'Estados Unidos',
     'United States': 'Estados Unidos',
+    'USA': 'Estados Unidos',
     'Paraguay': 'Paraguay',
     'Australia': 'Australia',
     'Turkey': 'Turquía',
     'Türkiye': 'Turquía',
     'Germany': 'Alemania',
-    'Curacao': 'Curazao',
     'Curaçao': 'Curazao',
-    'Ivory Coast': 'Costa de Marfil',
+    'Curacao': 'Curazao',
     "Côte d'Ivoire": 'Costa de Marfil',
+    'Ivory Coast': 'Costa de Marfil',
     'Ecuador': 'Ecuador',
     'Netherlands': 'Países Bajos',
     'Japan': 'Japón',
@@ -135,6 +137,7 @@ TEAM_MAP = {
     'Jordan': 'Jordania',
     'Portugal': 'Portugal',
     'DR Congo': 'Congo DR',
+    'Congo DR': 'Congo DR',
     'Uzbekistan': 'Uzbekistán',
     'Colombia': 'Colombia',
     'England': 'Inglaterra',
@@ -146,14 +149,11 @@ TEAM_MAP = {
 def normalize(name):
     return TEAM_MAP.get(name, name)
 
-def get_fixtures():
-    url = "https://api-football-v1.p.rapidapi.com/v3/fixtures"
-    headers = {
-        "x-rapidapi-host": "api-football-v1.p.rapidapi.com",
-        "x-rapidapi-key": API_KEY
-    }
-    # League 1 = FIFA World Cup
-    params = {"league": "1", "season": "2026"}
+def get_matches():
+    # football-data.org: competition code WC = FIFA World Cup
+    url = "https://api.football-data.org/v4/competitions/WC/matches"
+    headers = {"X-Auth-Token": API_KEY}
+    params = {"status": "FINISHED"}
     r = requests.get(url, headers=headers, params=params, timeout=30)
     r.raise_for_status()
     return r.json()
@@ -162,26 +162,24 @@ def main():
     with open('r.json') as f:
         R = json.load(f)
 
-    print("Fetching fixtures from API-Football...")
-    data = get_fixtures()
-    fixtures = data.get('response', [])
+    print("Fetching World Cup 2026 results from football-data.org...")
+    data = get_matches()
+    matches = data.get('matches', [])
 
-    if not fixtures:
-        print(f"No fixtures returned. Full response: {json.dumps(data)[:500]}")
+    if not matches:
+        print(f"No finished matches returned. Response keys: {list(data.keys())}")
         sys.exit(0)
 
-    print(f"Got {len(fixtures)} fixtures from API")
+    print(f"Got {len(matches)} finished matches")
     updated = False
 
-    for fixture in fixtures:
-        status = fixture['fixture']['status']['short']
-        if status not in ('FT', 'AET', 'PEN'):
-            continue
-
-        home = normalize(fixture['teams']['home']['name'])
-        away = normalize(fixture['teams']['away']['name'])
-        home_goals = fixture['goals']['home']
-        away_goals = fixture['goals']['away']
+    for match in matches:
+        home = normalize(match['homeTeam']['name'])
+        away = normalize(match['awayTeam']['name'])
+        score = match.get('score', {})
+        ft = score.get('fullTime', {})
+        home_goals = ft.get('home')
+        away_goals = ft.get('away')
 
         if home_goals is None or away_goals is None:
             continue
