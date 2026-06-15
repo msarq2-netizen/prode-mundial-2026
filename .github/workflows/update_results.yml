@@ -25,7 +25,7 @@ jobs:
 
       - name: Run update script
         env:
-          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+          FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
         run: python update_results.py
 
       - name: Commit and push if r.json changed
