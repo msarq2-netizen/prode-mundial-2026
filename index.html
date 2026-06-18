@@ -472,4 +472,16 @@ renderStandings();
     }).catch(function(){});
 })();
 </script>
+
+<script>
+(function(){
+  var BUILD='20260618c';
+  fetch('v.json?t='+Date.now())
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.v!==BUILD)location.replace(location.pathname+'?_v='+d.v);
+    })
+    .catch(function(){});
+})();
+</script>
 </body>
