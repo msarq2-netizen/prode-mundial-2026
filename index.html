@@ -469,6 +469,7 @@ renderStandings();
         R=data;
         renderStandings();
         renderFecha1();
+        renderFecha2();
       }
     }).catch(function(){});
 
@@ -486,12 +487,36 @@ function renderFecha1(){
     }
   }
 }
+function renderFecha2(){
+  var F2=[-5,-11,8,2,20,-17,14,-23,32,26,-29,-35,44,38,-47,-41,56,50,-53,-59,62,68,-71,-65];
+  var dayM=[[5,11,8,2],[20,17,14,23],[32,26,29,35],[44,38,47,41],[56,50,53,59],[62,68,71,65]];
+  var rows=document.querySelectorAll('#fecha2-content .f1-row');
+  for(var i=0;i<rows.length;i++){
+    if(i>=F2.length) break;
+    var mNum=Math.abs(F2[i]);
+    var rev=F2[i]<0;
+    var idx=(mNum-1)*2;
+    var h=R[idx],a=R[idx+1];
+    var center=rows[i].querySelector('.f1-center,.f1-prox');
+    if(!center) continue;
+    if(h!==null&&h!==undefined&&a!==null&&a!==undefined){
+      var disp=rev?(a+'\u2013'+h):(h+'\u2013'+a);
+      center.innerHTML='<span class="f1-score">'+disp+'<\/span>';
+    }
+  }
+  var hdrs=document.querySelectorAll('#fecha2-content .vivo-blk-hdr');
+  for(var j=0;j<hdrs.length;j++){
+    if(j>=dayM.length) break;
+    var allDone=dayM[j].every(function(m){var idx=(m-1)*2;return R[idx]!==null&&R[idx]!==undefined&&R[idx+1]!==null&&R[idx+1]!==undefined;});
+    if(allDone){hdrs[j].textContent=hdrs[j].textContent.replace('\uD83D\uDCC5','\u2705');hdrs[j].style.color='#22c55e';}
+  }
+}
 })();
 </script>
 
 <script>
 (function(){
-  var BUILD='20260618d';
+  var BUILD='20260618e';
   fetch('v.json?t='+Date.now())
     .then(function(r){return r.json();})
     .then(function(d){
