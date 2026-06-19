@@ -468,8 +468,24 @@ renderStandings();
       if(Array.isArray(data)&&data.length===144){
         R=data;
         renderStandings();
+        renderFecha1();
       }
     }).catch(function(){});
+
+function renderFecha1(){
+  var F1=[1,6,7,19,12,13,18,24,25,31,30,36,43,37,48,42,49,54,55,60,61,67,72,66];
+  var rows=document.querySelectorAll('#fecha1-content .f1-row');
+  for(var i=0;i<rows.length;i++){
+    if(i>=F1.length) break;
+    var idx=(F1[i]-1)*2;
+    var h=R[idx],a=R[idx+1];
+    var center=rows[i].querySelector('.f1-center');
+    if(!center) continue;
+    if(h!==null&&h!==undefined&&a!==null&&a!==undefined){
+      center.innerHTML='<span class="f1-score">'+h+'–'+a+'<\/span>';
+    }
+  }
+}
 })();
 </script>
 
