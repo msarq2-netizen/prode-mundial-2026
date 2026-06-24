@@ -233,8 +233,8 @@ function matchPts(pg1,pg2,rg1,rg2){
 }
 
 function showTab(t){
-  ["tab","res","pro","fecha2","adm"].forEach(function(id){document.getElementById("panel-"+id).classList.remove("on");});
-  document.querySelectorAll(".tb").forEach(function(b,i){b.classList.remove("on");if(["tab","res","pro","fecha2","adm"][i]===t)b.classList.add("on");});
+  ["tab","res","pro","fecha3","adm"].forEach(function(id){document.getElementById("panel-"+id).classList.remove("on");});
+  document.querySelectorAll(".tb").forEach(function(b,i){b.classList.remove("on");if(["tab","res","pro","fecha3","adm"][i]===t)b.classList.add("on");});
   document.getElementById("panel-"+t).classList.add("on");
   if(t==="tab")renderStandings();
   if(t==="res")renderResults();
