@@ -1606,6 +1606,54 @@ function renderAll(){
 }
 
 init();
+
+// ── Splash / anuncio ─────────────────────────────────────────────────────────
+(function(){
+  var SPLASH_KEY = 'splash_playoff_v1';
+  // Mostrar siempre (no solo una vez) — cambiar a sessionStorage para una sola vez por sesión
+  var overlay = document.createElement('div');
+  overlay.id = 'splash-overlay';
+  overlay.style.cssText = [
+    'position:fixed','inset:0','z-index:9999',
+    'background:rgba(0,0,0,.82)',
+    'display:flex','align-items:center','justify-content:center',
+    'padding:16px','cursor:pointer'
+  ].join(';');
+
+  var img = document.createElement('img');
+  img.src = 'anuncio.jpg';
+  img.alt = 'Anuncio Playoff Prode 2026';
+  img.style.cssText = [
+    'max-height:90vh','max-width:100%',
+    'border-radius:12px',
+    'box-shadow:0 8px 40px rgba(0,0,0,.8)',
+    'pointer-events:none'
+  ].join(';');
+
+  var close = document.createElement('div');
+  close.textContent = '✕';
+  close.style.cssText = [
+    'position:absolute','top:14px','right:18px',
+    'color:#fff','font-size:26px','font-weight:700',
+    'cursor:pointer','line-height:1','opacity:.8'
+  ].join(';');
+
+  var hint = document.createElement('div');
+  hint.textContent = 'Tocá en cualquier lugar para continuar';
+  hint.style.cssText = [
+    'position:absolute','bottom:18px','left:50%',
+    'transform:translateX(-50%)',
+    'color:#ccc','font-size:13px','white-space:nowrap'
+  ].join(';');
+
+  overlay.appendChild(img);
+  overlay.appendChild(close);
+  overlay.appendChild(hint);
+  document.body.appendChild(overlay);
+
+  function closeSplash(){ overlay.remove(); }
+  overlay.addEventListener('click', closeSplash);
+})();
 </script>
 </body>
 </html>
