@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0b0f1a">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>⚽ Prode Mundial 2026</title>
+<style>
+:root{
+  --bg:#0b0f1a;--bg2:#111827;--bg3:#1a2535;--bg4:#0f1826;
+  --border:#1e2d3d;--green:#22c55e;--green-dim:#14532d;
+  --gold:#f59e0b;--silver:#9ca3af;--bronze:#b45309;
+  --text:#f9fafb;--text2:#9ca3af;--text3:#4b5563;
+  --r:10px
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;min-height:100vh;max-width:480px;margin:0 auto}
+
+/* ── HEADER ───────────────────────────────────── */
+.hdr{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 16px 0;position:sticky;top:0;z-index:100;box-shadow:0 4px 16px rgba(0,0,0,.6)}
+.htitle{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px}
+.htitle-left{display:flex;align-items:center;gap:8px}
+.htitle-icon{font-size:20px;line-height:1}
+.htitle-text{display:flex;flex-direction:column}
+.htitle-main{font-size:13px;font-weight:900;letter-spacing:.8px;text-transform:uppercase;color:var(--text)}
+.htitle-sub{font-size:10px;font-weight:600;color:var(--green);letter-spacing:.3px;margin-top:1px}
+.htitle-badge{background:var(--green-dim);color:var(--green);border-radius:5px;padding:3px 8px;font-size:10px;font-weight:800;letter-spacing:.5px}
+.tabs{display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:2px solid var(--border)}
+.tabs::-webkit-scrollbar{display:none}
+.tb{flex:1;background:none;border:none;color:var(--text3);font-size:12px;font-weight:600;padding:10px 4px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s,border-color .15s;white-space:nowrap}
+.tb.on{color:var(--green);border-bottom-color:var(--green)}
+.panel{display:none}.panel.on{display:block}
+
+/* ── TABLA ────────────────────────────────────── */
+.tp-wrap{padding:14px 12px 40px}
+.tp-legend{display:flex;gap:12px;justify-content:center;padding:0 0 10px;font-size:11px;color:var(--text3)}
+.tp-bar{display:flex;justify-content:space-between;align-items:center;padding:0 2px 12px;font-size:11px;color:var(--text3)}
+.tag-ex{display:inline-block;background:#14532d;color:#22c55e;border-radius:3px;padding:1px 5px;font-size:10px;font-weight:700}
+.tag-re{display:inline-block;background:#1c2e4a;color:#60a5fa;border-radius:3px;padding:1px 5px;font-size:10px;font-weight:700}
+.rank-card{display:flex;align-items:center;border-radius:var(--r);padding:13px 14px;margin-bottom:7px;gap:11px;border:1px solid var(--border);background:var(--bg2);position:relative;overflow:hidden}
+.rank-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
+.rank-1::before{background:var(--gold)}
+.rank-2::before{background:var(--silver)}
+.rank-3::before{background:var(--bronze)}
+.rank-1{background:linear-gradient(95deg,#1c1208 0%,var(--bg2) 60%);border-color:#78450c}
+.rank-2{background:linear-gradient(95deg,#161b22 0%,var(--bg2) 60%);border-color:#374151}
+.rank-3{background:linear-gradient(95deg,#160e06 0%,var(--bg2) 60%);border-color:#593011}
+.rank-pos{font-size:22px;width:32px;text-align:center;flex-shrink:0;line-height:1}
+.rank-pos-num{font-size:16px;font-weight:800;color:var(--text3);width:32px;text-align:center;flex-shrink:0}
+.rank-name{flex:1;font-size:13px;font-weight:700;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.rank-pts{font-size:26px;font-weight:900;color:var(--green);line-height:1}
+.rank-pts-lbl{font-size:9px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.4px;text-align:center}
+.rank-tags{display:flex;flex-direction:column;gap:3px;align-items:flex-end}
+.rank-tag-row{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text3)}
+
+/* ── RESULTADOS ───────────────────────────────── */
+.res-wrap{padding:10px 12px 40px}
+.res-meta{text-align:center;font-size:11px;color:var(--text3);padding:4px 0 12px}
+.res-grp{background:var(--bg2);border-radius:var(--r);border:1px solid var(--border);margin-bottom:10px;overflow:hidden}
+.res-gh{padding:8px 12px;font-size:11px;font-weight:800;letter-spacing:.8px;color:#fff;display:flex;align-items:center;gap:8px}
+.res-gh-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.res-row{display:flex;align-items:center;padding:9px 12px;border-bottom:1px solid var(--border);gap:5px}
+.res-row:last-child{border-bottom:none}
+.res-num{font-size:10px;color:var(--text3);width:18px;flex-shrink:0;text-align:center;font-weight:600}
+.res-team{font-size:11px;color:#c9d1e0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:3px}
+.res-team.rt{flex-direction:row-reverse;text-align:right}
+.res-score{font-size:15px;font-weight:800;color:var(--green);min-width:48px;text-align:center;flex-shrink:0}
+.res-vs{font-size:10px;color:var(--text3);min-width:28px;text-align:center;flex-shrink:0;background:var(--bg3);border-radius:4px;padding:3px 5px;font-weight:600;letter-spacing:.5px}
+
+/* ── PRONÓSTICOS ──────────────────────────────── */
+.sw{padding:12px 16px;background:var(--bg2);border-bottom:1px solid var(--border)}
+select{width:100%;background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:14px;font-weight:600;-webkit-appearance:none}
+.ct{padding:10px 12px 40px}
+.pn{font-size:15px;font-weight:800;color:var(--green);padding:6px 8px 10px;border-bottom:1px solid var(--border);margin-bottom:10px}
+.gr{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.gb{background:var(--bg2);border-radius:8px;overflow:hidden;border:1px solid var(--border)}
+.gh{padding:5px 8px;font-size:10px;font-weight:800;letter-spacing:.5px;color:#fff}
+table{width:100%;border-collapse:collapse}
+tr{border-bottom:1px solid var(--border)}tr:last-child{border-bottom:none}
+td{padding:3px 5px;font-size:11px;vertical-align:middle}
+.mn{color:var(--text3);width:16px;font-size:10px}
+.te{color:#c9d1e0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:110px}
+.te img{height:12px;vertical-align:middle;border-radius:1px;margin-right:2px}
+.tr2{text-align:right}.tr2 img{margin-right:0;margin-left:2px}
+.sc2{font-weight:700;font-size:12px;text-align:center;width:34px;white-space:nowrap}
+.scW{color:#22c55e}.scL{color:#ef4444}.scD{color:#f59e0b}.scN{color:var(--text3)}
+.bx{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px;margin-top:4px}
+.br{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.br:last-child{border-bottom:none}
+.bi{font-size:18px;width:24px;text-align:center;flex-shrink:0}
+.bl{font-size:12px;color:var(--text2);flex:1}
+.bv{font-size:13px;font-weight:700;display:flex;align-items:center;gap:5px}
+.bv img{height:14px;border-radius:2px}
+
+/* ── FECHA 1 ──────────────────────────────────── */
+.vivo-wrap{padding:10px 12px 40px}
+.vivo-upd{text-align:right;font-size:10px;color:var(--text3);padding:0 2px 10px}
+.vivo-block{background:var(--bg2);border-radius:var(--r);border:1px solid var(--border);margin-bottom:10px;overflow:hidden}
+.vivo-blk-hdr{background:var(--bg3);padding:9px 14px;font-size:11px;font-weight:700;display:flex;align-items:center;gap:7px;letter-spacing:.5px;border-bottom:1px solid var(--border)}
+.f1-row{display:flex;align-items:center;padding:10px 12px;border-bottom:1px solid var(--border);gap:6px;min-height:44px}
+.f1-row:last-child{border-bottom:none}
+.f1-row.arg{background:rgba(22,197,94,.04);border-left:2px solid var(--green)}
+.f1-time{font-size:12px;color:var(--text3);width:40px;flex-shrink:0;font-weight:700;line-height:1.2}
+.f1-time.arg-t{color:var(--green)}
+.f1-grp{font-size:9px;font-weight:800;letter-spacing:.4px;color:#fff;border-radius:3px;padding:2px 5px;flex-shrink:0;text-align:center;min-width:20px}
+.f1-t{font-size:11px;color:#d1d5db;flex:1;display:flex;align-items:center;gap:3px;overflow:hidden;min-width:0}
+.f1-t.r{flex-direction:row-reverse;text-align:right;justify-content:flex-start}
+.f1-center{display:flex;flex-direction:column;align-items:center;flex-shrink:0;min-width:44px}
+.f1-score{font-size:15px;font-weight:800;color:var(--green);text-align:center;white-space:nowrap}
+.f1-prox{font-size:9px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;border:1px solid var(--border);border-radius:3px;padding:2px 5px;text-align:center;white-space:nowrap}
+
+/* ── ADMIN ────────────────────────────────────── */
+.adm-wrap{padding:10px 12px 40px}
+.adm-note{font-size:10px;color:var(--text3);text-align:center;padding:4px 0 12px;line-height:1.7}
+.adm-grp{background:var(--bg2);border-radius:var(--r);border:1px solid var(--border);margin-bottom:10px;overflow:hidden}
+.adm-gh{background:var(--bg3);padding:7px 12px;font-size:11px;font-weight:800;color:#fff;letter-spacing:.5px;border-bottom:1px solid var(--border)}
+.adm-row{display:flex;align-items:center;padding:7px 10px;border-bottom:1px solid var(--border);gap:6px}
+.adm-row:last-child{border-bottom:none}
+.adm-num{font-size:10px;color:var(--text3);width:18px;flex-shrink:0;text-align:center}
+.adm-teams{flex:1;font-size:11px;color:#c9d1e0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.adm-score{width:38px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--green);font-size:15px;font-weight:700;text-align:center;padding:5px 2px;-webkit-appearance:none}
+.adm-score:focus{outline:none;border-color:var(--green)}
+.adm-sep{color:var(--text3);font-size:13px;font-weight:700;flex-shrink:0}
+.adm-btn{width:100%;background:var(--green);color:#0b0f1a;border:none;border-radius:var(--r);padding:14px;font-size:15px;font-weight:800;cursor:pointer;margin-top:10px;letter-spacing:.3px}
+.adm-clear{width:100%;background:none;border:1px solid var(--border);color:var(--text3);border-radius:var(--r);padding:10px;font-size:13px;cursor:pointer;margin-top:6px}
+.adm-export{width:100%;background:var(--green-dim);border:1px solid var(--green);color:var(--green);border-radius:var(--r);padding:12px;font-size:14px;font-weight:700;cursor:pointer;margin-top:10px}
+.adm-msg{text-align:center;font-size:13px;padding:8px;min-height:28px}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ────────────────────────────────────────────── -->
+<div class="hdr">
+  <div class="htitle">
+    <div class="htitle-left">
+      <span class="htitle-icon">⚽</span>
+      <div class="htitle-text">
+        <span class="htitle-main">Prode Mundial 2026</span>
+        <span class="htitle-sub">3 países · 48 equipos · 104 partidos</span>
+      </div>
+    </div>
+    <span class="htitle-badge">GRUPO</span>
+  </div>
+  <div class="tabs">
+    <button class="tb on" onclick="showTab('tab')">Tabla</button>
+    <button class="tb" onclick="showTab('res')">Resultados</button>
+    <button class="tb" onclick="showTab('pro')">Pronósticos</button>
+
+    <button class="tb" onclick="showTab('fecha3')" style="color:#9ca3af">📅 Fecha 3</button>
+    <button class="tb" onclick="showTab('adm')" style="color:#4b5563">⚙</button>
+  </div>
+</div>
+
+<!-- ── TABLA ─────────────────────────────────────────────── -->
+<div id="panel-tab" class="panel on">
+  <div class="tp-wrap">
+    <div class="tp-legend">
+      <span><span class="tag-ex">EX</span> exacto = 3 pts</span>
+      <span><span class="tag-re">RE</span> resultado = 1 pt</span>
+    </div>
+    <div class="tp-bar">
+      <span id="tp-played"></span>
+      <span id="tp-upd"></span>
+    </div>
+    <div id="tp-body"></div>
+  </div>
+</div>
+
+<!-- ── RESULTADOS ─────────────────────────────────────────── -->
+<div id="panel-res" class="panel">
+  <div class="res-wrap">
+    <div class="res-meta" id="res-upd"></div>
+    <div id="res-form"></div>
+  </div>
+</div>
+<div id="panel-fecha3" class="panel"><div id="fecha3-content"><div class="vivo-upd">🕐 Horarios en hora argentina (UTC-3)</div><div class="vivo-block"><div class="vivo-blk-hdr" style="color:#9ca3af">📅 MIÉ 24 JUN</div><div class="f1-row"><div class="f1-time">16:00</div><span style="background:#16a34a;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">B</span><div class="f1-t"><img src="https://flagcdn.com/w20/qa.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Qatar</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">Bosnia-Herzegovina</span><img src="https://flagcdn.com/w20/ba.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div><div class="f1-row"><div class="f1-time">16:00</div><span style="background:#16a34a;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">B</span><div class="f1-t"><img src="https://flagcdn.com/w20/ca.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Canadá</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">Suiza</span><img src="https://flagcdn.com/w20/ch.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div><div class="f1-row"><div class="f1-time">19:00</div><span style="background:#1d4ed8;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">C</span><div class="f1-t"><img src="https://flagcdn.com/w20/ht.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Haítí</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">Marruecos</span><img src="https://flagcdn.com/w20/ma.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div><div class="f1-row"><div class="f1-time">19:00</div><span style="background:#1d4ed8;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">C</span><div class="f1-t"><img src="https://flagcdn.com/w20/br.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Brasil</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">Escocia</span><img src="https://flagcdn.com/w20/gb-sct.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div><div class="f1-row"><div class="f1-time">22:00</div><span style="background:#c0392b;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">A</span><div class="f1-t"><img src="https://flagcdn.com/w20/kr.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Corea del Sur</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">Sudáfrica</span><img src="https://flagcdn.com/w20/za.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div><div class="f1-row"><div class="f1-time">22:00</div><span style="background:#c0392b;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">A</span><div class="f1-t"><img src="https://flagcdn.com/w20/mx.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">México</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">República Checa</span><img src="https://flagcdn.com/w20/cz.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div></div><div class="vivo-block"><div class="vivo-blk-hdr" style="color:#9ca3af">📅 JUE 25 JUN</div><div class="f1-row"><div class="f1-time">17:00</div><span style="background:#ea580c;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">E</span><div class="f1-t"><img src="https://flagcdn.com/w20/ci.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Costa de Marfil</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">Curazao</span><img src="https://flagcdn.com/w20/cw.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div><div class="f1-row"><div class="f1-time">17:00</div><span style="background:#ea580c;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">E</span><div class="f1-t"><img src="https://flagcdn.com/w20/de.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Alemania</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">Ecuador</span><img src="https://flagcdn.com/w20/ec.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div><div class="f1-row"><div class="f1-time">20:00</div><span style="background:#0891b2;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">F</span><div class="f1-t"><img src="https://flagcdn.com/w20/se.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Suecia</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">Japón</span><img src="https://flagcdn.com/w20/jp.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div><div class="f1-row"><div class="f1-time">20:00</div><span style="background:#0891b2;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">F</span><div class="f1-t"><img src="https://flagcdn.com/w20/nl.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Países Bajos</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">Túnez</span><img src="https://flagcdn.com/w20/tn.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div><div class="f1-row"><div class="f1-time">23:00</div><span style="background:#7e22ce;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">D</span><div class="f1-t"><img src="https://flagcdn.com/w20/au.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Australia</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">Paraguay</span><img src="https://flagcdn.com/w20/py.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div><div class="f1-row"><div class="f1-time">23:00</div><span style="background:#7e22ce;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">D</span><div class="f1-t"><img src="https://flagcdn.com/w20/us.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Estados Unidos</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">Turquía</span><img src="https://flagcdn.com/w20/tr.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div></div><div class="vivo-block"><div class="vivo-blk-hdr" style="color:#9ca3af">📅 VIE 26 JUN</div><div class="f1-row"><div class="f1-time">16:00</div><span style="background:#065f46;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">I</span><div class="f1-t"><img src="https://flagcdn.com/w20/iq.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Irak</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">Senegal</span><img src="https://flagcdn.com/w20/sn.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div><div class="f1-row"><div class="f1-time">16:00</div><span style="background:#065f46;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">I</span><div class="f1-t"><img src="https://flagcdn.com/w20/fr.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Francia</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">Noruega</span><img src="https://flagcdn.com/w20/no.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div><div class="f1-row"><div class="f1-time">21:00</div><span style="background:#be185d;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">H</span><div class="f1-t"><img src="https://flagcdn.com/w20/sa.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Arabia Saudita</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">Cabo Verde</span><img src="https://flagcdn.com/w20/cv.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div><div class="f1-row"><div class="f1-time">21:00</div><span style="background:#be185d;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">H</span><div class="f1-t"><img src="https://flagcdn.com/w20/es.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">España</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">Uruguay</span><img src="https://flagcdn.com/w20/uy.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div><div class="f1-row"><div class="f1-time">00:00</div><span style="background:#a16207;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">G</span><div class="f1-t"><img src="https://flagcdn.com/w20/ir.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Irán</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">Egipto</span><img src="https://flagcdn.com/w20/eg.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div><div class="f1-row"><div class="f1-time">00:00</div><span style="background:#a16207;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">G</span><div class="f1-t"><img src="https://flagcdn.com/w20/be.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Bélgica</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">Nueva Zelanda</span><img src="https://flagcdn.com/w20/nz.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div></div><div class="vivo-block"><div class="vivo-blk-hdr" style="color:#9ca3af">📅 SÁB 27 JUN</div><div class="f1-row"><div class="f1-time">18:00</div><span style="background:#312e81;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">L</span><div class="f1-t"><img src="https://flagcdn.com/w20/gh.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Ghana</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">Croacia</span><img src="https://flagcdn.com/w20/hr.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div><div class="f1-row"><div class="f1-time">18:00</div><span style="background:#312e81;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">L</span><div class="f1-t"><img src="https://flagcdn.com/w20/gb-eng.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Inglaterra</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">Panamá</span><img src="https://flagcdn.com/w20/pa.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div><div class="f1-row"><div class="f1-time">20:30</div><span style="background:#7c2d12;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">K</span><div class="f1-t"><img src="https://flagcdn.com/w20/uz.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Uzbekistán</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">Congo DR</span><img src="https://flagcdn.com/w20/cd.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div><div class="f1-row"><div class="f1-time">20:30</div><span style="background:#7c2d12;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">K</span><div class="f1-t"><img src="https://flagcdn.com/w20/pt.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Portugal</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">Colombia</span><img src="https://flagcdn.com/w20/co.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div><div class="f1-row"><div class="f1-time">23:00</div><span style="background:#1e40af;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">J</span><div class="f1-t"><img src="https://flagcdn.com/w20/at.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Austria</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">Argelia</span><img src="https://flagcdn.com/w20/dz.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div><div class="f1-row arg"><div class="f1-time arg-t">23:00</div><span style="background:#1e40af;color:#fff;font-size:9px;font-weight:800;border-radius:3px;padding:2px 5px;flex-shrink:0;letter-spacing:.3px">J</span><div class="f1-t"><img src="https://flagcdn.com/w20/ar.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Argentina</span></div><div class="f1-center"><span class="f1-prox">VS</span></div><div class="f1-t r"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">Jordania</span><img src="https://flagcdn.com/w20/jo.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px"></div></div></div></div></div><div id="panel-adm" class="panel">
+  <div class="adm-wrap">
+    <div class="adm-note">Los resultados cargados acá se guardan en este dispositivo y tienen prioridad sobre los del sitio.<br>Si el scheduled task actualiza el sitio, tus datos locales se mantienen.</div>
+    <div id="adm-form"></div>
+    <div id="adm-msg" class="adm-msg"></div>
+    <button class="adm-btn" onclick="saveAdmin()">💾 Guardar resultados</button>
+    <button class="adm-clear" onclick="clearAdmin()">🗑 Borrar datos locales (usar los del sitio)</button>
+    <button class="adm-export" onclick="exportHTML()">⬇ Exportar HTML para subir a GitHub</button>
+  </div>
+</div>
+
+<!-- ── PRONÓSTICOS ────────────────────────────────────────── -->
+<div id="panel-pro" class="panel">
+  <div class="sw"><select id="ps" onchange="render(+this.value)"></select></div>
+  <div class="ct" id="ct"></div>
+</div>
+
+<script>
+var NAMES=["Diego Andino","Martín Orfila","Alejandro Quintana","Maximiliano Suarez","Marcelo Lugo","Martin Guerra","Ezequiel","Tentaculos","El Che Pibe","Cosme Fulanito (MMosovich)","Genoveva"];
+var FLAGS={
+  "México":"mx","Sudáfrica":"za","Corea del Sur":"kr","República Checa":"cz",
+  "Canadá":"ca","Bosnia-Herzegovina":"ba","Qatar":"qa","Suiza":"ch",
+  "Brasil":"br","Marruecos":"ma","Haití":"ht","Escocia":"gb-sct",
+  "Estados Unidos":"us","Paraguay":"py","Australia":"au","Turquía":"tr",
+  "Alemania":"de","Curazao":"cw","Costa de Marfil":"ci","Ecuador":"ec",
+  "Países Bajos":"nl","Japón":"jp","Suecia":"se","Túnez":"tn",
+  "Bélgica":"be","Egipto":"eg","Irán":"ir","Nueva Zelanda":"nz",
+  "España":"es","Cabo Verde":"cv","Arabia Saudita":"sa","Uruguay":"uy",
+  "Francia":"fr","Senegal":"sn","Irak":"iq","Noruega":"no",
+  "Argentina":"ar","Argelia":"dz","Austria":"at","Jordania":"jo",
+  "Portugal":"pt","Congo DR":"cd","Uzbekistán":"uz","Colombia":"co",
+  "Inglaterra":"gb-eng","Croacia":"hr","Ghana":"gh","Panamá":"pa"
+};
+var GC={"A":"#c0392b","B":"#16a34a","C":"#1d4ed8","D":"#7e22ce","E":"#ea580c","F":"#0891b2","G":"#a16207","H":"#be185d","I":"#065f46","J":"#1e40af","K":"#7c2d12","L":"#312e81"};
+var M=[[1,"A","México","Sudáfrica"],[2,"A","México","Corea del Sur"],[3,"A","México","República Checa"],[4,"A","Sudáfrica","Corea del Sur"],[5,"A","Sudáfrica","República Checa"],[6,"A","Corea del Sur","República Checa"],[7,"B","Canadá","Bosnia-Herzegovina"],[8,"B","Canadá","Qatar"],[9,"B","Canadá","Suiza"],[10,"B","Bosnia-Herzegovina","Qatar"],[11,"B","Bosnia-Herzegovina","Suiza"],[12,"B","Qatar","Suiza"],[13,"C","Brasil","Marruecos"],[14,"C","Brasil","Haití"],[15,"C","Brasil","Escocia"],[16,"C","Marruecos","Haití"],[17,"C","Marruecos","Escocia"],[18,"C","Haití","Escocia"],[19,"D","Estados Unidos","Paraguay"],[20,"D","Estados Unidos","Australia"],[21,"D","Estados Unidos","Turquía"],[22,"D","Paraguay","Australia"],[23,"D","Paraguay","Turquía"],[24,"D","Australia","Turquía"],[25,"E","Alemania","Curazao"],[26,"E","Alemania","Costa de Marfil"],[27,"E","Alemania","Ecuador"],[28,"E","Curazao","Costa de Marfil"],[29,"E","Curazao","Ecuador"],[30,"E","Costa de Marfil","Ecuador"],[31,"F","Países Bajos","Japón"],[32,"F","Países Bajos","Suecia"],[33,"F","Países Bajos","Túnez"],[34,"F","Japón","Suecia"],[35,"F","Japón","Túnez"],[36,"F","Suecia","Túnez"],[37,"G","Bélgica","Egipto"],[38,"G","Bélgica","Irán"],[39,"G","Bélgica","Nueva Zelanda"],[40,"G","Egipto","Irán"],[41,"G","Egipto","Nueva Zelanda"],[42,"G","Irán","Nueva Zelanda"],[43,"H","España","Cabo Verde"],[44,"H","España","Arabia Saudita"],[45,"H","España","Uruguay"],[46,"H","Cabo Verde","Arabia Saudita"],[47,"H","Cabo Verde","Uruguay"],[48,"H","Arabia Saudita","Uruguay"],[49,"I","Francia","Senegal"],[50,"I","Francia","Irak"],[51,"I","Francia","Noruega"],[52,"I","Senegal","Irak"],[53,"I","Senegal","Noruega"],[54,"I","Irak","Noruega"],[55,"J","Argentina","Argelia"],[56,"J","Argentina","Austria"],[57,"J","Argentina","Jordania"],[58,"J","Argelia","Austria"],[59,"J","Argelia","Jordania"],[60,"J","Austria","Jordania"],[61,"K","Portugal","Congo DR"],[62,"K","Portugal","Uzbekistán"],[63,"K","Portugal","Colombia"],[64,"K","Congo DR","Uzbekistán"],[65,"K","Congo DR","Colombia"],[66,"K","Uzbekistán","Colombia"],[67,"L","Inglaterra","Croacia"],[68,"L","Inglaterra","Ghana"],[69,"L","Inglaterra","Panamá"],[70,"L","Croacia","Ghana"],[71,"L","Croacia","Panamá"],[72,"L","Ghana","Panamá"]];
+var P=[{"g":[2,1,1,1,1,2,0,2,1,1,2,1,2,0,1,1,2,1,1,2,0,2,1,3,2,1,2,0,3,0,1,1,2,0,1,2,2,0,1,1,2,0,1,1,1,2,4,0,2,0,2,1,3,0,1,1,1,2,2,0,2,1,1,1,1,1,2,1,1,1,2,0,1,1,3,1,1,1,2,0,2,1,3,0,2,0,2,1,1,1,0,2,1,2,1,1,3,0,2,1,2,0,1,2,0,3,3,0,2,1,3,0,1,2,1,1,2,0,3,0,2,1,1,1,1,1,1,2,0,2,2,1,3,1,2,0,1,1,2,0,2,0,null,null],"c":"Portugal","s":"","t":"Francia","go":"Mbappe"},{"g":[1,1,0,0,1,2,1,0,1,1,1,0,1,1,1,2,1,1,0,3,2,1,0,2,3,1,2,1,2,0,1,1,0,0,1,2,1,1,1,0,1,1,2,1,2,0,3,0,2,0,3,0,2,0,1,1,1,3,2,2,2,3,1,0,2,2,1,0,3,1,0,2,1,0,0,0,1,0,2,1,1,1,2,0,3,1,2,1,1,1,0,3,1,2,2,1,2,0,2,2,1,0,2,3,1,2,1,0,2,1,3,1,1,0,1,1,2,2,2,0,3,0,2,2,1,1,0,2,1,3,2,2,1,1,2,1,1,0,1,0,3,1,null,null],"c":"España","s":"","t":"Argentina","go":"Julián Álvarez"},{"g":[1,2,2,0,0,2,3,2,2,0,1,1,2,0,1,3,0,0,0,2,1,3,2,3,4,0,2,0,3,0,2,0,2,1,1,1,1,0,0,2,2,1,2,2,1,3,6,0,2,1,2,2,3,1,0,3,3,3,1,2,1,0,2,0,2,1,1,1,2,2,3,1,2,0,3,0,3,2,2,0,1,1,4,0,3,0,1,2,0,1,0,3,1,3,4,2,3,0,2,2,3,1,1,2,0,2,3,0,2,0,4,0,3,3,2,0,2,1,4,0,3,0,2,3,1,3,0,3,0,2,2,1,3,1,4,0,1,2,3,0,2,0,null,null],"c":"Argentina","s":"","t":"Francia","go":"Harry Kane"},{"g":[2,0,1,1,0,1,0,2,1,1,1,0,1,0,0,0,0,1,1,0,0,2,0,1,1,0,1,0,2,0,1,0,2,0,0,1,1,0,1,1,1,0,0,0,1,1,0,3,1,0,1,0,2,0,1,2,0,1,2,0,1,0,2,1,1,0,2,0,2,1,2,1,1,0,3,0,1,0,2,0,1,0,3,0,2,1,1,1,1,0,1,0,0,1,1,0,2,0,1,0,2,0,2,1,0,1,0,2,1,0,2,0,3,0,1,1,2,0,3,0,3,0,1,0,1,1,2,0,0,2,0,2,1,0,2,0,2,0,2,1,2,0,1,0],"c":"Francia","s":"España","t":"Brasil","go":"Mbappe"},{"g":[2,1,1,1,1,1,0,1,0,1,1,0,3,1,1,2,0,1,0,2,0,2,1,1,3,0,2,2,2,0,2,1,1,0,1,2,1,0,0,0,2,0,1,1,1,0,4,0,0,1,2,1,3,0,0,5,1,2,2,1,1,1,2,0,1,2,2,0,2,1,2,2,1,1,2,1,3,0,3,2,0,2,5,0,2,1,2,2,0,1,0,3,1,2,3,2,2,0,1,1,0,2,3,2,2,1,2,1,0,1,1,0,2,2,3,0,1,1,3,0,1,1,2,2,0,1,0,1,0,2,2,3,4,0,2,0,4,1,2,1,2,0,null,null],"c":"","s":"","t":"","go":""},{"g":[0,0,0,1,1,1,2,2,0,1,0,0,1,0,0,2,2,2,1,3,0,1,2,0,3,1,1,0,1,1,3,1,1,0,2,2,0,1,0,2,3,2,1,0,0,0,2,0,1,1,3,0,2,0,0,2,1,1,3,2,1,1,2,0,0,3,1,1,0,0,2,1,2,0,0,0,1,1,0,1,2,1,2,1,0,0,3,1,0,2,1,2,2,3,3,0,1,1,2,0,1,1,0,2,1,1,2,0,1,0,1,1,2,0,1,0,2,0,3,0,2,1,2,2,0,0,0,2,1,3,2,0,2,0,1,1,3,1,2,0,1,1,null,null],"c":"Argentina","s":"","t":"Croacia","go":"Messi"},{"g":[1,1,2,1,0,3,1,0,2,1,2,0,1,1,2,2,0,2,0,3,0,2,1,0,3,0,2,2,3,2,1,1,3,0,0,1,3,2,2,23,3,2,2,2,3,2,4,0,6,0,2,2,3,0,1,3,0,2,3,2,3,3,2,0,2,2,1,1,2,0,2,1,3,1,2,2,1,1,2,2,0,3,3,0,2,2,3,3,1,3,1,3,2,2,3,0,2,0,3,3,2,1,1,4,0,3,2,0,3,0,3,1,2,1,0,3,1,1,3,0,4,1,2,3,1,1,0,3,1,4,3,1,4,2,2,1,2,1,3,0,1,1,null,null],"c":"Argentina","s":"","t":"Brasil","go":"Messi"},{"g":[1,2,0,3,2,1,2,2,1,2,1,0,2,0,2,2,1,1,0,2,1,3,4,0,3,0,1,1,1,1,1,2,2,1,1,1,1,2,1,2,2,1,2,2,1,1,3,0,2,1,1,1,2,0,0,3,2,2,2,1,1,1,3,0,2,1,1,1,2,0,3,1,3,0,2,1,2,0,1,1,0,2,3,0,3,1,2,2,0,0,0,2,1,2,2,2,3,0,2,1,3,0,2,0,1,1,2,0,2,1,3,1,0,1,1,0,2,1,3,0,4,1,2,2,0,1,0,2,1,2,2,2,1,1,3,0,2,1,2,0,3,0,null,null],"c":"Argentina","s":"","t":"Francia","go":"Inglaterra"},{"g":[2,1,1,2,3,2,3,2,2,2,3,1,2,2,1,3,2,2,0,3,1,4,2,4,3,1,2,3,4,0,2,2,3,1,1,2,2,3,1,4,2,3,3,3,4,2,4,0,3,2,4,1,3,1,2,3,2,4,3,2,3,4,3,2,2,3,3,1,3,1,4,1,3,0,4,1,1,2,1,2,3,1,3,0,4,1,2,3,0,3,1,3,1,4,2,3,3,1,2,3,2,1,2,2,1,3,4,1,3,1,3,0,2,1,1,0,2,1,4,0,3,1,3,2,2,2,1,3,1,4,3,2,4,1,3,0,4,1,3,1,3,0,null,null],"c":"","s":"","t":"Francia","go":"Messi"},{"g":[1,0,3,1,5,1,0,3,1,2,2,1,3,0,2,1,2,0,0,1,0,4,0,1,5,0,2,1,5,0,3,0,3,1,0,3,2,1,3,1,2,2,1,0,0,1,5,0,3,0,2,0,4,0,0,2,1,2,2,1,2,1,3,1,2,1,1,0,2,1,1,0,1,0,2,1,1,0,1,0,1,0,5,1,2,1,1,0,0,2,0,2,1,1,2,1,3,1,1,0,1,0,1,0,0,3,5,0,3,1,5,0,1,0,3,1,5,0,7,1,5,0,3,0,3,0,1,3,0,5,1,1,1,0,3,0,1,0,2,0,3,0,null,null],"c":"Argentina","s":"Francia","t":"España","go":"Kilyan Mbappe"},{"g":[2,0,1,0,2,1,0,2,0,1,1,1,1,0,2,0,0,1,2,0,0,1,0,2,1,0,3,0,2,0,2,0,1,1,0,2,1,0,2,0,1,1,1,0,1,1,0,2,3,0,2,0,1,0,0,2,0,3,1,1,2,1,1,0,2,0,1,1,2,0,1,1,2,1,2,0,3,0,1,1,2,0,0,1,3,0,2,0,1,1,1,2,0,2,0,1,2,1,3,0,1,2,2,0,1,1,0,2,2,0,1,0,3,0,1,1,0,1,2,0,2,0,2,0,1,1,3,3,0,2,0,2,1,0,2,0,3,0,1,0,2,0,2,0],"c":"España","s":"Francia","t":"Noruega","go":"Michael Olise"}];
+// R_EMBEDDED: actualizado automaticamente por el scheduled task cada 2 horas
+var R_EMBEDDED=[2, 0, null, null, null, null, null, null, null, null, 2, 1, 1, 1, null, null, null, null, null, null, null, null, 1, 1, null, null, null, null, null, null, null, null, null, null, null, null, 4, 1, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+var LAST_UPDATE="13/06/2026";
+var R=R_EMBEDDED.slice();
+(function(){try{var s=localStorage.getItem("prode_R");if(s){var a=JSON.parse(s);if(Array.isArray(a)&&a.length===R_EMBEDDED.length)R=a;}}catch(e){}})();
+
+function f(c,r){var code=FLAGS[c];if(!code)return"";var st=r?"margin-left:2px;margin-right:0":"margin-right:2px";return'<img src="https://flagcdn.com/w20/'+code+'.png" style="height:12px;vertical-align:middle;border-radius:1px;'+st+'">';}
+function fb(c){var code=FLAGS[c];if(!code)return"";return'<img src="https://flagcdn.com/w20/'+code+'.png" style="height:14px;vertical-align:middle;border-radius:2px;margin-right:4px">';}
+function fl(c){var code=FLAGS[c];if(!code)return"";return'<img src="https://flagcdn.com/w20/'+code+'.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-right:3px">';}
+function flr(c){var code=FLAGS[c];if(!code)return"";return'<img src="https://flagcdn.com/w20/'+code+'.png" style="height:11px;vertical-align:middle;border-radius:1px;margin-left:3px">';}
+function sc(a,b){if(a===null)return"scN";if(a>b)return"scW";if(a<b)return"scL";return"scD";}
+function outcome(a,b){if(a>b)return 1;if(a<b)return-1;return 0;}
+function matchPts(pg1,pg2,rg1,rg2){
+  if(pg1===null||pg1===undefined||rg1===null||rg1===undefined)return null;
+  if(pg1===rg1&&pg2===rg2)return 3;
+  if(outcome(pg1,pg2)===outcome(rg1,rg2))return 1;
+  return 0;
+}
+
+function showTab(t){
+  ["tab","res","pro","fecha3","adm"].forEach(function(id){document.getElementById("panel-"+id).classList.remove("on");});
+  document.querySelectorAll(".tb").forEach(function(b,i){b.classList.remove("on");if(["tab","res","pro","fecha3","adm"][i]===t)b.classList.add("on");});
+  document.getElementById("panel-"+t).classList.add("on");
+  if(t==="tab")renderStandings();
+  if(t==="res")renderResults();
+  if(t==="adm"){
+    if(!window._admOk){var pw=prompt("🔒 Contraseña Admin:");if(pw!=="mundial26"){alert("Contraseña incorrecta.");showTab("tab");return;}window._admOk=true;}
+    renderAdmin();
+  }
+  window.scrollTo(0,0);
+}
+
+// ── FECHA 1 ──────────────────────────────────────────────────────
+var F1=[
+  {d:"JUE 11 JUN",g:"A",t1:"México",t2:"Sudáfrica",h:"16:00",s1:2,s2:0},
+  {d:"JUE 11 JUN",g:"A",t1:"Corea del Sur",t2:"República Checa",h:"23:00",s1:2,s2:1},
+  {d:"VIE 12 JUN",g:"B",t1:"Canadá",t2:"Bosnia-Herzegovina",h:"16:00",s1:null,s2:null},
+  {d:"VIE 12 JUN",g:"D",t1:"Estados Unidos",t2:"Paraguay",h:"22:00",s1:null,s2:null},
+  {d:"SÁB 13 JUN",g:"B",t1:"Qatar",t2:"Suiza",h:"16:00",s1:null,s2:null},
+  {d:"SÁB 13 JUN",g:"C",t1:"Brasil",t2:"Marruecos",h:"19:00",s1:null,s2:null},
+  {d:"SÁB 13 JUN",g:"C",t1:"Haití",t2:"Escocia",h:"22:00",s1:null,s2:null},
+  {d:"DOM 14 JUN",g:"D",t1:"Australia",t2:"Turquía",h:"13:00",s1:null,s2:null},
+  {d:"DOM 14 JUN",g:"E",t1:"Alemania",t2:"Curazao",h:"14:00",s1:null,s2:null},
+  {d:"DOM 14 JUN",g:"F",t1:"Países Bajos",t2:"Japón",h:"17:00",s1:null,s2:null},
+  {d:"DOM 14 JUN",g:"E",t1:"Costa de Marfil",t2:"Ecuador",h:"20:00",s1:null,s2:null},
+  {d:"DOM 14 JUN",g:"F",t1:"Suecia",t2:"Túnez",h:"23:00",s1:null,s2:null},
+  {d:"LUN 15 JUN",g:"H",t1:"España",t2:"Cabo Verde",h:"13:00",s1:null,s2:null},
+  {d:"LUN 15 JUN",g:"G",t1:"Bélgica",t2:"Egipto",h:"16:00",s1:null,s2:null},
+  {d:"LUN 15 JUN",g:"H",t1:"Arabia Saudita",t2:"Uruguay",h:"19:00",s1:null,s2:null},
+  {d:"LUN 15 JUN",g:"G",t1:"Irán",t2:"Nueva Zelanda",h:"22:00",s1:null,s2:null},
+  {d:"MAR 16 JUN",g:"I",t1:"Francia",t2:"Senegal",h:"16:00",s1:null,s2:null},
+  {d:"MAR 16 JUN",g:"I",t1:"Irak",t2:"Noruega",h:"19:00",s1:null,s2:null},
+  {d:"MAR 16 JUN",g:"J",t1:"Argentina",t2:"Argelia",h:"22:00",s1:null,s2:null},
+  {d:"MIÉ 17 JUN",g:"J",t1:"Austria",t2:"Jordania",h:"01:00",s1:null,s2:null},
+  {d:"MIÉ 17 JUN",g:"K",t1:"Portugal",t2:"Congo DR",h:"14:00",s1:null,s2:null},
+  {d:"MIÉ 17 JUN",g:"L",t1:"Inglaterra",t2:"Croacia",h:"17:00",s1:null,s2:null},
+  {d:"MIÉ 17 JUN",g:"L",t1:"Ghana",t2:"Panamá",h:"20:00",s1:null,s2:null},
+  {d:"MIÉ 17 JUN",g:"K",t1:"Uzbekistán",t2:"Colombia",h:"23:00",s1:null,s2:null}
+];
+
+// ── TABLA / STANDINGS ──────────────────────────────────────────────
+function renderStandings(){
+  var played=0;
+  for(var m=0;m<72;m++){var i=m*2;if(R[i]!==null&&R[i+1]!==null)played++;}
+  document.getElementById("tp-played").textContent="Partidos jugados: "+played+" / 72";
+  document.getElementById("tp-upd").textContent="Upd: "+LAST_UPDATE;
+  var rows=NAMES.map(function(name,pi){
+    var pts=0,exact=0,corr=0,pj=0;
+    for(var m=0;m<72;m++){
+      var i=m*2;var rg1=R[i],rg2=R[i+1];
+      if(rg1===null||rg2===null)continue;
+      var p=matchPts(P[pi].g[i],P[pi].g[i+1],rg1,rg2);
+      if(p===null)continue;
+      pts+=p;pj++;
+      if(p===3)exact++;else if(p===1)corr++;
+    }
+    return{name:name,pts:pts,exact:exact,corr:corr,pj:pj};
+  });
+  rows.sort(function(a,b){return b.pts-a.pts||b.exact-a.exact||b.corr-a.corr;});
+  var medals=['🥇','🥈','🥉'];
+  var rankCls=['rank-1','rank-2','rank-3'];
+  var html="";
+  rows.forEach(function(r,i){
+    var cls="rank-card"+(i<3?" "+rankCls[i]:"");
+    var posHtml=i<3
+      ?'<div class="rank-pos">'+medals[i]+'</div>'
+      :'<div class="rank-pos-num">'+(i+1)+'</div>';
+    html+='<div class="'+cls+'">'
+      +posHtml
+      +'<div class="rank-name">'+r.name+'</div>'
+      +'<div class="rank-tags">'
+      +'<div class="rank-tag-row"><span class="tag-ex">'+r.exact+'</span> EX</div>'
+      +'<div class="rank-tag-row"><span class="tag-re">'+r.corr+'</span> RE &nbsp;<span style="color:#374151">PJ '+r.pj+'</span></div>'
+      +'</div>'
+      +'<div style="text-align:center"><div class="rank-pts">'+r.pts+'</div><div class="rank-pts-lbl">pts</div></div>'
+      +'</div>';
+  });
+  document.getElementById("tp-body").innerHTML=html;
+}
+
+// ── RESULTADOS ─────────────────────────────────────────────────────
+function renderResults(){
+  document.getElementById("res-upd").textContent="Actualizado: "+LAST_UPDATE;
+  var grps={};
+  M.forEach(function(m){if(!grps[m[1]])grps[m[1]]=[];grps[m[1]].push(m);});
+  var html="";
+  Object.keys(grps).forEach(function(grp){
+    var color=GC[grp]||"#374151";
+    html+='<div class="res-grp">'
+      +'<div class="res-gh" style="background:'+color+'">'
+      +'<span class="res-gh-dot" style="background:rgba(255,255,255,.3)"></span>'
+      +'GRUPO '+grp
+      +'</div>';
+    grps[grp].forEach(function(m){
+      var i=(m[0]-1)*2;var rg1=R[i],rg2=R[i+1];var played=(rg1!==null&&rg2!==null);
+      html+='<div class="res-row">';
+      html+='<span class="res-num">'+m[0]+'</span>';
+      html+='<span class="res-team">'+fl(m[2])+m[2]+'</span>';
+      html+=played
+        ?'<span class="res-score">'+rg1+'&ndash;'+rg2+'</span>'
+        :'<span class="res-vs">VS</span>';
+      html+='<span class="res-team rt">'+m[3]+fl(m[3])+'</span>';
+      html+='</div>';
+    });
+    html+='</div>';
+  });
+  document.getElementById("res-form").innerHTML=html;
+}
+
+// ── PRONÓSTICOS ────────────────────────────────────────────────────
+function render(idx){
+  var d=P[idx],goals=d.g;
+  var grps={};
+  M.forEach(function(m){if(!grps[m[1]])grps[m[1]]=[];grps[m[1]].push(m);});
+  var html='<div class="pn">'+NAMES[idx]+'</div>';
+  Object.keys(grps).forEach(function(grp){
+    var color=GC[grp]||"#374151";
+    html+='<div class="res-grp">'
+      +'<div class="res-gh" style="background:'+color+'">'
+      +'<span class="res-gh-dot" style="background:rgba(255,255,255,.3)"></span>'
+      +'GRUPO '+grp+'</div>';
+    grps[grp].forEach(function(m){
+      var i=(m[0]-1)*2;
+      var g1=goals[i],g2=goals[i+1];
+      var rg1=R[i],rg2=R[i+1];
+      var played=(rg1!==null&&rg2!==null);
+      var pts=played?matchPts(g1,g2,rg1,rg2):null;
+      var s1=g1===null?"?":g1,s2=g2===null?"?":g2;
+      var scoreColor=pts===3?"#22c55e":pts===1?"#f59e0b":pts===0?"#ef4444":"#4b5563";
+      html+='<div class="res-row">'
+        +'<span class="res-num">'+m[0]+'</span>'
+        +'<span class="res-team">'+fl(m[2])+m[2]+'</span>'
+        +'<span class="res-score" style="color:'+scoreColor+'">'+s1+'&ndash;'+s2+'</span>'
+        +'<span class="res-team rt">'+m[3]+fl(m[3])+'</span>'
+        +'</div>';
+    });
+    html+='</div>';
+  });
+  html+='<div class="bx" style="margin:12px 0 40px">';
+  html+='<div class="br"><span class="bi">🥇</span><span class="bl">Campeón</span><span class="bv">'+(d.c?fb(d.c)+d.c:"—")+'</span></div>';
+  html+='<div class="br"><span class="bi">🥈</span><span class="bl">Subcampeón</span><span class="bv">'+(d.s?fb(d.s)+d.s:"—")+'</span></div>';
+  html+='<div class="br"><span class="bi">🥉</span><span class="bl">Tercero</span><span class="bv">'+(d.t?fb(d.t)+d.t:"—")+'</span></div>';
+  html+='<div class="br"><span class="bi">⚽</span><span class="bl">Goleador</span><span class="bv">'+(d.go||"—")+'</span></div>';
+  html+='</div>';
+  document.getElementById("ct").innerHTML=html;
+  window.scrollTo(0,0);
+}
+
+// ── ADMIN ──────────────────────────────────────────────────────────
+function renderAdmin(){
+  var groups=["A","B","C","D","E","F","G","H","I","J","K","L"];
+  var html='';
+  var hasLocal=false;
+  try{hasLocal=!!localStorage.getItem("prode_R");}catch(e){}
+  if(hasLocal){html+='<div class="adm-note" style="color:#22c55e">⚠ Usando resultados cargados manualmente en este dispositivo.</div>';}
+  groups.forEach(function(g){
+    var gm=M.filter(function(m){return m[1]===g;});
+    html+='<div class="adm-grp"><div class="adm-gh">GRUPO '+g+'</div>';
+    gm.forEach(function(m){
+      var idx=m[0]-1;
+      var v0=R[idx*2]!==null&&R[idx*2]!==undefined?R[idx*2]:'';
+      var v1=R[idx*2+1]!==null&&R[idx*2+1]!==undefined?R[idx*2+1]:'';
+      html+='<div class="adm-row">'
+        +'<span class="adm-num">'+m[0]+'</span>'
+        +'<span class="adm-teams">'+fl(m[2])+m[2]+'</span>'
+        +'<input type="number" class="adm-score" id="adm-'+idx+'a" value="'+v0+'" min="0" max="30" placeholder="-">'
+        +'<span class="adm-sep">–</span>'
+        +'<input type="number" class="adm-score" id="adm-'+idx+'b" value="'+v1+'" min="0" max="30" placeholder="-">'
+        +'<span class="adm-teams" style="text-align:right">'+m[3]+fl(m[3])+'</span>'
+        +'</div>';
+    });
+    html+='</div>';
+  });
+  document.getElementById('adm-form').innerHTML=html;
+}
+function saveAdmin(){
+  var newR=[];
+  for(var i=0;i<72;i++){
+    var ea=document.getElementById('adm-'+i+'a');
+    var eb=document.getElementById('adm-'+i+'b');
+    var a=(ea&&ea.value!=='')?parseInt(ea.value):null;
+    var b=(eb&&eb.value!=='')?parseInt(eb.value):null;
+    if(a!==null&&!isNaN(a)&&b!==null&&!isNaN(b)){newR.push(a,b);}
+    else{newR.push(null,null);}
+  }
+  R=newR;
+  try{localStorage.setItem("prode_R",JSON.stringify(R));}catch(e){}
+  var msg=document.getElementById('adm-msg');
+  msg.style.color='#22c55e';
+  msg.innerHTML='✓ Guardado. La tabla y resultados se actualizaron.';
+  setTimeout(function(){msg.innerHTML='';},4000);
+  renderAdmin();
+}
+function exportHTML(){
+  var blob=new Blob([JSON.stringify(R)],{type:'application/json'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='r.json';
+  a.click();
+  var msg=document.getElementById('adm-msg');
+  msg.style.color='#22c55e';
+  msg.innerHTML='⬇ r.json descargado. Subilo a GitHub (mismo repo, mismo lugar que index.html).';
+  setTimeout(function(){msg.innerHTML='';},6000);
+}
+function clearAdmin(){
+  if(!confirm('¿Borrar los resultados cargados manualmente y volver a los del sitio?'))return;
+  try{localStorage.removeItem("prode_R");}catch(e){}
+  R=R_EMBEDDED.slice();
+  renderAdmin();
+  var msg=document.getElementById('adm-msg');
+  msg.style.color='#4b5563';
+  msg.innerHTML='🗑 Datos locales borrados. Usando resultados del sitio.';
+  setTimeout(function(){msg.innerHTML='';},4000);
+}
+
+// ── INIT ───────────────────────────────────────────────────────────
+var sel=document.getElementById("ps");
+NAMES.forEach(function(n,i){sel.innerHTML+='<option value="'+i+'">'+n+'</option>';});
+render(0);
+renderStandings();
+// Carga r.json siempre fresco (sin caché) para tener resultados actualizados
+(function(){
+  fetch('r.json?_='+Date.now(),{cache:'no-store'})
+    .then(function(res){return res.json();})
+    .then(function(data){
+      if(Array.isArray(data)&&data.length===144){
+        R=data;
+        renderStandings();
+        renderFecha1();
+        renderFecha3();
+      }
+    }).catch(function(){});
+
+function renderFecha1(){
+  var F1=[1,6,7,19,12,13,18,24,25,31,30,36,43,37,48,42,49,54,55,60,61,67,72,66];
+  var rows=document.querySelectorAll('#fecha1-content .f1-row');
+  for(var i=0;i<rows.length;i++){
+    if(i>=F1.length) break;
+    var idx=(F1[i]-1)*2;
+    var h=R[idx],a=R[idx+1];
+    var center=rows[i].querySelector('.f1-center');
+    if(!center) continue;
+    if(h!==null&&h!==undefined&&a!==null&&a!==undefined){
+      center.innerHTML='<span class="f1-score">'+h+'–'+a+'<\/span>';
+    }
+  }
+}
+
+function renderFecha3(){
+  var F3=[-10,9,-16,15,-4,3,-28,27,-34,33,-22,21,-52,51,-46,45,-40,39,-70,69,-64,63,-58,57];
+  var dayM3=[[10,9,16,15,4,3],[28,27,34,33,22,21],[52,51,46,45,40,39],[70,69,64,63,58,57]];
+  var rows=document.querySelectorAll('#fecha3-content .f1-row');
+  for(var i=0;i<rows.length;i++){
+    if(i>=F3.length)break;
+    var mNum=Math.abs(F3[i]);
+    var rev=F3[i]<0;
+    var idx=(mNum-1)*2;
+    var h=R[idx],a=R[idx+1];
+    var center=rows[i].querySelector('.f1-center');
+    if(!center)continue;
+    if(h!=null&&a!=null){
+      var score=rev?(a+'–'+h):(h+'–'+a);
+      center.innerHTML='<span class="f1-score">'+score+'</span>';
+    }
+  }
+  var hdrs=document.querySelectorAll('#fecha3-content .vivo-blk-hdr');
+  for(var j=0;j<hdrs.length;j++){
+    if(j>=dayM3.length)break;
+    var ms=dayM3[j];
+    var done=ms.every(function(m){var idx2=(m-1)*2;return R[idx2]!=null&&R[idx2+1]!=null;});
+    if(done){hdrs[j].textContent=hdrs[j].textContent.replace('📅','✅');hdrs[j].style.color='#22c55e';}
+  }
+}
+})();
+</script>
+
+<script>
+(function(){
+  var BUILD='20260618e';
+  fetch('v.json?t='+Date.now())
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.v!==BUILD)location.replace(location.pathname+'?_v='+d.v);
+    })
+    .catch(function(){});
+})();
+</script>
+</body>

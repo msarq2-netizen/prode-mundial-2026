@@ -362,7 +362,7 @@ async function init() {
   try {
     var [rj, pageHtml] = await Promise.all([
       fetch(BASE + 'r.json?nc=' + Date.now()).then(r => r.json()),
-      fetch(BASE + '?nc=' + Date.now()).then(r => r.text()),
+      fetch(BASE + 'grupos.html?nc=' + Date.now()).then(r => r.text()),
     ]);
     R = rj;
 
