@@ -235,6 +235,7 @@ nav button:hover:not(.on){background:#475569;color:#e2e8f0}
 <script>
 var BASE = 'https://msarq2-netizen.github.io/prode-mundial-2026/';
 var KEY  = 'po2026v1';
+var RKEY = 'r2026v1';
 var R, M, P_raw, NAMES_raw;
 var standings = {}, qual = {};
 var players = [];   // [{name, pts, exact, corr}]
@@ -365,6 +366,9 @@ async function init() {
       fetch(BASE + 'grupos.html?nc=' + Date.now()).then(r => r.text()),
     ]);
     R = rj;
+    // Apply admin overrides saved locally
+    var rOvr = JSON.parse(localStorage.getItem(RKEY)||'{}');
+    Object.keys(rOvr).forEach(function(i){ R[parseInt(i)] = rOvr[i]; });
 
     M = extractArr(pageHtml, 'var M=');
     if (!M) throw new Error('No se pudo leer M[]');
@@ -671,6 +675,16 @@ function aLsr(mid){
   var p=pred[mid]; if(!p) return null;
   var h=parseInt(p.h),a=parseInt(p.a); if(isNaN(h)||isNaN(a)) return null;
   return h>a?p.at:a>h?p.ht:p.pl||null;
+}
+function rSave(mn, side, val){
+  var ri = (mn-1)*2 + (side==='h'?0:1);
+  var v = (val===''||val===null) ? null : parseInt(val);
+  R[ri] = (isNaN(v)||v===null) ? null : v;
+  var rOvr = JSON.parse(localStorage.getItem(RKEY)||'{}');
+  if(R[ri]===null) delete rOvr[ri]; else rOvr[ri] = R[ri];
+  localStorage.setItem(RKEY, JSON.stringify(rOvr));
+  renderResContent();
+  renderStandings();
 }
 function aSave(mid,side,val){
   if(!pred[mid]) pred[mid]={h:'',a:'',ht:'',at:'',pw:null,pl:null};
@@ -1427,7 +1441,7 @@ function updateGear(){
   btn.title=adminMode?'Admin activo — click para salir':'Admin';
 }
 
-// ── Grupos results (read-only from R[] + M[]) ─────────────────────────────────
+// ── Grupos results (admin editable / read-only from R[] + M[]) ───────────────
 function renderGruposResultados(){
   if(!M||!R){
     return '<div class="note">Datos de fase de grupos no disponibles.</div>';
@@ -1443,6 +1457,7 @@ function renderGruposResultados(){
   });
 
   var played=0,total=0;
+  var inpStyle='width:36px;text-align:center;background:#1e293b;color:#f1f5f9;border:1px solid #475569;border-radius:4px;padding:2px 4px;font-size:.85rem;-moz-appearance:textfield';
   var cards='<div class="gp-grid">';
   GROUPS.forEach(function(gr){
     var ms=byGroup[gr]; if(!ms||!ms.length) return;
@@ -1451,10 +1466,23 @@ function renderGruposResultados(){
       +'<span>'+grpPlayed+'/'+ms.length+' jugados</span></div>';
     ms.forEach(function(m,i){
       total++;
-      if(m.hasAct){
-        played++;
+      if(m.hasAct) played++;
+      if(adminMode){
+        var vH=m.hasAct?m.actH:'';
+        var vA=m.hasAct?m.actA:'';
+        cards+='<div class="gr-match">'
+          +'<span class="gr-num">'+(i+1)+'</span>'
+          +'<div class="gr-home"><span class="gr-home-txt">'+withFlag(m.home)+'</span></div>'
+          +'<div class="gr-score-ctr" style="display:flex;align-items:center;gap:3px">'
+            +'<input type="number" min="0" max="20" style="'+inpStyle+'" value="'+vH+'" oninput="rSave('+m.mn+',\'h\',this.value)">'
+            +'<span style="color:#64748b">–</span>'
+            +'<input type="number" min="0" max="20" style="'+inpStyle+'" value="'+vA+'" oninput="rSave('+m.mn+',\'a\',this.value)">'
+          +'</div>'
+          +'<div class="gr-away"><span class="gr-away-txt">'+withFlag(m.away)+'</span></div>'
+          +'</div>';
+      } else if(m.hasAct){
         var aH=parseInt(m.actH),aA=parseInt(m.actA);
-        var winH=aH>aA,winA=aA>aH,draw=aH===aA;
+        var draw=aH===aA;
         var scoreColor=draw?'#fbbf24':'#22c55e';
         cards+='<div class="gr-match">'
           +'<span class="gr-num">'+(i+1)+'</span>'
@@ -1475,11 +1503,19 @@ function renderGruposResultados(){
   });
   cards+='</div>';
 
+  var adminBar = adminMode
+    ? '<div class="admin-bar active">'
+      +'<span class="admin-label">✏️ <strong>Modo admin activo</strong> — ingresá resultados de grupos</span>'
+      +'<button class="admin-btn" onclick="adminSave()" style="background:#166534;border-color:#16a34a;margin-right:6px">💾 Guardar</button>'
+      +'<button class="admin-btn" onclick="exitAdmin()">Salir</button>'
+      +'</div>'
+    : '';
+
   var summary='<div class="gp-sum">'
     +'<span style="color:#94a3b8">Fase de grupos</span>'
     +'<span class="pts" style="color:#60a5fa">'+played+' / '+total+' partidos jugados</span>'
     +'</div>';
-  return summary+cards;
+  return adminBar+summary+cards;
 }
 
 // ── Playoff bracket (read-only / admin editable) ──────────────────────────────
