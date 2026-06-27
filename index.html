@@ -625,21 +625,21 @@ var DEF = {
   // Round of 32 — bracket oficial FIFA 2026 (M73–M88)
   // T3-1..T3-8 = mejores 8 terceros (asignación final post-grupos según FIFA)
   'r32-1' :{h:'Sudáfrica',       a:'Canadá'},              // confirmado
-  'r32-2' :{h:'Alemania',        a:'T3-1'}, // Alemania confirmada; T3 pendiente: 1°E vs T3(A/B/C/D/F)
-  'r32-3' :{h:'Países Bajos',    a:'Marruecos'},          // confirmado: 1°F vs 2°C
-  'r32-4' :{h:'Brasil',          a:'Japón'},              // confirmado: 1°C vs 2°F
-  'r32-5' :{h:'Francia',         a:'T3-2'},               // Francia confirmada; T3 pendiente: 1°I vs T3(C/D/F/G/H)
-  'r32-6' :{h:'Costa de Marfil', a:'Noruega'},            // confirmado: 2°E vs 2°I
-  'r32-7' :{h:'México',          a:'T3-3'},               // México confirmado; T3 pendiente: 1°A vs T3(C/E/F/H/I)
-  'r32-8' :{h:'1L',  a:'T3-4'}, // M80: 1°L vs T3(E/H/I/J/K)
-  'r32-9' :{h:'Estados Unidos',  a:'Bosnia y Herzegovina'}, // confirmado: 1°D vs T3(B/E/F/I/J)
-  'r32-10':{h:'1G',  a:'T3-6'}, // M82: 1°G vs T3(A/E/H/I/J)
-  'r32-11':{h:'2K',  a:'2L'},   // M83: 2°K vs 2°L
-  'r32-12':{h:'1H',  a:'2J'},   // M84: 1°H vs 2°J
-  'r32-13':{h:'Suiza',           a:'T3-7'},               // Suiza confirmada; T3 pendiente: 1°B vs T3(E/F/G/I/J)
-  'r32-14':{h:'Argentina',  a:'Cabo Verde'},   // M86: confirmado
-  'r32-15':{h:'1K',  a:'T3-8'}, // M87: 1°K vs T3(D/E/I/J/L)
-  'r32-16':{h:'Australia',       a:'2G'},                 // Australia confirmada; 2°G pendiente: 2°D vs 2°G
+  'r32-2' :{h:'Alemania',        a:'T3-1'},               // Alemania confirmada; T3 pendiente
+  'r32-3' :{h:'Países Bajos',    a:'Marruecos'},          // confirmado
+  'r32-4' :{h:'Brasil',          a:'Japón'},              // confirmado
+  'r32-5' :{h:'Francia',         a:'T3-2'},               // Francia confirmada; T3 pendiente
+  'r32-6' :{h:'Costa de Marfil', a:'Noruega'},            // confirmado
+  'r32-7' :{h:'México',          a:'T3-3'},               // México confirmado; T3 pendiente
+  'r32-8' :{h:'1L',              a:'T3-4'},               // pendiente (1°L = Ing/Cro/Ghana)
+  'r32-9' :{h:'Estados Unidos',  a:'Bosnia y Herzegovina'}, // confirmado
+  'r32-10':{h:'1G',              a:'T3-6'},               // pendiente (1°G = Eg/Irán/Bél)
+  'r32-11':{h:'2K',              a:'2L'},                 // pendiente
+  'r32-12':{h:'1H',              a:'2J'},                 // pendiente
+  'r32-13':{h:'Suiza',           a:'T3-7'},               // Suiza confirmada; T3 pendiente
+  'r32-14':{h:'Argentina',       a:'Cabo Verde'},         // confirmado
+  'r32-15':{h:'1K',              a:'T3-8'},               // pendiente (1°K = Col/Portugal)
+  'r32-16':{h:'Australia',       a:'2G'},                 // Australia confirmada; 2°G pendiente
   // Round of 16
   'r16-1':{hp:'r32-1',ap:'r32-2'},'r16-2':{hp:'r32-3',ap:'r32-4'},
   'r16-3':{hp:'r32-5',ap:'r32-6'},'r16-4':{hp:'r32-7',ap:'r32-8'},
@@ -888,12 +888,15 @@ function renderStandings() {
   var played = M.filter(function(m){return R[(m[0]-1)*2]!==null;}).length;
   var hasBonus = hasBonusPicks();
 
-  // Enrich players with bonus pts and re-sort
+  // Enrich players with bonus pts, playoff pts, and re-sort
   var enriched = players.map(function(p){
     var b = getBonusScore(p.name);
-    return Object.assign({}, p, {bonus: b, total: (p.pts||0)+b});
+    var pl = calcPlayoffScore(p.name);
+    var plPts = pl.pts + pl.penBonus;
+    return Object.assign({}, p, {bonus:b, plPts:plPts, plExact:pl.exact, plCorr:pl.corr, total:(p.pts||0)+b+plPts});
   });
   enriched.sort(function(a,b){ return (b.total-a.total)||(b.exact-a.exact)||(b.corr-a.corr); });
+  var hasPlayoff = enriched.some(function(p){ return p.plPts>0; });
 
   // ── Podio top 3 ────────────────────────────────────────────────────────────
   var podCfg=[
@@ -922,6 +925,7 @@ function renderStandings() {
     +'<th class="col-name">Jugador</th>'
     +(hasBonus?'<th class="col-detail" title="Puntos fase de grupos">Grupos</th>':'')
     +(hasBonus?'<th title="Puntos pronósticos especiales" style="color:#f59e0b">+Bonus</th>':'')
+    +(hasPlayoff?'<th title="Puntos playoff (base+penales)" style="color:#a78bfa">⚡Playoff</th>':'')
     +'<th title="Puntos totales">Total</th>'
     +'<th class="col-detail" title="Resultado exacto (3pts)"><span class="tag-ex">EX</span></th>'
     +'<th class="col-detail" title="Resultado correcto (1pt)"><span class="tag-re">RE</span></th>'
@@ -935,6 +939,7 @@ function renderStandings() {
       +'<td class="col-name">'+p.name+'</td>'
       +(hasBonus?'<td class="col-detail" style="color:#64748b">'+p.pts+'</td>':'')
       +(hasBonus?'<td style="color:'+(p.bonus>0?'#f59e0b':'#334155')+';font-weight:700">+'+(p.bonus)+'</td>':'')
+      +(hasPlayoff?'<td style="color:'+(p.plPts>0?'#a78bfa':'#334155')+';font-weight:700">+'+(p.plPts)+'</td>':'')
       +'<td class="pts-big">'+p.total+'</td>'
       +'<td class="col-detail"><span class="tag-ex">'+p.exact+'</span></td>'
       +'<td class="col-detail"><span class="tag-re">'+p.corr+'</span></td>'
@@ -1006,8 +1011,9 @@ function renderProContent(){
   } else if(proSubTab==='extras'){
     el.innerHTML=renderExtrasPronostico(curPlayer);
   } else {
-    el.innerHTML='<div id="pbracket"></div>';
+    el.innerHTML='<div id="pbracket"></div><div id="playoff-scoring"></div>';
     renderPBracket(curPlayer);
+    document.getElementById('playoff-scoring').innerHTML=renderPlayoffPronostico(curPlayer);
   }
 }
 
@@ -1144,6 +1150,104 @@ function renderExtrasPronostico(name){
       +'</div>';
   });
   h+='</div>';
+  return h;
+}
+
+// ── Playoff scoring ───────────────────────────────────────────────────────────
+function calcPlayoffScore(name) {
+  var pp_all = pPred[name] || {};
+  var pts = 0, exact = 0, corr = 0, penBonus = 0;
+  var rows = [];
+  var allMids = [];
+  ARNDS.forEach(function(r){ r.ids.forEach(function(id){ allMids.push(id); }); });
+  allMids.push('final','tercero');
+
+  allMids.forEach(function(mid) {
+    var ap = pred[mid];
+    var pp = pp_all[mid];
+    var aH = ap ? parseInt(ap.h) : NaN;
+    var aA = ap ? parseInt(ap.a) : NaN;
+    var pH = pp ? parseInt(pp.h) : NaN;
+    var pA = pp ? parseInt(pp.a) : NaN;
+    var hasPred = !isNaN(pH) && !isNaN(pA);
+    var hasAct  = !isNaN(aH) && !isNaN(aA);
+    if (!hasPred || !hasAct) { rows.push({mid,hasPred,hasAct,matchPts:0,penPts:0}); return; }
+
+    var aWin = aH>aA ? ap.ht : aA>aH ? ap.at : (ap.pw||null);
+    var pWin = pH>pA ? pp.ht : pA>pH ? pp.at : (pp.pw||null);
+    var matchPts = 0;
+    if (pH===aH && pA===aA)                        { matchPts=3; exact++; }
+    else if (aWin && pWin && aWin===pWin)           { matchPts=1; corr++;  }
+    pts += matchPts;
+
+    var aIsPen = (aH===aA) && !!ap.pw;
+    var pIsPen = (pH===pA) && !!pp.pw;
+    var penPts = 0;
+    if      (pIsPen && aIsPen)  { penPts = (pp.pw===ap.pw) ? 4 : 2; }
+    else if (!pIsPen && !aIsPen){ penPts = 1; }
+    penBonus += penPts;
+
+    rows.push({mid,hasPred,hasAct,pH,pA,aH,aA,pWin,aWin,matchPts,penPts,
+               aIsPen,pIsPen,ppPW:pp?pp.pw:null,apPW:ap?ap.pw:null});
+  });
+  return {pts,exact,corr,penBonus,total:pts+penBonus,rows};
+}
+
+function renderPlayoffPronostico(name) {
+  var sc = calcPlayoffScore(name);
+  if (!sc.rows.some(function(r){return r.hasAct;})) {
+    return '<div class="note" style="margin-top:12px">Los puntos de playoff aparecen aquí cuando terminen los partidos.</div>';
+  }
+  var h = '<div class="gp-sum" style="margin-top:16px;margin-bottom:10px">'
+    +'<span style="color:#94a3b8;font-weight:700">⚡ Scoring Playoff — '+name+'</span>'
+    +'<span class="pts">'+sc.pts+' pts</span>'
+    +(sc.penBonus>0?'<span class="sub" style="color:#a78bfa">+'+sc.penBonus+' bonus ⚽</span>':'')
+    +'<span class="sub" style="color:#22c55e;font-weight:700">Total playoff: '+(sc.pts+sc.penBonus)+' pts</span>'
+    +'</div>';
+
+  var allRnds=ARNDS.concat([{t:'🏆 Final y 3er Puesto',ids:['final','tercero']}]);
+  allRnds.forEach(function(r){
+    var rRows=sc.rows.filter(function(row){return r.ids.indexOf(row.mid)>=0 && (row.hasAct||row.hasPred);});
+    if(!rRows.some(function(row){return row.hasAct;})) return;
+    h+='<div style="margin-bottom:10px">'
+      +'<div class="g-head" style="border-radius:6px 6px 0 0;padding:7px 10px">'+r.t+'</div>'
+      +'<div style="background:#1e293b;border-radius:0 0 8px 8px;overflow:hidden">';
+
+    rRows.forEach(function(row){
+      var ht=aTeam(row.mid,true), at=aTeam(row.mid,false);
+      var predStr=row.hasPred?row.pH+'-'+row.pA:'?';
+      var actStr =row.hasAct ?row.aH+'-'+row.aA:'—';
+      var ppPWstr=row.ppPW?'<br><span style="font-size:.62rem">🏅'+withFlag(row.ppPW)+'</span>':'';
+      var apPWstr=row.apPW?'<br><span style="font-size:.62rem">🏅'+withFlag(row.apPW)+'</span>':'';
+      var total=(row.matchPts||0)+(row.penPts||0);
+      var ptsCol=total>=7?'#a78bfa':total>=4?'#22c55e':total>=2?'#fbbf24':total===1?'#94a3b8':'#475569';
+      var rowBg =total>=7?'background:#1e0f3a':total>=4?'background:#052e16':total>=2?'background:#1c1408':'';
+      var ptsStr=(row.hasAct&&row.hasPred)?String(total):'';
+      var penBadge='';
+      if(row.hasAct&&row.hasPred){
+        if(row.pIsPen&&row.aIsPen)
+          penBadge='<br><span style="font-size:.6rem;background:#4c1d95;color:#c4b5fd;border-radius:3px;padding:1px 4px">⚽+'+row.penPts+'</span>';
+        else if(!row.pIsPen&&!row.aIsPen)
+          penBadge='<br><span style="font-size:.6rem;background:#1e3a5f;color:#93c5fd;border-radius:3px;padding:1px 4px">🕐+1</span>';
+        else
+          penBadge='<br><span style="font-size:.6rem;background:#3f1515;color:#fca5a5;border-radius:3px;padding:1px 4px">✗método</span>';
+      }
+      h+='<div class="gr-match" style="'+rowBg+'">'
+        +'<div class="gr-home" style="flex:1;flex-direction:column;align-items:flex-start;gap:1px">'
+        +'<div style="font-size:.64rem;color:#475569">'+row.mid.toUpperCase()+'</div>'
+        +'<div style="font-size:.73rem">'+withFlag(ht)+' <span style="color:#475569">vs</span> '+withFlag(at)+'</div>'
+        +'</div>'
+        +'<div style="text-align:center;font-size:.7rem;color:#64748b;flex-shrink:0;min-width:58px">'+predStr+ppPWstr+'</div>'
+        +'<div style="text-align:center;font-size:.74rem;font-weight:700;flex-shrink:0;min-width:58px">'+actStr+apPWstr+'</div>'
+        +'<div style="text-align:center;font-weight:800;color:'+ptsCol+';flex-shrink:0;width:38px">'+ptsStr+penBadge+'</div>'
+        +'</div>';
+    });
+    h+='</div></div>';
+  });
+  h+='<div class="note" style="font-size:.7rem;margin-top:6px">'
+    +'🎯 Exacto +3 · ✅ Ganador +1 · '
+    +'<span style="color:#a78bfa">⚽ Penales (ganador ✓) +4 · ⚽ Penales (ganador ✗) +2</span> · '
+    +'<span style="color:#93c5fd">🕐 Sin penales +1</span></div>';
   return h;
 }
 
