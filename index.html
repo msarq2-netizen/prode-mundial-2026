@@ -244,6 +244,7 @@ var pred = JSON.parse(localStorage.getItem(KEY) || '{}');
 var rt = null;
 var adminMode = false;
 var ADMIN_PW = 'mundial26';
+var myPlayer = sessionStorage.getItem('myPlayer') || null; // jugador de esta sesión (privacidad playoff)
 var proSubTab = 'grupos';
 var resSubTab = 'grupos';
 
@@ -971,9 +972,12 @@ function renderPronosticos() {
 
   // Player selector
   var sel='<div class="psel" id="psel">';
+  var playoffPrivate = !adminMode && !playoffPhaseStarted();
   players.forEach(function(p){
     var lk=isLocked(p.name);
-    sel+='<button style="'+(lk?'opacity:.7':'')+'" class="'+(p.name===curPlayer?'on':'')+'" onclick="selPlayer(\''+esc(p.name)+'\',this)">'+(lk?'🔒 ':'')+p.name+'</button>';
+    var prvLk = playoffPrivate && myPlayer && p.name !== myPlayer && proSubTab === 'playoff';
+    var title = prvLk ? ' title="Pronósticos visibles al iniciar 16vos"' : '';
+    sel+='<button style="'+(lk?'opacity:.7':'')+(prvLk?'opacity:.55':'')+ '" class="'+(p.name===curPlayer?'on':'')+'"'+title+' onclick="selPlayer(\''+esc(p.name)+'\',this)">'+(lk?'🔒 ':'')+(prvLk?'🔒 ':'')+p.name+'</button>';
   });
   sel+='</div>';
 
@@ -997,6 +1001,8 @@ function switchProTab(tab){
 }
 
 function selPlayer(name,btn){
+  // Primer click fija el jugador de la sesión (para privacidad de pronósticos playoff)
+  if (!myPlayer && !adminMode) { myPlayer=name; sessionStorage.setItem('myPlayer',name); }
   curPlayer=name;
   document.querySelectorAll('#psel button').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
@@ -1154,6 +1160,14 @@ function renderExtrasPronostico(name){
 }
 
 // ── Playoff scoring ───────────────────────────────────────────────────────────
+function playoffPhaseStarted() {
+  for (var i = 1; i <= 16; i++) {
+    var ap = pred['r32-'+i];
+    if (ap && ap.h !== null && ap.h !== undefined && String(ap.h).trim() !== '') return true;
+  }
+  return false;
+}
+
 function calcPlayoffScore(name) {
   var pp_all = pPred[name] || {};
   var pts = 0, exact = 0, corr = 0, penBonus = 0;
@@ -1194,6 +1208,8 @@ function calcPlayoffScore(name) {
 }
 
 function renderPlayoffPronostico(name) {
+  // Privacidad: scoring de otros jugadores oculto hasta que inicie la fase
+  if (!adminMode && !playoffPhaseStarted() && myPlayer && name !== myPlayer) return '';
   var sc = calcPlayoffScore(name);
   if (!sc.rows.some(function(r){return r.hasAct;})) {
     return '<div class="note" style="margin-top:12px">Los puntos de playoff aparecen aquí cuando terminen los partidos.</div>';
@@ -1286,6 +1302,18 @@ function roundStateBanner(k, label) {
 }
 
 function renderPBracket(name){
+  // Privacidad: bloquear pronosticos de otros jugadores hasta que inicie la fase de 16vos
+  if (!adminMode && !playoffPhaseStarted() && myPlayer && name !== myPlayer) {
+    document.getElementById('pbracket').innerHTML=
+      '<div style="text-align:center;padding:48px 20px;color:#64748b">'
+      +'<div style="font-size:2.5rem;margin-bottom:14px">🔒</div>'
+      +'<div style="font-weight:700;color:#94a3b8;font-size:1rem;margin-bottom:8px">Predicciones privadas</div>'
+      +'<div style="font-size:.82rem;line-height:1.6">Los pronósticos de <strong style="color:#c4b5fd">'+name+'</strong><br>'
+      +'se revelan cuando inicie la fase de 16vos.</div>'
+      +'</div>';
+    return;
+  }
+
   var locked=isLocked(name);
 
   // ── Barra de lock manual ───────────────────────────────────────────────────
