@@ -1404,6 +1404,15 @@ function adminLogin(){
   updateGear();
   renderResContent();
 }
+function adminSave(){
+  localStorage.setItem(KEY, JSON.stringify(pred));
+  // Toast de confirmación
+  var t=document.createElement('div');
+  t.textContent='✅ Resultados guardados';
+  t.style.cssText='position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#166534;color:#bbf7d0;padding:10px 22px;border-radius:10px;font-weight:700;font-size:.9rem;z-index:9999;box-shadow:0 4px 16px #0008;pointer-events:none;transition:opacity .4s';
+  document.body.appendChild(t);
+  setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 400); }, 1800);
+}
 function exitAdmin(){
   adminMode=false;
   updateGear();
@@ -1478,6 +1487,7 @@ function renderPlayoffResultados(){
   var adminBar = adminMode
     ? '<div class="admin-bar active">'
       +'<span class="admin-label">✏️ <strong>Modo admin activo</strong> — podés ingresar resultados</span>'
+      +'<button class="admin-btn" onclick="adminSave()" style="background:#166534;border-color:#16a34a;margin-right:6px">💾 Guardar</button>'
       +'<button class="admin-btn exit" onclick="exitAdmin()">✕ Salir del modo admin</button>'
       +'</div>'
     : '<div class="admin-bar">'
