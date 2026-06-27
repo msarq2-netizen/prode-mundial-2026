@@ -609,10 +609,11 @@ function qualResolved(code) {
   if (!code) return '?';
   if (code.startsWith('T3-')) {
     var pool = T3_POOLS[code] || '?';
-    // Los terceros solo se asignan a slots cuando se conocen TODOS los grupos
     if (allGroupsDone()) return qual[code] || ('3° '+pool);
     return '3° Gr. '+pool;
   }
+  // Si el código no es un código posicional estándar (1A-2L), es un nombre directo
+  if (!/^[12][A-L]$/.test(code)) return code;
   var rank = code[0]; // '1' o '2'
   var grp  = code[1]; // 'A'-'L'
   if (isGroupFinished(grp)) return qual[code] || ((rank==='1'?'1°':'2°')+' Gr. '+grp);
@@ -636,7 +637,7 @@ var DEF = {
   'r32-11':{h:'2K',  a:'2L'},   // M83: 2°K vs 2°L
   'r32-12':{h:'1H',  a:'2J'},   // M84: 1°H vs 2°J
   'r32-13':{h:'1B',  a:'T3-7'}, // M85: 1°B vs T3(E/F/G/I/J)
-  'r32-14':{h:'1J',  a:'2H'},   // M86: 1°J vs 2°H
+  'r32-14':{h:'Argentina',  a:'Cabo Verde'},   // M86: confirmado
   'r32-15':{h:'1K',  a:'T3-8'}, // M87: 1°K vs T3(D/E/I/J/L)
   'r32-16':{h:'2D',  a:'2G'},   // M88: 2°D vs 2°G
   // Round of 16
