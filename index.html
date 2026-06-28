@@ -367,14 +367,18 @@ function extractArr(html, marker) {
 // ── Init ─────────────────────────────────────────────────────────────────────
 async function init() {
   try {
-    var [rj, pageHtml] = await Promise.all([
+    var [rj, pageHtml, predJ] = await Promise.all([
       fetch(BASE + 'r.json?nc=' + Date.now()).then(r => r.json()),
       fetch(BASE + 'grupos.html?nc=' + Date.now()).then(r => r.text()),
+      fetch(BASE + 'pred.json?nc=' + Date.now()).then(r => r.json()).catch(function(){ return {}; }),
     ]);
     R = rj;
     // Apply admin overrides saved locally
     var rOvr = JSON.parse(localStorage.getItem(RKEY)||'{}');
     Object.keys(rOvr).forEach(function(i){ R[parseInt(i)] = rOvr[i]; });
+    // Merge server playoff results (pred.json) → fuente de verdad para todos los dispositivos
+    Object.keys(predJ).forEach(function(k){ pred[k] = predJ[k]; });
+    localStorage.setItem(KEY, JSON.stringify(pred));
 
     M = extractArr(pageHtml, 'var M=');
     if (!M) throw new Error('No se pudo leer M[]');
