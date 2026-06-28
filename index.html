@@ -236,6 +236,12 @@ nav button:hover:not(.on){background:#475569;color:#e2e8f0}
 var BASE = 'https://msarq2-netizen.github.io/prode-mundial-2026/';
 var KEY  = 'po2026v1';
 var RKEY = 'r2026v1';
+// ── Google Sheets backend ─────────────────────────────────────────────────────
+// Pegá acá la URL del Apps Script desplegado (ver prode_backend.gs).
+// Si se deja vacío, el sistema funciona solo con localStorage (comportamiento anterior).
+var SHEETS_URL = '';
+var _syncTimer = null;
+// ─────────────────────────────────────────────────────────────────────────────
 var R, M, P_raw, NAMES_raw;
 var standings = {}, qual = {};
 var players = [];   // [{name, pts, exact, corr}]
@@ -472,10 +478,43 @@ function calcScore(pg) {
 }
 
 function loadPPred() {
+  // 1. Carga inmediata desde localStorage (cache local)
   players.forEach(function(p) {
     var raw = localStorage.getItem(KEY + '_' + p.name);
     pPred[p.name] = raw ? JSON.parse(raw) : {};
   });
+  // 2. Sincronización en background desde Google Sheets (fuente de verdad)
+  if (!SHEETS_URL) return;
+  fetch(SHEETS_URL + '?action=getAll&_=' + Date.now())
+    .then(function(r) { return r.json(); })
+    .then(function(json) {
+      if (!json.ok || !json.data) return;
+      var updated = false;
+      players.forEach(function(p) {
+        var sheetData = json.data[p.name];
+        if (sheetData && Object.keys(sheetData).length > 0) {
+          pPred[p.name] = sheetData;
+          localStorage.setItem(KEY + '_' + p.name, JSON.stringify(sheetData));
+          updated = true;
+        }
+      });
+      if (updated) { buildPlayers(); renderAll(); }
+    })
+    .catch(function(e) { console.warn('[Sheets] Error al cargar:', e); });
+}
+
+// Guarda los pronósticos de un jugador en Google Sheets (debounced 2s)
+function syncToSheets(name) {
+  if (!SHEETS_URL || !name) return;
+  clearTimeout(_syncTimer);
+  _syncTimer = setTimeout(function() {
+    fetch(SHEETS_URL, {
+      method: 'POST',
+      mode: 'no-cors',          // evita preflight CORS de Apps Script
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ name: name, data: pPred[name] || {} })
+    }).catch(function(e) { console.warn('[Sheets] Error al guardar:', e); });
+  }, 2000);
 }
 
 // ── Lock system ───────────────────────────────────────────────────────────────
@@ -727,6 +766,7 @@ function pSave(name,mid,side,val){
   pPred[name][mid].ht=pTeam(mid,true,name);
   pPred[name][mid].at=pTeam(mid,false,name);
   localStorage.setItem(KEY+'_'+name,JSON.stringify(pPred[name]));
+  syncToSheets(name);
   clearTimeout(rt); rt=setTimeout(function(){renderProContent();},600);
 }
 function pPW(name,mid,team){
@@ -738,6 +778,7 @@ function pPW(name,mid,team){
   pm[mid].pw=(pm[mid].pw===team)?null:team;
   pm[mid].pl=pm[mid].pw?(pm[mid].pw===pm[mid].ht?pm[mid].at:pm[mid].ht):null;
   localStorage.setItem(KEY+'_'+name,JSON.stringify(pm));
+  syncToSheets(name);
   renderProContent();
 }
 
