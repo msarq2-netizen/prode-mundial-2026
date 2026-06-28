@@ -1278,20 +1278,24 @@ function calcPlayoffScore(name) {
 
     var aWin = aH>aA ? ap.ht : aA>aH ? ap.at : (ap.pw||null);
     var pWin = pH>pA ? pp.ht : pA>pH ? pp.at : (pp.pw||null);
-    var matchPts = 0;
-    if (pH===aH && pA===aA)                        { matchPts=3; exact++; }
-    else if (aWin && pWin && aWin===pWin)           { matchPts=1; corr++;  }
+
+    // Nuevo sistema:
+    // +3 ganador correcto, +1 marcador local exacto, +1 marcador visitante exacto
+    // Bonus +3 si acertaste ganador por penales
+    var winOk  = !!(aWin && pWin && aWin===pWin);
+    var homeOk = (pH===aH);
+    var awayOk = (pA===aA);
+    var matchPts = (winOk?3:0) + (homeOk?1:0) + (awayOk?1:0);
+    if(homeOk && awayOk){ exact++; } else if(winOk){ corr++; }
     pts += matchPts;
 
     var aIsPen = (aH===aA) && !!ap.pw;
     var pIsPen = (pH===pA) && !!pp.pw;
-    var penPts = 0;
-    if      (pIsPen && aIsPen)  { penPts = (pp.pw===ap.pw) ? 4 : 2; }
-    else if (!pIsPen && !aIsPen){ penPts = 1; }
+    var penPts = (pIsPen && aIsPen && pp.pw===ap.pw) ? 3 : 0;
     penBonus += penPts;
 
     rows.push({mid,hasPred,hasAct,pH,pA,aH,aA,pWin,aWin,matchPts,penPts,
-               aIsPen,pIsPen,ppPW:pp?pp.pw:null,apPW:ap?ap.pw:null});
+               winOk,homeOk,awayOk,aIsPen,pIsPen,ppPW:pp?pp.pw:null,apPW:ap?ap.pw:null});
   });
   return {pts,exact,corr,penBonus,total:pts+penBonus,rows};
 }
@@ -1323,17 +1327,12 @@ function renderPlayoffPronostico(name) {
       var ppPWstr=row.ppPW?'<br><span style="font-size:.62rem">🏅'+withFlag(row.ppPW)+'</span>':'';
       var apPWstr=row.apPW?'<br><span style="font-size:.62rem">🏅'+withFlag(row.apPW)+'</span>':'';
       var total=(row.matchPts||0)+(row.penPts||0);
-      var ptsCol=total>=7?'#a78bfa':total>=4?'#22c55e':total>=2?'#fbbf24':total===1?'#94a3b8':'#475569';
-      var rowBg =total>=7?'background:#1e0f3a':total>=4?'background:#052e16':total>=2?'background:#1c1408':'';
+      var ptsCol=total>=8?'#a78bfa':total>=5?'#22c55e':total>=3?'#fbbf24':total>=1?'#94a3b8':'#475569';
+      var rowBg =total>=8?'background:#1e0f3a':total>=5?'background:#052e16':total>=3?'background:#1c1408':'';
       var ptsStr=(row.hasAct&&row.hasPred)?String(total):'';
       var penBadge='';
-      if(row.hasAct&&row.hasPred){
-        if(row.pIsPen&&row.aIsPen)
-          penBadge='<br><span style="font-size:.6rem;background:#4c1d95;color:#c4b5fd;border-radius:3px;padding:1px 4px">⚽+'+row.penPts+'</span>';
-        else if(!row.pIsPen&&!row.aIsPen)
-          penBadge='<br><span style="font-size:.6rem;background:#1e3a5f;color:#93c5fd;border-radius:3px;padding:1px 4px">🕐+1</span>';
-        else
-          penBadge='<br><span style="font-size:.6rem;background:#3f1515;color:#fca5a5;border-radius:3px;padding:1px 4px">✗método</span>';
+      if(row.hasAct&&row.hasPred&&row.penPts>0){
+        penBadge='<br><span style="font-size:.6rem;background:#4c1d95;color:#c4b5fd;border-radius:3px;padding:1px 4px">⚽+'+row.penPts+'</span>';
       }
       h+='<div class="gr-match" style="'+rowBg+'">'
         +'<div class="gr-home" style="flex:1;flex-direction:column;align-items:flex-start;gap:1px">'
@@ -1348,9 +1347,9 @@ function renderPlayoffPronostico(name) {
     h+='</div></div>';
   });
   h+='<div class="note" style="font-size:.7rem;margin-top:6px">'
-    +'🎯 Exacto +3 · ✅ Ganador +1 · '
-    +'<span style="color:#a78bfa">⚽ Penales (ganador ✓) +4 · ⚽ Penales (ganador ✗) +2</span> · '
-    +'<span style="color:#93c5fd">🕐 Sin penales +1</span></div>';
+    +'✅ Ganador +3 · 🏠 Gol local exacto +1 · 🚌 Gol visitante exacto +1 · '
+    +'🎯 Exacto total = 5 pts · '
+    +'<span style="color:#a78bfa">⚽ Penales (ganador ✓) +3 bonus</span></div>';
   return h;
 }
 
