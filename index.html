@@ -495,6 +495,10 @@ function loadPPred() {
         if (sheetData && Object.keys(sheetData).length > 0) {
           pPred[p.name] = sheetData;
           localStorage.setItem(KEY + '_' + p.name, JSON.stringify(sheetData));
+          // Si el jugador selló, propagar el lock al localStorage local
+          if (sheetData._locked === '1') {
+            localStorage.setItem(KEY + '_locked_' + p.name, '1');
+          }
           updated = true;
         }
       });
@@ -581,14 +585,30 @@ function getRoundCountdown(k) {
 function isR32AutoLocked() { return getRoundState('r32')==='closed'; }
 
 function isLocked(name) {
-  return localStorage.getItem(KEY + '_locked_' + name) === '1';
+  // Chequea localStorage (propio device) O el flag _locked dentro de pPred (sincronizado vía Sheets)
+  return localStorage.getItem(KEY + '_locked_' + name) === '1' ||
+         !!(pPred[name] && pPred[name]._locked === '1');
+}
+
+// Devuelve true si hay que ocultar el pronóstico de 'name' a otros jugadores
+// (está sellado Y el plazo de carga aún no venció)
+function isSealed(name) {
+  if (!isLocked(name)) return false;
+  var now = new Date();
+  // Una vez que pasa el deadline de R32, todo se hace visible
+  return now < ROUND_DEADLINES.r32;
 }
 
 function lockPlayer(name) {
-  if (!confirm('¿Seguro que querés guardar y bloquear tu pronóstico?\n\n' +
-    'Una vez guardado NO vas a poder editarlo más.\n\n' +
+  if (!confirm('¿Seguro que querés sellar tu pronóstico?\n\n' +
+    'Una vez sellado NO vas a poder editarlo más.\n' +
+    'Otros jugadores no podrán ver tus picks hasta que venza el plazo.\n\n' +
     'Jugador: ' + name)) return;
+  if (!pPred[name]) pPred[name] = {};
+  pPred[name]._locked = '1';  // se sincroniza a Sheets para que todos lo vean
   localStorage.setItem(KEY + '_locked_' + name, '1');
+  localStorage.setItem(KEY + '_' + name, JSON.stringify(pPred[name]));
+  syncToSheets(name);  // guardar con el flag _locked incluido
   // Refresh selector badge + bracket
   document.querySelectorAll('#psel button').forEach(function(btn) {
     if (btn.textContent.replace('🔒 ','').trim() === name) {
@@ -1061,6 +1081,18 @@ function selPlayer(name,btn){
 function renderProContent(){
   var el=document.getElementById('pro-content');
   if(!el) return;
+  // Anti-spoiler: si el jugador selló sus picks y el plazo no venció → pantalla sellada
+  if(isSealed(curPlayer)){
+    el.innerHTML='<div style="text-align:center;padding:3rem 1rem;max-width:420px;margin:0 auto">'
+      +'<div style="font-size:4rem;margin-bottom:.5rem">🔒</div>'
+      +'<div style="font-size:1.15rem;font-weight:700;color:#1e293b;margin-bottom:.6rem">'
+      +curPlayer+' ya selló su pronóstico</div>'
+      +'<div style="color:#64748b;font-size:.9rem;line-height:1.5">'
+      +'Sus elecciones estarán disponibles cuando venza el plazo de carga:<br>'
+      +'<span style="color:#f59e0b;font-weight:600">⏰ '+ROUND_CLOSE_LABEL.r32+'</span>'
+      +'</div></div>';
+    return;
+  }
   if(proSubTab==='grupos'){
     el.innerHTML=renderGruposContent(curPlayer);
   } else if(proSubTab==='extras'){
