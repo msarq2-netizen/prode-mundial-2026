@@ -780,8 +780,15 @@ function pLsr(mid,name){
   var h=parseInt(p.h),a=parseInt(p.a); if(isNaN(h)||isNaN(a)) return null;
   return h>a?p.at:a>h?p.ht:p.pl||null;
 }
+// Devuelve true si el partido ya fue jugado (hay resultado en pred)
+function isMatchPlayed(mid){
+  var p=pred[mid];
+  return !!(p && !isNaN(parseInt(p.h)) && !isNaN(parseInt(p.a)));
+}
+
 function pSave(name,mid,side,val){
   if(isLocked(name)) return;
+  if(isMatchPlayed(mid)) return;  // partido ya jugado: no se puede editar
   // Bloqueo automático por ronda
   var _rk=mid&&mid.replace(/-\d+$/,''); if(_rk&&getRoundState(_rk)!=='open') return;
   if(!pPred[name]) pPred[name]={};
@@ -795,6 +802,7 @@ function pSave(name,mid,side,val){
 }
 function pPW(name,mid,team){
   if(isLocked(name)) return;
+  if(isMatchPlayed(mid)) return;  // partido ya jugado: no se puede editar
   var _rk2=mid&&mid.replace(/-\d+$/,''); if(_rk2&&getRoundState(_rk2)!=='open') return;
   if(!pPred[name]) pPred[name]={};
   var pm=pPred[name];
@@ -828,6 +836,10 @@ function playerCard(mid, name) {
   else {pp[mid].ht=ht;pp[mid].at=at;}
   var p=pp[mid]; var en=esc(name);
   var locked=isLocked(name);
+  // Si el partido ya fue jugado → solo lectura, independientemente del lock del jugador
+  if(isMatchPlayed(mid)){
+    return cardReadOnly(mid,ht,at,p.h,p.a,p.pw);
+  }
   if(locked){
     // Read-only version
     return cardReadOnly(mid,ht,at,p.h,p.a,p.pw);
