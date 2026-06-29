@@ -613,13 +613,6 @@ function lockPlayer(name) {
   localStorage.setItem(KEY + '_locked_' + name, '1');
   localStorage.setItem(KEY + '_' + name, JSON.stringify(pPred[name]));
   syncToSheets(name);  // guardar con el flag _locked incluido
-  // Refresh selector badge + bracket
-  document.querySelectorAll('#psel button').forEach(function(btn) {
-    if (btn.textContent.replace('🔒 ','').trim() === name) {
-      btn.innerHTML = '🔒 ' + name;
-      btn.style.opacity = '.7';
-    }
-  });
   renderProContent();
 }
 
@@ -1063,8 +1056,7 @@ function renderPronosticos() {
   // Player selector
   var sel='<div class="psel" id="psel">';
   players.forEach(function(p){
-    var lk=isLocked(p.name);
-    sel+='<button style="'+(lk?'opacity:.7':'')+'" class="'+(p.name===curPlayer?'on':'')+'" onclick="selPlayer(\''+esc(p.name)+'\',this)">'+(lk?'🔒 ':'')+p.name+'</button>';
+    sel+='<button class="'+(p.name===curPlayer?'on':'')+'" onclick="selPlayer(\''+esc(p.name)+'\',this)">'+p.name+'</button>';
   });
   sel+='</div>';
 
@@ -1097,18 +1089,6 @@ function selPlayer(name,btn){
 function renderProContent(){
   var el=document.getElementById('pro-content');
   if(!el) return;
-  // Anti-spoiler: si el jugador selló sus picks y el plazo no venció → pantalla sellada
-  if(isSealed(curPlayer)){
-    el.innerHTML='<div style="text-align:center;padding:3rem 1rem;max-width:420px;margin:0 auto">'
-      +'<div style="font-size:4rem;margin-bottom:.5rem">🔒</div>'
-      +'<div style="font-size:1.15rem;font-weight:700;color:#1e293b;margin-bottom:.6rem">'
-      +curPlayer+' ya selló su pronóstico</div>'
-      +'<div style="color:#64748b;font-size:.9rem;line-height:1.5">'
-      +'Sus elecciones estarán disponibles cuando venza el plazo de carga:<br>'
-      +'<span style="color:#f59e0b;font-weight:600">⏰ '+ROUND_CLOSE_LABEL.r32+'</span>'
-      +'</div></div>';
-    return;
-  }
   if(proSubTab==='grupos'){
     el.innerHTML=renderGruposContent(curPlayer);
   } else if(proSubTab==='extras'){
