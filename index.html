@@ -1800,6 +1800,11 @@ function renderFixture(){
         scoreOrVs='<span class="fix-vs">vs</span>';
       }
 
+      var fixPen='';
+      if(hasScore&&hi===ai&&p.pw&&!htbd&&!atbd){
+        fixPen='<div class="pen-row" style="opacity:.7">⚽ Penales: <strong style="color:#fef3c7">'+withFlag(p.pw)+'</strong></div>';
+      }
+
       h+='<div class="fix-card'+(hasScore?' played':'')+'">'
         +'<span class="fix-time">'+m.time+'</span>'
         +'<span class="fix-rnd">'+rndLabel(m.id)+'</span>'
@@ -1808,6 +1813,7 @@ function renderFixture(){
         +scoreOrVs
         +'<span class="fix-team fix-team-r'+(atbd?' tbd':win===at?' win':'')+'" title="'+(atbd?'':at)+'">'+(atbd?'Por definir':withFlag(at))+'</span>'
         +'</div>'
+        +fixPen
         +'<span class="fix-venue">📍 '+m.venue+'</span>'
         +'</div>';
     });
