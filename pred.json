@@ -1,5 +1,6 @@
 {
   "r32-1": {"h": 0, "a": 1, "ht": "Sudáfrica", "at": "Canadá", "pw": null, "pl": null},
   "r32-4": {"h": 2, "a": 1, "ht": "Brasil", "at": "Japón", "pw": null, "pl": null},
-  "r32-2": {"h": 1, "a": 1, "ht": "Alemania", "at": "Paraguay", "pw": "Paraguay", "pl": "Alemania"}
+  "r32-2": {"h": 1, "a": 1, "ht": "Alemania", "at": "Paraguay", "pw": "Paraguay", "pl": "Alemania"},
+  "r32-3": {"h": 1, "a": 1, "ht": "Países Bajos", "at": "Marruecos", "pw": "Marruecos", "pl": "Países Bajos"}
 }
