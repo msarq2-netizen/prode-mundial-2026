@@ -5,5 +5,6 @@
   "r32-3": {"h": 1, "a": 1, "ht": "Países Bajos", "at": "Marruecos", "pw": "Marruecos", "pl": "Países Bajos"},
   "r32-6": {"h": 1, "a": 2, "ht": "Costa de Marfil", "at": "Noruega", "pw": null, "pl": null},
   "r32-5": {"h": 3, "a": 0, "ht": "Francia", "at": "Suecia", "pw": null, "pl": null},
-  "r32-7": {"h": 2, "a": 0, "ht": "México", "at": "Ecuador", "pw": null, "pl": null}
+  "r32-7": {"h": 2, "a": 0, "ht": "México", "at": "Ecuador", "pw": null, "pl": null},
+  "r32-8": {"h": 2, "a": 1, "ht": "Inglaterra", "at": "Congo DR", "pw": null, "pl": null}
 }
