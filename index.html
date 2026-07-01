@@ -1262,7 +1262,10 @@ function calcPlayoffScore(name) {
     // Nuevo sistema:
     // +3 ganador correcto, +1 marcador local exacto, +1 marcador visitante exacto
     // Bonus +3 si acertaste ganador por penales
-    var winOk  = !!(aWin && pWin && aWin===pWin);
+    // Ganador solo cuenta si el tipo de resultado coincide (empate vs. victoria directa)
+    var aIsDraw = (aH === aA);
+    var pIsDraw = (pH === pA);
+    var winOk  = !!(aWin && pWin && aWin===pWin && aIsDraw===pIsDraw);
     var homeOk = (pH===aH);
     var awayOk = (pA===aA);
     var matchPts = (winOk?3:0) + (homeOk?1:0) + (awayOk?1:0);
