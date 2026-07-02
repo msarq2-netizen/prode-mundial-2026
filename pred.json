@@ -8,5 +8,6 @@
   "r32-7": {"h": 2, "a": 0, "ht": "México", "at": "Ecuador", "pw": null, "pl": null},
   "r32-8": {"h": 2, "a": 1, "ht": "Inglaterra", "at": "Congo DR", "pw": null, "pl": null},
   "r32-10": {"h": 3, "a": 2, "ht": "Bélgica", "at": "Senegal", "pw": null, "pl": null},
-  "r32-9": {"h": 2, "a": 0, "ht": "Estados Unidos", "at": "Bosnia y Herzegovina", "pw": null, "pl": null}
+  "r32-9": {"h": 2, "a": 0, "ht": "Estados Unidos", "at": "Bosnia y Herzegovina", "pw": null, "pl": null},
+  "r32-12": {"h": 3, "a": 0, "ht": "España", "at": "Austria", "pw": null, "pl": null}
 }
