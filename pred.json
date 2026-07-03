@@ -11,5 +11,6 @@
   "r32-9": {"h": 2, "a": 0, "ht": "Estados Unidos", "at": "Bosnia y Herzegovina", "pw": null, "pl": null},
   "r32-12": {"h": 3, "a": 0, "ht": "España", "at": "Austria", "pw": null, "pl": null},
   "r32-11": {"h": 2, "a": 1, "ht": "Portugal", "at": "Croacia", "pw": null, "pl": null},
-  "r32-13": {"h": 2, "a": 0, "ht": "Suiza", "at": "Argelia", "pw": null, "pl": null}
+  "r32-13": {"h": 2, "a": 0, "ht": "Suiza", "at": "Argelia", "pw": null, "pl": null},
+  "r32-16": {"h": 1, "a": 1, "ht": "Australia", "at": "Egipto", "pw": "Egipto", "pl": "Australia"}
 }
