@@ -837,7 +837,10 @@ function playerCard(mid, name) {
   if(isMatchPlayed(mid)){
     return cardReadOnly(mid,ht,at,p.h,p.a,p.pw);
   }
-  if(locked){
+  // Si la ronda está abierta, ignorar el lock (permite editar nueva ronda aunque hayan sellado la anterior)
+  var rndKey=mid.replace(/-\d+$/,'');
+  var rndOpen=getRoundState(rndKey)==='open';
+  if(locked && !rndOpen){
     // Read-only version
     return cardReadOnly(mid,ht,at,p.h,p.a,p.pw);
   }
@@ -1397,7 +1400,9 @@ function renderPBracket(name){
   );
 
   PRNDS.forEach(function(r){
-    var state=locked ? 'closed' : getRoundState(r.k);
+    var roundState=getRoundState(r.k);
+    // Si la ronda está abierta, siempre editable (ignora el lock del jugador de rondas anteriores)
+    var state=(locked && roundState!=='open') ? 'closed' : roundState;
     h+='<p class="rnd-title gap">'+r.t+'</p>';
     h+=roundStateBanner(r.k, r.t.replace(/^[^\s]+\s/,''));
     h+='<div class="bk-grid">';
