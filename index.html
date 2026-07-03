@@ -534,14 +534,14 @@ function syncToSheets(name) {
 // 'final' cierra: Dom 19/7 13:00 ART = 19/7 16:00 UTC (estimado)
 var ROUND_DEADLINES = {
   r32:   new Date('2026-06-29T15:00:00Z'),
-  r16:   new Date('2026-07-05T15:00:00Z'),
+  r16:   new Date('2026-07-04T17:00:00Z'),  // Sáb 4 Jul 14:00 ART, antes del primer 8vo
   qf:    new Date('2026-07-11T16:00:00Z'),
   sf:    new Date('2026-07-15T16:00:00Z'),
   final: new Date('2026-07-19T16:00:00Z'),
 };
 // Etiqueta legible de cuándo abre cada ronda
 var ROUND_OPEN_LABEL = {
-  r16:    'Sáb 5 Jul · 12:00 ART',
+  r16:    'Sáb 4 Jul · 14:00 ART',
   qf:     'Vie 11 Jul · 13:00 ART',
   sf:     'Mar 15 Jul · 13:00 ART',
   final:  'Dom 19 Jul · 13:00 ART',
@@ -549,7 +549,7 @@ var ROUND_OPEN_LABEL = {
 // Etiqueta de cuándo cierra cada ronda
 var ROUND_CLOSE_LABEL = {
   r32:   'Lun 29/6 · 12:00 ART',
-  r16:   'Sáb 5 Jul · 12:00 ART',
+  r16:   'Sáb 4 Jul · 14:00 ART',
   qf:    'Vie 11 Jul · 13:00 ART',
   sf:    'Mar 15 Jul · 13:00 ART',
   final: 'Dom 19 Jul · 13:00 ART',
@@ -1737,20 +1737,20 @@ var SCHEDULE = [
   ]},
   // 8vos de Final (R16)
   {date:'Sáb 4 Jul', matches:[
-    {id:'r16-1',  time:'—', venue:'Lincoln Financial Field, Philadelphia'},
-    {id:'r16-2',  time:'—', venue:'NRG Stadium, Houston'}
+    {id:'r16-2',  time:'14:00', venue:'NRG Stadium, Houston'},
+    {id:'r16-1',  time:'18:00', venue:'Lincoln Financial Field, Philadelphia'}
   ]},
   {date:'Dom 5 Jul', matches:[
-    {id:'r16-5',  time:'—', venue:'MetLife Stadium, New York/NJ'},
-    {id:'r16-6',  time:'—', venue:'Estadio Azteca, México'}
+    {id:'r16-5',  time:'17:00', venue:'MetLife Stadium, New York/NJ'},
+    {id:'r16-6',  time:'21:00', venue:'Estadio Azteca, México'}
   ]},
   {date:'Lun 6 Jul', matches:[
-    {id:'r16-3',  time:'—', venue:'AT&T Stadium, Dallas'},
-    {id:'r16-4',  time:'—', venue:'Lumen Field, Seattle'}
+    {id:'r16-3',  time:'16:00', venue:'AT&T Stadium, Dallas'},
+    {id:'r16-4',  time:'21:00', venue:'Lumen Field, Seattle'}
   ]},
   {date:'Mar 7 Jul', matches:[
-    {id:'r16-7',  time:'—', venue:'Mercedes-Benz Stadium, Atlanta'},
-    {id:'r16-8',  time:'—', venue:'BC Place, Vancouver'}
+    {id:'r16-7',  time:'13:00', venue:'Mercedes-Benz Stadium, Atlanta'},
+    {id:'r16-8',  time:'17:00', venue:'BC Place, Vancouver'}
   ]},
   // Cuartos de Final
   {date:'Vie 11 Jul', matches:[
