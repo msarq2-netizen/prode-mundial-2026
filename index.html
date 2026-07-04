@@ -746,7 +746,7 @@ var DEF = {
   'r16-5':{h:'Brasil',     a:'Noruega'},      // M91: gan.r32-4  vs gan.r32-6  ✓
   'r16-6':{h:'México',     a:'Inglaterra'},   // M92: gan.r32-7  vs gan.r32-8  ✓
   'r16-7':{h:'Argentina',a:'Egipto'},          // M95: gan.r32-14 vs gan.r32-16 ✓
-  'r16-8':{h:'Suiza',a:''},                   // M96: gan.r32-13 vs gan.r32-15 (Suiza confirmado)
+  'r16-8':{h:'Suiza',a:'Colombia'},            // M96: gan.r32-13 vs gan.r32-15 ✓
   // Cuartos
   'qf-1':{hp:'r16-1',ap:'r16-2'},'qf-2':{hp:'r16-3',ap:'r16-4'},
   'qf-3':{hp:'r16-5',ap:'r16-6'},'qf-4':{hp:'r16-7',ap:'r16-8'},
@@ -1099,8 +1099,11 @@ function renderPronosticos() {
 
   // Player selector
   var sel='<div class="psel" id="psel">';
+  var openRndSel=PRNDS.find(function(r){return getRoundState(r.k)==='open';});
   players.forEach(function(p){
-    sel+='<button class="'+(p.name===curPlayer?'on':'')+'" onclick="selPlayer(\''+esc(p.name)+'\',this)">'+p.name+'</button>';
+    var sealBadge=openRndSel&&isSealedForRound(p.name,openRndSel.k)?' 🔒':'';
+    sel+='<button class="'+(p.name===curPlayer?'on':'')+' onclick="selPlayer(\''+esc(p.name)+'\',this)">'+p.name+sealBadge+'<\/button>';
+
   });
   sel+='</div>';
 
