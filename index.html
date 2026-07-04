@@ -784,9 +784,8 @@ function isMatchPlayed(mid){
 }
 
 function pSave(name,mid,side,val){
-  if(isLocked(name)) return;
   if(isMatchPlayed(mid)) return;  // partido ya jugado: no se puede editar
-  // Bloqueo automático por ronda
+  // Si la ronda está abierta, permitir guardar aunque el jugador haya bloqueado (nueva ronda)
   var _rk=mid&&mid.replace(/-\d+$/,''); if(_rk&&getRoundState(_rk)!=='open') return;
   if(!pPred[name]) pPred[name]={};
   if(!pPred[name][mid]) pPred[name][mid]={h:'',a:'',ht:'',at:'',pw:null,pl:null};
@@ -798,8 +797,8 @@ function pSave(name,mid,side,val){
   clearTimeout(rt); rt=setTimeout(function(){renderProContent();},600);
 }
 function pPW(name,mid,team){
-  if(isLocked(name)) return;
   if(isMatchPlayed(mid)) return;  // partido ya jugado: no se puede editar
+  // Si la ronda está abierta, permitir guardar aunque el jugador haya bloqueado (nueva ronda)
   var _rk2=mid&&mid.replace(/-\d+$/,''); if(_rk2&&getRoundState(_rk2)!=='open') return;
   if(!pPred[name]) pPred[name]={};
   var pm=pPred[name];
