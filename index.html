@@ -615,6 +615,17 @@ function lockPlayer(name) {
   syncToSheets(name);  // guardar con el flag _locked incluido
   renderProContent();
 }
+function saveCurRound(name) {
+  // Guarda y sincroniza los pronósticos de la ronda actual sin re-bloquear
+  if (!pPred[name]) pPred[name] = {};
+  localStorage.setItem(KEY + '_' + name, JSON.stringify(pPred[name]));
+  syncToSheets(name);
+  var t=document.createElement('div');
+  t.textContent='✅ Pronósticos guardados';
+  t.style.cssText='position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#1d4ed8;color:#bfdbfe;padding:10px 22px;border-radius:10px;font-weight:700;font-size:.9rem;z-index:9999;box-shadow:0 4px 16px #0008;pointer-events:none;transition:opacity .4s';
+  document.body.appendChild(t);
+  setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 400); }, 1800);
+}
 
 // ── Group standings ───────────────────────────────────────────────────────────
 var GROUPS = ['A','B','C','D','E','F','G','H','I','J','K','L'];
@@ -1382,10 +1393,21 @@ function renderPBracket(name){
   // ── Barra de lock manual ───────────────────────────────────────────────────
   var lockBar='';
   if(locked){
-    lockBar='<div class="lock-bar locked">'
-      +'<div class="lock-badge">🔒 Pronóstico guardado y bloqueado</div>'
-      +'<div class="lock-sub">Solo podés visualizarlo. No se puede modificar.</div>'
-      +'</div>';
+    // ¿Hay alguna ronda actualmente abierta? Si es así, mostrar botón de guardado para esa ronda
+    var openRound=PRNDS.find(function(r){ return getRoundState(r.k)==='open'; });
+    if(openRound){
+      var roundLabel=openRound.t.replace(/^[^\s]+\s/,''); // ej: "Octavos de Final"
+      lockBar='<div class="lock-bar">'
+        +'<div class="lock-badge" style="color:#60a5fa">✏️ '+roundLabel+' — en curso</div>'
+        +'<div class="lock-sub" style="margin-bottom:10px">Tus pronósticos de esta ronda se guardan automáticamente. Usá el botón para confirmar y sincronizar.</div>'
+        +'<button class="lock-btn" onclick="saveCurRound(\''+esc(name)+'\')" style="background:#1d4ed8">💾 Guardar pronósticos de '+roundLabel+'</button>'
+        +'</div>';
+    } else {
+      lockBar='<div class="lock-bar locked">'
+        +'<div class="lock-badge">🔒 Pronóstico guardado y bloqueado</div>'
+        +'<div class="lock-sub">Solo podés visualizarlo. No se puede modificar.</div>'
+        +'</div>';
+    }
   } else {
     lockBar='<div class="lock-bar">'
       +'<div class="lock-sub" style="margin-bottom:10px">Completá todo tu bracket antes de guardar. Una vez guardado no se puede editar.</div>'
