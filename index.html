@@ -1099,10 +1099,8 @@ function renderPronosticos() {
 
   // Player selector
   var sel='<div class="psel" id="psel">';
-    var openRndSel=PRNDS.find(function(r){return getRoundState(r.k)==='open';});
-players.forEach(function(p){
-      var sealBadge=openRndSel&&isSealedForRound(p.name,openRndSel.k)?' 🔒':'';
-  sel+='<button class="'+(p.name===curPlayer?'on':'')+'" onclick="selPlayer(\''+esc(p.name)+'\',this)">'+p.name+sealBadge+'</button>'';
+    players.forEach(function(p){
+    sel+='<button class="'+(p.name===curPlayer?'on':'')+'" onclick="selPlayer(\''+esc(p.name)+'\',this)">'+p.name+'</button>';
   });
   sel+='</div>';
 
