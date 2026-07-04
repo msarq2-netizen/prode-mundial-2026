@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🏆 Playoff – Prode Mundial 2026</title>
+<title>ð Playoff â Prode Mundial 2026</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh}
@@ -140,7 +140,7 @@ nav button:hover:not(.on){background:#475569;color:#e2e8f0}
 .mc.result{opacity:1}
 .mc-score{width:34px;text-align:center;font-weight:700;font-size:.95rem}
 
-/* Pronósticos sub-tabs */
+/* PronÃ³sticos sub-tabs */
 .pro-tabs{display:flex;gap:6px;margin-bottom:16px;border-bottom:1px solid #334155;padding-bottom:10px}
 .proto-tab{padding:7px 16px;border-radius:8px 8px 0 0;border:1px solid #334155;background:#1e293b;color:#64748b;cursor:pointer;font-size:.8rem;font-weight:600;transition:.15s;border-bottom:none}
 .proto-tab.on{background:#7c3aed;border-color:#7c3aed;color:#fff}
@@ -199,26 +199,26 @@ nav button:hover:not(.on){background:#475569;color:#e2e8f0}
 </head>
 <body>
 <div class="hdr">
-  <h1>🏆 Fase de Playoff · Prode Mundial 2026</h1>
-  <p id="st">⏳ Cargando datos...</p>
+  <h1>ð Fase de Playoff Â· Prode Mundial 2026</h1>
+  <p id="st">â³ Cargando datos...</p>
 </div>
 <nav>
-  <button class="on" onclick="tab('posiciones',this)">🏅 Posiciones</button>
-  <button onclick="tab('resultados',this)">📋 Resultados</button>
-  <button onclick="tab('pronosticos',this)">🔮 Pronósticos</button>
-  <button onclick="tab('fixture',this)">📅 Fixture</button>
-  <button id="gear-btn" onclick="toggleAdmin()" style="margin-left:auto" title="Admin">⚙️</button>
+  <button class="on" onclick="tab('posiciones',this)">ð Posiciones</button>
+  <button onclick="tab('resultados',this)">ð Resultados</button>
+  <button onclick="tab('pronosticos',this)">ð® PronÃ³sticos</button>
+  <button onclick="tab('fixture',this)">ð Fixture</button>
+  <button id="gear-btn" onclick="toggleAdmin()" style="margin-left:auto" title="Admin">âï¸</button>
 </nav>
 
 <!-- Admin modal -->
 <div id="admin-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:100;align-items:center;justify-content:center">
   <div style="background:#1e293b;border:1px solid #334155;border-radius:14px;padding:28px 32px;width:320px;max-width:90vw">
-    <h3 style="color:#fbbf24;margin-bottom:6px;font-size:1rem">⚙️ Acceso administrador</h3>
-    <p style="color:#64748b;font-size:.78rem;margin-bottom:18px">Ingresá la contraseña para cargar resultados.</p>
-    <input id="admin-pw-input" type="password" placeholder="Contraseña"
+    <h3 style="color:#fbbf24;margin-bottom:6px;font-size:1rem">âï¸ Acceso administrador</h3>
+    <p style="color:#64748b;font-size:.78rem;margin-bottom:18px">IngresÃ¡ la contraseÃ±a para cargar resultados.</p>
+    <input id="admin-pw-input" type="password" placeholder="ContraseÃ±a"
       style="width:100%;padding:10px 12px;background:#0f172a;border:1px solid #334155;border-radius:8px;color:#e2e8f0;font-size:.9rem;margin-bottom:12px;outline:none"
       onkeydown="if(event.key==='Enter')adminLogin()">
-    <p id="admin-pw-err" style="color:#ef4444;font-size:.75rem;margin-bottom:10px;display:none">Contraseña incorrecta.</p>
+    <p id="admin-pw-err" style="color:#ef4444;font-size:.75rem;margin-bottom:10px;display:none">ContraseÃ±a incorrecta.</p>
     <div style="display:flex;gap:10px">
       <button onclick="adminLogin()" style="flex:1;padding:10px;background:#2563eb;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:.85rem">Ingresar</button>
       <button onclick="closeAdminModal()" style="padding:10px 16px;background:#334155;color:#94a3b8;border:none;border-radius:8px;cursor:pointer;font-size:.85rem">Cancelar</button>
@@ -236,12 +236,12 @@ nav button:hover:not(.on){background:#475569;color:#e2e8f0}
 var BASE = 'https://msarq2-netizen.github.io/prode-mundial-2026/';
 var KEY  = 'po2026v1';
 var RKEY = 'r2026v1';
-// ── Google Sheets backend ─────────────────────────────────────────────────────
-// Pegá acá la URL del Apps Script desplegado (ver prode_backend.gs).
-// Si se deja vacío, el sistema funciona solo con localStorage (comportamiento anterior).
+// ââ Google Sheets backend âââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// PegÃ¡ acÃ¡ la URL del Apps Script desplegado (ver prode_backend.gs).
+// Si se deja vacÃ­o, el sistema funciona solo con localStorage (comportamiento anterior).
 var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbx8c33RBA7Zx-EXnF83voR-6iD_8-pruzG7ip1z7lOCDBMhvH0JvE4RlK_xxWRRfgAD/exec';
 var _syncTimer = null;
-// ─────────────────────────────────────────────────────────────────────────────
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 var R, M, P_raw, NAMES_raw;
 var standings = {}, qual = {};
 var players = [];   // [{name, pts, exact, corr}]
@@ -258,54 +258,54 @@ var BONUS_KEY = 'po2026v1_bonus';
 var bonusData = JSON.parse(localStorage.getItem(BONUS_KEY) || '{"actual":{}}');
 var BONUS_PTS  = {champ:10, sub:7, third:5, scorer:5};
 var BONUS_CATS = [
-  {k:'champ',  label:'Campeón 🏆',       pts:10},
-  {k:'sub',    label:'Subcampeón 🥈',     pts:7},
-  {k:'third',  label:'Tercer puesto 🥉',  pts:5},
-  {k:'scorer', label:'Goleador ⚽',       pts:5},
+  {k:'champ',  label:'CampeÃ³n ð',       pts:10},
+  {k:'sub',    label:'SubcampeÃ³n ð¥',     pts:7},
+  {k:'third',  label:'Tercer puesto ð¥',  pts:5},
+  {k:'scorer', label:'Goleador â½',       pts:5},
 ];
 
-// ── Flags ─────────────────────────────────────────────────────────────────────
-// ISO 3166-1 alpha-2 codes → flagcdn.com images (funciona en todos los navegadores)
+// ââ Flags âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ISO 3166-1 alpha-2 codes â flagcdn.com images (funciona en todos los navegadores)
 var FLAGS = {
   // Norte/Centro/Caribe
-  'México':'mx','Canadá':'ca','Canada':'ca',
+  'MÃ©xico':'mx','CanadÃ¡':'ca','Canada':'ca',
   'EEUU':'us','Estados Unidos':'us','USA':'us',
   'Jamaica':'jm','Honduras':'hn','Costa Rica':'cr',
-  'Panamá':'pa','El Salvador':'sv','Trinidad y Tobago':'tt',
-  'Curazao':'cw','Curaçao':'cw','Granada':'gd',
-  // Sudamérica
+  'PanamÃ¡':'pa','El Salvador':'sv','Trinidad y Tobago':'tt',
+  'Curazao':'cw','CuraÃ§ao':'cw','Granada':'gd',
+  // SudamÃ©rica
   'Argentina':'ar','Brasil':'br','Colombia':'co',
   'Uruguay':'uy','Chile':'cl','Ecuador':'ec',
-  'Perú':'pe','Paraguay':'py','Bolivia':'bo','Venezuela':'ve',
+  'PerÃº':'pe','Paraguay':'py','Bolivia':'bo','Venezuela':'ve',
   // Europa
-  'Alemania':'de','Francia':'fr','España':'es',
-  'Inglaterra':'gb-eng','Portugal':'pt','Bélgica':'be',
-  'Países Bajos':'nl','Holanda':'nl','Suiza':'ch',
+  'Alemania':'de','Francia':'fr','EspaÃ±a':'es',
+  'Inglaterra':'gb-eng','Portugal':'pt','BÃ©lgica':'be',
+  'PaÃ­ses Bajos':'nl','Holanda':'nl','Suiza':'ch',
   'Croacia':'hr','Dinamarca':'dk','Austria':'at',
   'Serbia':'rs','Polonia':'pl','Rumania':'ro',
-  'Turquía':'tr','Hungría':'hu','República Checa':'cz',
+  'TurquÃ­a':'tr','HungrÃ­a':'hu','RepÃºblica Checa':'cz',
   'Escocia':'gb-sct','Gales':'gb-wls','Ucrania':'ua',
   'Eslovenia':'si','Eslovaquia':'sk','Georgia':'ge',
   'Albania':'al','Bosnia-Herzegovina':'ba','Bosnia y Herzegovina':'ba',
   'Grecia':'gr','Italia':'it','Suecia':'se','Noruega':'no',
-  // África
+  // Ãfrica
   'Marruecos':'ma','Senegal':'sn','Nigeria':'ng',
-  'Costa de Marfil':'ci','Ghana':'gh','Camerún':'cm',
-  'Egipto':'eg','Argelia':'dz','Túnez':'tn',
-  'Sudáfrica':'za','Mali':'ml','Angola':'ao',
+  'Costa de Marfil':'ci','Ghana':'gh','CamerÃºn':'cm',
+  'Egipto':'eg','Argelia':'dz','TÃºnez':'tn',
+  'SudÃ¡frica':'za','Mali':'ml','Angola':'ao',
   'Tanzania':'tz','Mozambique':'mz','Zambia':'zm',
   'Cabo Verde':'cv','Guinea':'gn','Uganda':'ug',
-  'República Democrática del Congo':'cd','RD Congo':'cd',
-  'Etiopía':'et','Benín':'bj','Ruanda':'rw',
+  'RepÃºblica DemocrÃ¡tica del Congo':'cd','RD Congo':'cd',
+  'EtiopÃ­a':'et','BenÃ­n':'bj','Ruanda':'rw',
   // Asia / Medio Oriente
-  'Japón':'jp','Corea del Sur':'kr','Arabia Saudita':'sa',
-  'Irán':'ir','Australia':'au','Qatar':'qa',
-  'Irak':'iq','Iraq':'iq','Uzbekistán':'uz',
-  'Indonesia':'id','Jordania':'jo','Bahréin':'bh',
-  'Tayikistán':'tj','China':'cn','India':'in',
-  'Kirguistán':'kg','Siria':'sy',
-  // Oceanía
-  'Nueva Zelanda':'nz','Tahití':'pf','Fiyi':'fj',
+  'JapÃ³n':'jp','Corea del Sur':'kr','Arabia Saudita':'sa',
+  'IrÃ¡n':'ir','Australia':'au','Qatar':'qa',
+  'Irak':'iq','Iraq':'iq','UzbekistÃ¡n':'uz',
+  'Indonesia':'id','Jordania':'jo','BahrÃ©in':'bh',
+  'TayikistÃ¡n':'tj','China':'cn','India':'in',
+  'KirguistÃ¡n':'kg','Siria':'sy',
+  // OceanÃ­a
+  'Nueva Zelanda':'nz','TahitÃ­':'pf','Fiyi':'fj',
 };
 var FLAG_URL = 'https://flagcdn.com/w20/';
 function withFlag(name){
@@ -315,15 +315,15 @@ function withFlag(name){
   return '<img src="'+FLAG_URL+code+'.png" style="width:18px;height:13px;vertical-align:middle;margin-right:4px;border-radius:1px" alt="">'+name;
 }
 
-// Fallback: hardcoded names in standings order (as of última actualización)
-// Se usan si no se puede extraer NAMES[] del script de la página
+// Fallback: hardcoded names in standings order (as of Ãºltima actualizaciÃ³n)
+// Se usan si no se puede extraer NAMES[] del script de la pÃ¡gina
 var FALLBACK_NAMES = [
   'Marcelo Lugo','Diego Andino','Maximiliano Suarez','Ezequiel',
-  'Cosme Fulanito (MMosovich)','Martín Orfila','Genoveva',
+  'Cosme Fulanito (MMosovich)','MartÃ­n Orfila','Genoveva',
   'El Che Pibe','Alejandro Quintana','Tentaculos','Martin Guerra'
 ];
 
-// ── Tab ─────────────────────────────────────────────────────────────────────
+// ââ Tab âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function tab(id, btn) {
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('on'));
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
@@ -331,7 +331,7 @@ function tab(id, btn) {
   document.getElementById('panel-' + id).classList.add('on');
 }
 
-// ── Extract JS array from HTML source (handles single or double quotes) ──────
+// ââ Extract JS array from HTML source (handles single or double quotes) ââââââ
 function extractArr(html, marker) {
   // Try multiple spacing variants
   var variants = [marker, marker.replace('=','= '), marker.replace('=','=\n')];
@@ -364,7 +364,7 @@ function extractArr(html, marker) {
   return null;
 }
 
-// ── Init ─────────────────────────────────────────────────────────────────────
+// ââ Init âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 async function init() {
   try {
     var [rj, pageHtml, predJ] = await Promise.all([
@@ -376,7 +376,7 @@ async function init() {
     // Apply admin overrides saved locally
     var rOvr = JSON.parse(localStorage.getItem(RKEY)||'{}');
     Object.keys(rOvr).forEach(function(i){ R[parseInt(i)] = rOvr[i]; });
-    // Merge server playoff results (pred.json) → fuente de verdad para todos los dispositivos
+    // Merge server playoff results (pred.json) â fuente de verdad para todos los dispositivos
     Object.keys(predJ).forEach(function(k){ pred[k] = predJ[k]; });
     localStorage.setItem(KEY, JSON.stringify(pred));
 
@@ -397,19 +397,19 @@ async function init() {
 
     var played = R.filter(v => v !== null).length / 2;
     document.getElementById('st').textContent =
-      '✓ ' + M.length + ' partidos · ' + played + ' jugados · ' + players.length + ' participantes'
-      + (P_raw ? ' · scores calculados' : ' · scores del HTML');
+      'â ' + M.length + ' partidos Â· ' + played + ' jugados Â· ' + players.length + ' participantes'
+      + (P_raw ? ' Â· scores calculados' : ' Â· scores del HTML');
   } catch(e) {
-    document.getElementById('st').textContent = '❌ ' + e.message;
+    document.getElementById('st').textContent = 'â ' + e.message;
     console.error(e);
   }
 }
 
-// ── Build players list ────────────────────────────────────────────────────────
+// ââ Build players list ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function buildPlayers() {
   players = [];
 
-  // Strategy 1: NAMES[] + P[] → compute scores from scratch
+  // Strategy 1: NAMES[] + P[] â compute scores from scratch
   if (NAMES_raw && NAMES_raw.length && P_raw && P_raw.length) {
     var names = NAMES_raw;
     // Compute scores for each player
@@ -467,7 +467,7 @@ function buildPlayers() {
   });
 }
 
-// ── Score computation ─────────────────────────────────────────────────────────
+// ââ Score computation âââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function calcScore(pg) {
   var pts=0, exact=0, corr=0;
   for (var i=0; i<M.length; i++) {
@@ -487,7 +487,7 @@ function loadPPred() {
     var raw = localStorage.getItem(KEY + '_' + p.name);
     pPred[p.name] = raw ? JSON.parse(raw) : {};
   });
-  // 2. Sincronización en background desde Google Sheets (fuente de verdad)
+  // 2. SincronizaciÃ³n en background desde Google Sheets (fuente de verdad)
   if (!SHEETS_URL) return;
   fetch(SHEETS_URL + '?action=getAll&_=' + Date.now())
     .then(function(r) { return r.json(); })
@@ -499,7 +499,7 @@ function loadPPred() {
         if (sheetData && Object.keys(sheetData).length > 0) {
           pPred[p.name] = sheetData;
           localStorage.setItem(KEY + '_' + p.name, JSON.stringify(sheetData));
-          // Si el jugador selló, propagar el lock al localStorage local
+          // Si el jugador sellÃ³, propagar el lock al localStorage local
           if (sheetData._locked === '1') {
             localStorage.setItem(KEY + '_locked_' + p.name, '1');
           }
@@ -511,7 +511,7 @@ function loadPPred() {
     .catch(function(e) { console.warn('[Sheets] Error al cargar:', e); });
 }
 
-// Guarda los pronósticos de un jugador en Google Sheets (debounced 2s)
+// Guarda los pronÃ³sticos de un jugador en Google Sheets (debounced 2s)
 function syncToSheets(name) {
   if (!SHEETS_URL || !name) return;
   clearTimeout(_syncTimer);
@@ -525,39 +525,39 @@ function syncToSheets(name) {
   }, 2000);
 }
 
-// ── Lock system ───────────────────────────────────────────────────────────────
+// ââ Lock system âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 // Cada ronda cierra cuando arranca su primer partido (ART = UTC-3)
 // 'r32'  cierra: Dom 28/6 20:00 ART = 28/6 23:00 UTC
-// 'r16'  cierra: Sáb 5/7 12:00 ART  = 5/7  15:00 UTC  (estimado, antes del primer 8vo)
+// 'r16'  cierra: SÃ¡b 5/7 12:00 ART  = 5/7  15:00 UTC  (estimado, antes del primer 8vo)
 // 'qf'   cierra: Vie 11/7 13:00 ART = 11/7 16:00 UTC  (estimado)
 // 'sf'   cierra: Mar 15/7 13:00 ART = 15/7 16:00 UTC  (estimado)
 // 'final' cierra: Dom 19/7 13:00 ART = 19/7 16:00 UTC (estimado)
 var ROUND_DEADLINES = {
   r32:   new Date('2026-06-29T15:00:00Z'),
-  r16:   new Date('2026-07-04T17:00:00Z'),  // Sáb 4 Jul 14:00 ART, antes del primer 8vo
+  r16:   new Date('2026-07-04T17:00:00Z'),  // SÃ¡b 4 Jul 14:00 ART, antes del primer 8vo
   qf:    new Date('2026-07-11T16:00:00Z'),
   sf:    new Date('2026-07-15T16:00:00Z'),
   final: new Date('2026-07-19T16:00:00Z'),
 };
-// Etiqueta legible de cuándo abre cada ronda
+// Etiqueta legible de cuÃ¡ndo abre cada ronda
 var ROUND_OPEN_LABEL = {
-  r16:    'Sáb 4 Jul · 14:00 ART',
-  qf:     'Vie 11 Jul · 13:00 ART',
-  sf:     'Mar 15 Jul · 13:00 ART',
-  final:  'Dom 19 Jul · 13:00 ART',
+  r16:    'SÃ¡b 4 Jul Â· 14:00 ART',
+  qf:     'Vie 11 Jul Â· 13:00 ART',
+  sf:     'Mar 15 Jul Â· 13:00 ART',
+  final:  'Dom 19 Jul Â· 13:00 ART',
 };
-// Etiqueta de cuándo cierra cada ronda
+// Etiqueta de cuÃ¡ndo cierra cada ronda
 var ROUND_CLOSE_LABEL = {
-  r32:   'Lun 29/6 · 12:00 ART',
-  r16:   'Sáb 4 Jul · 14:00 ART',
-  qf:    'Vie 11 Jul · 13:00 ART',
-  sf:    'Mar 15 Jul · 13:00 ART',
-  final: 'Dom 19 Jul · 13:00 ART',
+  r32:   'Lun 29/6 Â· 12:00 ART',
+  r16:   'SÃ¡b 4 Jul Â· 14:00 ART',
+  qf:    'Vie 11 Jul Â· 13:00 ART',
+  sf:    'Mar 15 Jul Â· 13:00 ART',
+  final: 'Dom 19 Jul Â· 13:00 ART',
 };
 // Una ronda abre cuando la anterior cierra
 var ROUND_OPENS_AFTER = {r16:'r32', qf:'r16', sf:'qf', final:'sf', tercero:'sf'};
 
-// Devuelve 'open' | 'closed' | 'locked' (aún no habilitada)
+// Devuelve 'open' | 'closed' | 'locked' (aÃºn no habilitada)
 function getRoundState(k) {
   var now = new Date();
   var closeKey = (k==='tercero') ? 'final' : k;
@@ -568,7 +568,7 @@ function getRoundState(k) {
   }
   var prevKey = ROUND_OPENS_AFTER[k];
   var openTime = prevKey ? ROUND_DEADLINES[prevKey] : null;
-  if(openTime && now < openTime) return 'locked'; // todavía no abrió
+  if(openTime && now < openTime) return 'locked'; // todavÃ­a no abriÃ³
   if(now >= closeDL) return 'closed';
   return 'open';
 }
@@ -589,13 +589,13 @@ function getRoundCountdown(k) {
 function isR32AutoLocked() { return getRoundState('r32')==='closed'; }
 
 function isLocked(name) {
-  // Chequea localStorage (propio device) O el flag _locked dentro de pPred (sincronizado vía Sheets)
+  // Chequea localStorage (propio device) O el flag _locked dentro de pPred (sincronizado vÃ­a Sheets)
   return localStorage.getItem(KEY + '_locked_' + name) === '1' ||
          !!(pPred[name] && pPred[name]._locked === '1');
 }
 
-// Devuelve true si hay que ocultar el pronóstico de 'name' a otros jugadores
-// (está sellado Y el plazo de carga aún no venció)
+// Devuelve true si hay que ocultar el pronÃ³stico de 'name' a otros jugadores
+// (estÃ¡ sellado Y el plazo de carga aÃºn no venciÃ³)
 function isSealed(name) {
   if (!isLocked(name)) return false;
   var now = new Date();
@@ -603,8 +603,8 @@ function isSealed(name) {
   return now < ROUND_DEADLINES.r32;
 }
 
-// Devuelve true si el jugador selló sus picks para una ronda específica
-// y el plazo de esa ronda aún no venció → oculta a otros jugadores
+// Devuelve true si el jugador sellÃ³ sus picks para una ronda especÃ­fica
+// y el plazo de esa ronda aÃºn no venciÃ³ â oculta a otros jugadores
 function isSealedForRound(name, roundKey) {
   var pp = pPred[name] || {};
   var flag = pp['_locked_' + roundKey] === '1' ||
@@ -614,9 +614,9 @@ function isSealedForRound(name, roundKey) {
   return dl ? new Date() < dl : false;
 }
 function lockPlayer(name) {
-  if (!confirm('¿Seguro que querés sellar tu pronóstico?\n\n' +
-    'Una vez sellado NO vas a poder editarlo más.\n' +
-    'Otros jugadores no podrán ver tus picks hasta que venza el plazo.\n\n' +
+  if (!confirm('Â¿Seguro que querÃ©s sellar tu pronÃ³stico?\n\n' +
+    'Una vez sellado NO vas a poder editarlo mÃ¡s.\n' +
+    'Otros jugadores no podrÃ¡n ver tus picks hasta que venza el plazo.\n\n' +
     'Jugador: ' + name)) return;
   if (!pPred[name]) pPred[name] = {};
   pPred[name]._locked = '1';  // se sincroniza a Sheets para que todos lo vean
@@ -626,12 +626,12 @@ function lockPlayer(name) {
   renderProContent();
 }
 function saveCurRound(name) {
-  // Guarda y sincroniza los pronósticos de la ronda actual sin re-bloquear
+  // Guarda y sincroniza los pronÃ³sticos de la ronda actual sin re-bloquear
   if (!pPred[name]) pPred[name] = {};
   localStorage.setItem(KEY + '_' + name, JSON.stringify(pPred[name]));
   syncToSheets(name);
   var t=document.createElement('div');
-  t.textContent='✅ Pronósticos guardados';
+  t.textContent='â PronÃ³sticos guardados';
   t.style.cssText='position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#1d4ed8;color:#bfdbfe;padding:10px 22px;border-radius:10px;font-weight:700;font-size:.9rem;z-index:9999;box-shadow:0 4px 16px #0008;pointer-events:none;transition:opacity .4s';
   document.body.appendChild(t);
   setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 400); }, 1800);
@@ -640,7 +640,7 @@ function lockCurRound(name) {
   var openRound = PRNDS.find(function(r){ return getRoundState(r.k) === 'open'; });
   if (!openRound) return;
   var roundLabel = openRound.t.replace(/^[^\s]+\s/, '');
-  if (!confirm('¿Sellar tus picks de ' + roundLabel + '?\n\nOtros jugadores no podrán ver tus pronósticos hasta que cierre el plazo.\n\nJugador: ' + name)) return;
+  if (!confirm('Â¿Sellar tus picks de ' + roundLabel + '?\n\nOtros jugadores no podrÃ¡n ver tus pronÃ³sticos hasta que cierre el plazo.\n\nJugador: ' + name)) return;
   if (!pPred[name]) pPred[name] = {};
   pPred[name]['_locked_' + openRound.k] = '1';
   localStorage.setItem(KEY + '_locked_' + openRound.k + '_' + name, '1');
@@ -648,13 +648,13 @@ function lockCurRound(name) {
   syncToSheets(name);
   renderProContent();
   var t = document.createElement('div');
-  t.textContent = '🔒 ' + roundLabel + ' sellado';
+  t.textContent = 'ð ' + roundLabel + ' sellado';
   t.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#7c3aed;color:#ede9fe;padding:10px 22px;border-radius:10px;font-weight:700;font-size:.9rem;z-index:9999;box-shadow:0 4px 16px #0008;pointer-events:none;transition:opacity .4s';
   document.body.appendChild(t);
   setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 400); }, 2000);
 }
 
-// ── Group standings ───────────────────────────────────────────────────────────
+// ââ Group standings âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 var GROUPS = ['A','B','C','D','E','F','G','H','I','J','K','L'];
 
 function compute() {
@@ -687,7 +687,7 @@ function compute() {
   for(var i=0;i<8;i++) qual['T3-'+(i+1)] = thirds[i]?thirds[i].t:'?';
 }
 
-// ── Resolución de posiciones (solo muestra equipo si el grupo terminó) ─────────
+// ââ ResoluciÃ³n de posiciones (solo muestra equipo si el grupo terminÃ³) âââââââââ
 var T3_POOLS = {
   'T3-1':'A/B/C/D/F','T3-2':'C/D/F/G/H','T3-3':'C/E/F/H/I','T3-4':'E/H/I/J/K',
   'T3-5':'B/E/F/I/J','T3-6':'A/E/H/I/J','T3-7':'E/F/G/I/J','T3-8':'D/E/I/J/L',
@@ -702,51 +702,51 @@ function allGroupsDone() {
   return GROUPS.every(function(g){ return isGroupFinished(g); });
 }
 
-// Devuelve nombre del equipo si la instancia está confirmada, o etiqueta posicional si no
+// Devuelve nombre del equipo si la instancia estÃ¡ confirmada, o etiqueta posicional si no
 function qualResolved(code) {
   if (!code) return '?';
   if (code.startsWith('T3-')) {
     var pool = T3_POOLS[code] || '?';
-    if (allGroupsDone()) return qual[code] || ('3° '+pool);
-    return '3° Gr. '+pool;
+    if (allGroupsDone()) return qual[code] || ('3Â° '+pool);
+    return '3Â° Gr. '+pool;
   }
-  // Si el código no es un código posicional estándar (1A-2L), es un nombre directo
+  // Si el cÃ³digo no es un cÃ³digo posicional estÃ¡ndar (1A-2L), es un nombre directo
   if (!/^[12][A-L]$/.test(code)) return code;
   var rank = code[0]; // '1' o '2'
   var grp  = code[1]; // 'A'-'L'
-  if (isGroupFinished(grp)) return qual[code] || ((rank==='1'?'1°':'2°')+' Gr. '+grp);
-  return (rank==='1'?'1°':'2°')+' Gr. '+grp;
+  if (isGroupFinished(grp)) return qual[code] || ((rank==='1'?'1Â°':'2Â°')+' Gr. '+grp);
+  return (rank==='1'?'1Â°':'2Â°')+' Gr. '+grp;
 }
 
-// ── Playoff match definitions ─────────────────────────────────────────────────
+// ââ Playoff match definitions âââââââââââââââââââââââââââââââââââââââââââââââââ
 var DEF = {
-  // Round of 32 — bracket oficial FIFA 2026 (M73–M88)
-  // T3-1..T3-8 = mejores 8 terceros (asignación final post-grupos según FIFA)
-  'r32-1' :{h:'Sudáfrica',       a:'Canadá'},              // confirmado
+  // Round of 32 â bracket oficial FIFA 2026 (M73âM88)
+  // T3-1..T3-8 = mejores 8 terceros (asignaciÃ³n final post-grupos segÃºn FIFA)
+  'r32-1' :{h:'SudÃ¡frica',       a:'CanadÃ¡'},              // confirmado
   'r32-2' :{h:'Alemania',        a:'Paraguay'},               // Alemania confirmada; T3 pendiente
-  'r32-3' :{h:'Países Bajos',    a:'Marruecos'},          // confirmado
-  'r32-4' :{h:'Brasil',          a:'Japón'},              // confirmado
+  'r32-3' :{h:'PaÃ­ses Bajos',    a:'Marruecos'},          // confirmado
+  'r32-4' :{h:'Brasil',          a:'JapÃ³n'},              // confirmado
   'r32-5' :{h:'Francia',         a:'Suecia'},               // Francia confirmada; T3 pendiente
   'r32-6' :{h:'Costa de Marfil', a:'Noruega'},            // confirmado
-  'r32-7' :{h:'México',          a:'Ecuador'},             // confirmado
+  'r32-7' :{h:'MÃ©xico',          a:'Ecuador'},             // confirmado
   'r32-8' :{h:'Inglaterra',      a:'Congo DR'},            // confirmado
   'r32-9' :{h:'Estados Unidos',  a:'Bosnia y Herzegovina'}, // confirmado
-  'r32-10':{h:'Bélgica',         a:'Senegal'},             // confirmado
+  'r32-10':{h:'BÃ©lgica',         a:'Senegal'},             // confirmado
   'r32-11':{h:'Portugal',        a:'2L'},                  // Portugal 2K confirmado; 2L pendiente
-  'r32-12':{h:'España',          a:'Austria'},             // confirmado
+  'r32-12':{h:'EspaÃ±a',          a:'Austria'},             // confirmado
   'r32-13':{h:'Suiza',           a:'Argelia'},             // confirmado
   'r32-14':{h:'Argentina',       a:'Cabo Verde'},         // confirmado
   'r32-15':{h:'Colombia',        a:'Ghana'},               // confirmado
   'r32-16':{h:'Australia',       a:'Egipto'},              // confirmado
-  // Round of 16 — bracket FIFA: M89=r32-2vsR32-5, M90=r32-1vsR32-3, M91=r32-4vsR32-6, M92=r32-7vsR32-8, M93=r32-11vsR32-12, M94=r32-9vsR32-10, M95=r32-14vsR32-16, M96=r32-13vsR32-15
-  'r16-1':{h:'Paraguay',   a:'Francia'},      // M89: gan.r32-2 vs gan.r32-5 ✓
-  'r16-2':{h:'Canadá',     a:'Marruecos'},    // M90: gan.r32-1 vs gan.r32-3 ✓
-  'r16-3':{h:'Portugal',   a:'España'},        // M93: gan.r32-11 vs gan.r32-12 ✓
-  'r16-4':{h:'Estados Unidos', a:'Bélgica'},  // M94: gan.r32-9  vs gan.r32-10 ✓
-  'r16-5':{h:'Brasil',     a:'Noruega'},      // M91: gan.r32-4  vs gan.r32-6  ✓
-  'r16-6':{h:'México',     a:'Inglaterra'},   // M92: gan.r32-7  vs gan.r32-8  ✓
-  'r16-7':{h:'Argentina',a:'Egipto'},          // M95: gan.r32-14 vs gan.r32-16 ✓
-  'r16-8':{h:'Suiza',a:'Colombia'},            // M96: gan.r32-13 vs gan.r32-15 ✓
+  // Round of 16 â bracket FIFA: M89=r32-2vsR32-5, M90=r32-1vsR32-3, M91=r32-4vsR32-6, M92=r32-7vsR32-8, M93=r32-11vsR32-12, M94=r32-9vsR32-10, M95=r32-14vsR32-16, M96=r32-13vsR32-15
+  'r16-1':{h:'Paraguay',   a:'Francia'},      // M89: gan.r32-2 vs gan.r32-5 â
+  'r16-2':{h:'CanadÃ¡',     a:'Marruecos'},    // M90: gan.r32-1 vs gan.r32-3 â
+  'r16-3':{h:'Portugal',   a:'EspaÃ±a'},        // M93: gan.r32-11 vs gan.r32-12 â
+  'r16-4':{h:'Estados Unidos', a:'BÃ©lgica'},  // M94: gan.r32-9  vs gan.r32-10 â
+  'r16-5':{h:'Brasil',     a:'Noruega'},      // M91: gan.r32-4  vs gan.r32-6  â
+  'r16-6':{h:'MÃ©xico',     a:'Inglaterra'},   // M92: gan.r32-7  vs gan.r32-8  â
+  'r16-7':{h:'Argentina',a:'Egipto'},          // M95: gan.r32-14 vs gan.r32-16 â
+  'r16-8':{h:'Suiza',a:'Colombia'},                   // M96: gan.r32-13 vs gan.r32-15 (Suiza confirmado)
   // Cuartos
   'qf-1':{hp:'r16-1',ap:'r16-2'},'qf-2':{hp:'r16-3',ap:'r16-4'},
   'qf-3':{hp:'r16-5',ap:'r16-6'},'qf-4':{hp:'r16-7',ap:'r16-8'},
@@ -757,12 +757,12 @@ var DEF = {
   'tercero':{hp:'sf-1',ap:'sf-2',loser:true},
 };
 
-// ── Admin bracket (real results) ──────────────────────────────────────────────
+// ââ Admin bracket (real results) ââââââââââââââââââââââââââââââââââââââââââââââ
 function aTeam(mid, isH) {
   var d=DEF[mid]; if(!d) return '?';
   if(d.h) return qualResolved(isH?d.h:d.a);
   var prev=isH?d.hp:d.ap;
-  return d.loser?(aLsr(prev)||'— Por definir —'):(aWin(prev)||'— Por definir —');
+  return d.loser?(aLsr(prev)||'â Por definir â'):(aWin(prev)||'â Por definir â');
 }
 function aWin(mid){
   var p=pred[mid]; if(!p) return null;
@@ -798,12 +798,12 @@ function aPW(mid,team){
   renderBracket(); renderFixture();
 }
 
-// ── Player bracket ────────────────────────────────────────────────────────────
+// ââ Player bracket ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function pTeam(mid, isH, name) {
   var d=DEF[mid]; if(!d) return '?';
   if(d.h) return qualResolved(isH?d.h:d.a);
   var prev=isH?d.hp:d.ap;
-  return d.loser?(pLsr(prev,name)||'— Por definir —'):(pWin(prev,name)||'— Por definir —');
+  return d.loser?(pLsr(prev,name)||'â Por definir â'):(pWin(prev,name)||'â Por definir â');
 }
 function pWin(mid,name){
   var pp=pPred[name]||{}; var p=pp[mid]; if(!p) return null;
@@ -823,7 +823,7 @@ function isMatchPlayed(mid){
 
 function pSave(name,mid,side,val){
   if(isMatchPlayed(mid)) return;  // partido ya jugado: no se puede editar
-  // Si la ronda está abierta, permitir guardar aunque el jugador haya bloqueado (nueva ronda)
+  // Si la ronda estÃ¡ abierta, permitir guardar aunque el jugador haya bloqueado (nueva ronda)
   var _rk=mid&&mid.replace(/-\d+$/,''); if(_rk&&getRoundState(_rk)!=='open') return;
   if(!pPred[name]) pPred[name]={};
   if(!pPred[name][mid]) pPred[name][mid]={h:'',a:'',ht:'',at:'',pw:null,pl:null};
@@ -836,7 +836,7 @@ function pSave(name,mid,side,val){
 }
 function pPW(name,mid,team){
   if(isMatchPlayed(mid)) return;  // partido ya jugado: no se puede editar
-  // Si la ronda está abierta, permitir guardar aunque el jugador haya bloqueado (nueva ronda)
+  // Si la ronda estÃ¡ abierta, permitir guardar aunque el jugador haya bloqueado (nueva ronda)
   var _rk2=mid&&mid.replace(/-\d+$/,''); if(_rk2&&getRoundState(_rk2)!=='open') return;
   if(!pPred[name]) pPred[name]={};
   var pm=pPred[name];
@@ -848,7 +848,7 @@ function pPW(name,mid,team){
   renderProContent();
 }
 
-// ── Card builders ─────────────────────────────────────────────────────────────
+// ââ Card builders âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function esc(s){ return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
 
 function adminCard(mid) {
@@ -870,11 +870,11 @@ function playerCard(mid, name) {
   else {pp[mid].ht=ht;pp[mid].at=at;}
   var p=pp[mid]; var en=esc(name);
   var locked=isLocked(name);
-  // Si el partido ya fue jugado → solo lectura, independientemente del lock del jugador
+  // Si el partido ya fue jugado â solo lectura, independientemente del lock del jugador
   if(isMatchPlayed(mid)){
     return cardReadOnly(mid,ht,at,p.h,p.a,p.pw);
   }
-  // Si la ronda está abierta, ignorar el lock (permite editar nueva ronda aunque hayan sellado la anterior)
+  // Si la ronda estÃ¡ abierta, ignorar el lock (permite editar nueva ronda aunque hayan sellado la anterior)
   var rndKey=mid.replace(/-\d+$/,'');
   var rndOpen=getRoundState(rndKey)==='open';
   if(locked && !rndOpen){
@@ -900,16 +900,16 @@ function playerCardRO(mid, name) {
 
 function cardReadOnly(mid,ht,at,hv,av,pw){
   var hi=parseInt(hv),ai=parseInt(av);
-  var htbd=ht==='— Por definir —',atbd=at==='— Por definir —';
+  var htbd=ht==='â Por definir â',atbd=at==='â Por definir â';
   var win='';
   if(!isNaN(hi)&&!isNaN(ai)){if(hi>ai)win=ht;else if(ai>hi)win=at;else win=pw||'';}
-  var scoreH=(!isNaN(hi)?hv:'—'), scoreA=(!isNaN(ai)?av:'—');
+  var scoreH=(!isNaN(hi)?hv:'â'), scoreA=(!isNaN(ai)?av:'â');
   var htD=htbd?'Por definir':withFlag(ht), atD=atbd?'Por definir':withFlag(at);
   var pen='';
   if(!isNaN(hi)&&!isNaN(ai)&&hi===ai&&pw&&!htbd&&!atbd){
-    pen='<div class="pen-row" style="opacity:.7">⚽ Penales: <strong style="color:#fef3c7">'+withFlag(pw)+'</strong></div>';
+    pen='<div class="pen-row" style="opacity:.7">â½ Penales: <strong style="color:#fef3c7">'+withFlag(pw)+'</strong></div>';
   }
-  return '<div class="mc" style="opacity:.85"><div class="mc-id">'+mid.toUpperCase()+' 🔒</div>'
+  return '<div class="mc" style="opacity:.85"><div class="mc-id">'+mid.toUpperCase()+' ð</div>'
     +'<div class="mc-row"><span class="mn'+(htbd?' tbd':win===ht?' win':'')+'" title="'+ht+'">'+htD+'</span>'
     +'<span style="width:34px;text-align:center;font-weight:700;color:'+(win===ht?'#22c55e':'#94a3b8')+'">'+scoreH+'</span></div>'
     +'<div class="mc-row"><span class="mn'+(atbd?' tbd':win===at?' win':'')+'" title="'+at+'">'+atD+'</span>'
@@ -920,13 +920,13 @@ function cardReadOnly(mid,ht,at,hv,av,pw){
 function card(mid,ht,at,hv,av,pw,onH,onA,onPH,onPA) {
   var hi=parseInt(hv),ai=parseInt(av);
   var isDraw=!isNaN(hi)&&!isNaN(ai)&&hi===ai;
-  var htbd=ht==='— Por definir —', atbd=at==='— Por definir —';
+  var htbd=ht==='â Por definir â', atbd=at==='â Por definir â';
   var win='';
   if(!isNaN(hi)&&!isNaN(ai)){if(hi>ai)win=ht;else if(ai>hi)win=at;else win=pw||'';}
   var htD=htbd?'Por definir':withFlag(ht), atD=atbd?'Por definir':withFlag(at);
   var pen='';
   if(isDraw&&!htbd&&!atbd){
-    pen='<div class="pen-row">⚽ Penales:'
+    pen='<div class="pen-row">â½ Penales:'
       +'<button class="pb'+(pw===ht?' on':'')+'" onclick="'+onPH+'" title="'+ht+'">'+withFlag(ht)+'</button>'
       +'<button class="pb'+(pw===at?' on':'')+'" onclick="'+onPA+'" title="'+at+'">'+withFlag(at)+'</button>'
       +'</div>';
@@ -939,12 +939,12 @@ function card(mid,ht,at,hv,av,pw,onH,onA,onPH,onPA) {
     +pen+'</div>';
 }
 
-// ── Render: Groups ────────────────────────────────────────────────────────────
+// ââ Render: Groups ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function renderGroups() {
   var h='<div class="g-grid">';
   GROUPS.forEach(function(g){
     if(!standings[g]||!standings[g].length) return;
-    h+='<div class="g-card"><div class="g-head">Grupo '+g+' <span>PJ · PTS · GF · GC · DIF</span></div>'
+    h+='<div class="g-card"><div class="g-head">Grupo '+g+' <span>PJ Â· PTS Â· GF Â· GC Â· DIF</span></div>'
       +'<table><thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>PTS</th><th>GF</th><th>GC</th><th>DIF</th></tr></thead><tbody>';
     standings[g].forEach(function(t,i){
       h+='<tr class="'+(i===0?'q1':i===1?'q2':i===2?'q3':'')+'">'
@@ -957,23 +957,23 @@ function renderGroups() {
   document.getElementById('panel-grupos').innerHTML=h+'</div>'+thirdsHtml();
 }
 
-// ── Render: Thirds (inline, used inside Grupos panel) ─────────────────────────
+// ââ Render: Thirds (inline, used inside Grupos panel) âââââââââââââââââââââââââ
 function thirdsHtml() {
   var thirds=[];
   GROUPS.forEach(function(g){if(standings[g]&&standings[g][2])thirds.push(Object.assign({},standings[g][2],{grp:g}));});
   thirds.sort((a,b)=>(b.pts-a.pts)||(b.gd-a.gd)||(b.gf-a.gf));
-  var h='<div class="box" style="margin-top:18px"><div class="box-h">🥉 Ranking de Terceros <span>Clasifican los mejores 8</span></div>'
-    +'<table><thead><tr><th>#</th><th>Equipo</th><th>Grupo</th><th>PJ</th><th>PTS</th><th>GF</th><th>GC</th><th>DIF</th><th>¿Clasifica?</th></tr></thead><tbody>';
+  var h='<div class="box" style="margin-top:18px"><div class="box-h">ð¥ Ranking de Terceros <span>Clasifican los mejores 8</span></div>'
+    +'<table><thead><tr><th>#</th><th>Equipo</th><th>Grupo</th><th>PJ</th><th>PTS</th><th>GF</th><th>GC</th><th>DIF</th><th>Â¿Clasifica?</th></tr></thead><tbody>';
   thirds.forEach(function(t,i){
     h+='<tr><td>'+(i+1)+'</td><td>'+withFlag(t.t)+'</td><td>'+t.grp+'</td>'
       +'<td>'+t.pj+'</td><td><strong>'+t.pts+'</strong></td>'
       +'<td>'+t.gf+'</td><td>'+t.ga+'</td><td>'+(t.gd>0?'+':'')+t.gd+'</td>'
-      +'<td class="'+(i<8?'ok':'no')+'">'+(i<8?'✅ Sí':'❌ No')+'</td></tr>';
+      +'<td class="'+(i<8?'ok':'no')+'">'+(i<8?'â SÃ­':'â No')+'</td></tr>';
   });
   return h+'</tbody></table></div>';
 }
 
-// ── Bonus helpers ─────────────────────────────────────────────────────────────
+// ââ Bonus helpers âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 // picks vienen de P_raw (datos en vivo del sitio), solo "actual" va a localStorage
 function saveBonus(){ localStorage.setItem(BONUS_KEY, JSON.stringify(bonusData)); }
 function cmpNorm(a,b){ return !!(a&&b&&a.trim().toLowerCase()===b.trim().toLowerCase()); }
@@ -1006,11 +1006,11 @@ function saveActual(key,val){
   renderResContent();
 }
 
-// ── Render: Standings ─────────────────────────────────────────────────────────
+// ââ Render: Standings âââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function renderStandings() {
   if(!players.length){
     document.getElementById('panel-posiciones').innerHTML=
-      '<div class="note">No se pudieron cargar los participantes. Verificá que la página principal esté accesible.</div>';
+      '<div class="note">No se pudieron cargar los participantes. VerificÃ¡ que la pÃ¡gina principal estÃ© accesible.</div>';
     return;
   }
   var played = M.filter(function(m){return R[(m[0]-1)*2]!==null;}).length;
@@ -1026,13 +1026,13 @@ function renderStandings() {
   enriched.sort(function(a,b){ return (b.total-a.total)||(b.exact-a.exact)||(b.corr-a.corr); });
   var hasPlayoff = enriched.some(function(p){ return p.plPts>0; });
 
-  // ── Podio top 3 ────────────────────────────────────────────────────────────
+  // ââ Podio top 3 ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
   var podCfg=[
-    {cls:'p2',trophy:'🥈',idx:1},  // orden visual: 2do izq, 1ro centro, 3ro der
-    {cls:'p1',trophy:'🥇',idx:0},
-    {cls:'p3',trophy:'🥉',idx:2},
+    {cls:'p2',trophy:'ð¥',idx:1},  // orden visual: 2do izq, 1ro centro, 3ro der
+    {cls:'p1',trophy:'ð¥',idx:0},
+    {cls:'p3',trophy:'ð¥',idx:2},
   ];
-  var podH='<div class="box" style="padding-bottom:0"><div class="box-h">🏅 Posiciones <span>'+played+'/72 partidos · Fase de Grupos</span></div>'
+  var podH='<div class="box" style="padding-bottom:0"><div class="box-h">ð Posiciones <span>'+played+'/72 partidos Â· Fase de Grupos</span></div>'
     +'<div class="podium-wrap">';
   podCfg.forEach(function(cfg){
     var p=enriched[cfg.idx];
@@ -1052,8 +1052,8 @@ function renderStandings() {
     +'<th>#</th>'
     +'<th class="col-name">Jugador</th>'
     +(hasBonus?'<th class="col-detail" title="Puntos fase de grupos">Grupos</th>':'')
-    +(hasBonus?'<th title="Puntos pronósticos especiales" style="color:#f59e0b">+Bonus</th>':'')
-    +(hasPlayoff?'<th title="Puntos playoff (base+penales)" style="color:#a78bfa">⚡Playoff</th>':'')
+    +(hasBonus?'<th title="Puntos pronÃ³sticos especiales" style="color:#f59e0b">+Bonus</th>':'')
+    +(hasPlayoff?'<th title="Puntos playoff (base+penales)" style="color:#a78bfa">â¡Playoff</th>':'')
     +'<th title="Puntos totales">Total</th>'
     +'<th class="col-detail" title="Resultado exacto (3pts)"><span class="tag-ex">EX</span></th>'
     +'<th class="col-detail" title="Resultado correcto (1pt)"><span class="tag-re">RE</span></th>'
@@ -1061,7 +1061,7 @@ function renderStandings() {
 
   enriched.forEach(function(p,i){
     var rc=i===0?'r1':i===1?'r2':i===2?'r3':'';
-    var med=i===0?' 🥇':i===1?' 🥈':i===2?' 🥉':'';
+    var med=i===0?' ð¥':i===1?' ð¥':i===2?' ð¥':'';
     h+='<tr>'
       +'<td class="'+rc+'" style="font-weight:700;width:32px">'+(i+1)+med+'</td>'
       +'<td class="col-name">'+p.name+'</td>'
@@ -1077,18 +1077,18 @@ function renderStandings() {
 
   // Bonus legend
   if(hasBonus){
-    h+='<div class="note gap"><strong style="color:#f59e0b">Extras (pronósticos especiales):</strong> '
-      +'Campeón +10pts · Subcampeón +7pts · 3er puesto +5pts · Goleador +5pts. '
-      +'Cargados por el admin · los resultados se confirman al final del torneo.</div>';
+    h+='<div class="note gap"><strong style="color:#f59e0b">Extras (pronÃ³sticos especiales):</strong> '
+      +'CampeÃ³n +10pts Â· SubcampeÃ³n +7pts Â· 3er puesto +5pts Â· Goleador +5pts. '
+      +'Cargados por el admin Â· los resultados se confirman al final del torneo.</div>';
   } else {
-    h+='<div class="note gap"><strong>EX</strong> = resultado exacto (3 pts) · <strong>RE</strong> = resultado correcto (1 pt). '
-      +'Los pronósticos especiales (campeón, goleador…) se cargarán vía el ⚙️ admin.</div>';
+    h+='<div class="note gap"><strong>EX</strong> = resultado exacto (3 pts) Â· <strong>RE</strong> = resultado correcto (1 pt). '
+      +'Los pronÃ³sticos especiales (campeÃ³n, goleadorâ¦) se cargarÃ¡n vÃ­a el âï¸ admin.</div>';
   }
   h+='</div>'; // cierre del box de la tabla
   document.getElementById('panel-posiciones').innerHTML=h;
 }
 
-// ── Render: Pronosticos ───────────────────────────────────────────────────────
+// ââ Render: Pronosticos âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function renderPronosticos() {
   if(!players.length){
     document.getElementById('panel-pronosticos').innerHTML=
@@ -1099,16 +1099,16 @@ function renderPronosticos() {
 
   // Player selector
   var sel='<div class="psel" id="psel">';
-    players.forEach(function(p){
+  players.forEach(function(p){
     sel+='<button class="'+(p.name===curPlayer?'on':'')+'" onclick="selPlayer(\''+esc(p.name)+'\',this)">'+p.name+'</button>';
   });
   sel+='</div>';
 
   // Sub-tabs
   var tabs='<div class="pro-tabs">'
-    +'<button class="proto-tab'+(proSubTab==='grupos'?' on':'')+'" data-tab="grupos" onclick="switchProTab(\'grupos\')">📊 Fase de Grupos</button>'
-    +'<button class="proto-tab'+(proSubTab==='playoff'?' on':'')+'" data-tab="playoff" onclick="switchProTab(\'playoff\')">🏆 Playoff</button>'
-    +'<button class="proto-tab'+(proSubTab==='extras'?' on':'')+'" data-tab="extras" onclick="switchProTab(\'extras\')" style="color:#f59e0b">⭐ Extras</button>'
+    +'<button class="proto-tab'+(proSubTab==='grupos'?' on':'')+'" data-tab="grupos" onclick="switchProTab(\'grupos\')">ð Fase de Grupos</button>'
+    +'<button class="proto-tab'+(proSubTab==='playoff'?' on':'')+'" data-tab="playoff" onclick="switchProTab(\'playoff\')">ð Playoff</button>'
+    +'<button class="proto-tab'+(proSubTab==='extras'?' on':'')+'" data-tab="extras" onclick="switchProTab(\'extras\')" style="color:#f59e0b">â­ Extras</button>'
     +'</div>';
 
   document.getElementById('panel-pronosticos').innerHTML=sel+tabs+'<div id="pro-content"></div>';
@@ -1144,10 +1144,10 @@ function renderProContent(){
   }
 }
 
-// ── Grupos predictions ────────────────────────────────────────────────────────
+// ââ Grupos predictions ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function renderGruposContent(name){
   if(!P_raw||!NAMES_raw||!M||!R){
-    return '<div class="note">Los datos de fase de grupos no están disponibles aún.</div>';
+    return '<div class="note">Los datos de fase de grupos no estÃ¡n disponibles aÃºn.</div>';
   }
   // Find player index by name
   var idx=-1;
@@ -1155,7 +1155,7 @@ function renderGruposContent(name){
     if(NAMES_raw[i]===name){idx=i;break;}
   }
   if(idx<0||!P_raw[idx]){
-    return '<div class="note">No se encontraron pronósticos de fase de grupos para <strong>'+name+'</strong>.</div>';
+    return '<div class="note">No se encontraron pronÃ³sticos de fase de grupos para <strong>'+name+'</strong>.</div>';
   }
   var g=P_raw[idx].g||[];
 
@@ -1197,7 +1197,7 @@ function renderGruposContent(name){
       +'</div>';
     ms.forEach(function(m,i){
       var predStr=m.hasPred?m.predH+'-'+m.predA:'?';
-      var actStr=m.hasAct?m.actH+'-'+m.actA:'—';
+      var actStr=m.hasAct?m.actH+'-'+m.actA:'â';
       var pts=m.pts;
       var ptsCol=pts===3?'#22c55e':pts===1?'#fbbf24':'#475569';
       var ptsStr=(m.hasAct&&m.hasPred)?String(pts):'';
@@ -1226,23 +1226,23 @@ function renderGruposContent(name){
 
   // Summary bar
   var summary='<div class="gp-sum">'
-    +'<span style="color:#94a3b8">Fase de grupos — <strong>'+name+'</strong></span>'
+    +'<span style="color:#94a3b8">Fase de grupos â <strong>'+name+'</strong></span>'
     +'<span class="pts">'+totalPts+' pts</span>'
-    +'<span class="sub">'+totalEx+' exactos (×3)</span>'
-    +'<span class="sub">'+totalRe+' resultados (×1)</span>'
+    +'<span class="sub">'+totalEx+' exactos (Ã3)</span>'
+    +'<span class="sub">'+totalRe+' resultados (Ã1)</span>'
     +'</div>';
 
   return summary+cards;
 }
 
 var PRNDS=[
-  {k:'r32',t:'⚽ Dieciseisavos de Final',ids:['r32-1','r32-2','r32-3','r32-4','r32-5','r32-6','r32-7','r32-8','r32-9','r32-10','r32-11','r32-12','r32-13','r32-14','r32-15','r32-16']},
-  {k:'r16',t:'🎯 Octavos de Final',ids:['r16-1','r16-2','r16-3','r16-4','r16-5','r16-6','r16-7','r16-8']},
-  {k:'qf', t:'🏅 Cuartos de Final',ids:['qf-1','qf-2','qf-3','qf-4']},
-  {k:'sf', t:'🌟 Semifinales',ids:['sf-1','sf-2']},
+  {k:'r32',t:'â½ Dieciseisavos de Final',ids:['r32-1','r32-2','r32-3','r32-4','r32-5','r32-6','r32-7','r32-8','r32-9','r32-10','r32-11','r32-12','r32-13','r32-14','r32-15','r32-16']},
+  {k:'r16',t:'ð¯ Octavos de Final',ids:['r16-1','r16-2','r16-3','r16-4','r16-5','r16-6','r16-7','r16-8']},
+  {k:'qf', t:'ð Cuartos de Final',ids:['qf-1','qf-2','qf-3','qf-4']},
+  {k:'sf', t:'ð Semifinales',ids:['sf-1','sf-2']},
 ];
 
-// ── Extras: pronóstico de un jugador ─────────────────────────────────────────
+// ââ Extras: pronÃ³stico de un jugador âââââââââââââââââââââââââââââââââââââââââ
 function renderExtrasPronostico(name){
   var picks = getPicksFromPRaw(name);
   var act   = bonusData.actual   || {};
@@ -1250,27 +1250,27 @@ function renderExtrasPronostico(name){
   var hasPicks = BONUS_CATS.some(function(c){ return picks[c.k]; });
 
   if(!hasPicks){
-    return '<div class="note">No hay pronósticos especiales cargados para <strong>'+name+'</strong>.</div>';
+    return '<div class="note">No hay pronÃ³sticos especiales cargados para <strong>'+name+'</strong>.</div>';
   }
 
   var h='<div class="gp-sum" style="margin-bottom:16px">'
-    +'<span style="color:#94a3b8">Extras — <strong>'+name+'</strong></span>'
+    +'<span style="color:#94a3b8">Extras â <strong>'+name+'</strong></span>'
     +'<span class="pts" style="color:#f59e0b">+'+totalBonus+' pts bonus</span>'
     +'</div>'
     +'<div style="display:flex;flex-direction:column;gap:10px;max-width:480px">';
 
   BONUS_CATS.forEach(function(c){
-    var pick = picks[c.k] || '–';
+    var pick = picks[c.k] || 'â';
     var actual = act[c.k] || '';
     var correct = actual && cmpNorm(pick, actual);
-    var pending = pick !== '–' && !actual;
+    var pending = pick !== 'â' && !actual;
     var wrong   = actual && !correct;
     var statusColor = correct ? '#22c55e' : pending ? '#64748b' : wrong ? '#ef4444' : '#475569';
-    var statusText  = correct ? '✓ +'+c.pts+' pts' : pending ? 'Pendiente' : wrong ? '✗ 0 pts' : '';
+    var statusText  = correct ? 'â +'+c.pts+' pts' : pending ? 'Pendiente' : wrong ? 'â 0 pts' : '';
     h+='<div class="bcat-card">'
       +'<div style="flex:1;min-width:0">'
       +'<div class="bcat-label">'+c.label+' (hasta '+c.pts+' pts)</div>'
-      +'<div class="bcat-pick">'+(pick!=='–'?withFlag(pick):pick)+'</div>'
+      +'<div class="bcat-pick">'+(pick!=='â'?withFlag(pick):pick)+'</div>'
       +(actual?'<div style="font-size:.7rem;color:#475569;margin-top:2px">Real: '+withFlag(actual)+'</div>':'')
       +'</div>'
       +'<div class="bcat-pts" style="color:'+statusColor+'">'+statusText+'</div>'
@@ -1280,7 +1280,7 @@ function renderExtrasPronostico(name){
   return h;
 }
 
-// ── Playoff scoring ───────────────────────────────────────────────────────────
+// ââ Playoff scoring âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function calcPlayoffScore(name) {
   var pp_all = pPred[name] || {};
   var pts = 0, exact = 0, corr = 0, penBonus = 0;
@@ -1330,16 +1330,16 @@ function calcPlayoffScore(name) {
 function renderPlayoffPronostico(name) {
   var sc = calcPlayoffScore(name);
   if (!sc.rows.some(function(r){return r.hasAct;})) {
-    return '<div class="note" style="margin-top:12px">Los puntos de playoff aparecen aquí cuando terminen los partidos.</div>';
+    return '<div class="note" style="margin-top:12px">Los puntos de playoff aparecen aquÃ­ cuando terminen los partidos.</div>';
   }
   var h = '<div class="gp-sum" style="margin-top:16px;margin-bottom:10px">'
-    +'<span style="color:#94a3b8;font-weight:700">⚡ Scoring Playoff — '+name+'</span>'
+    +'<span style="color:#94a3b8;font-weight:700">â¡ Scoring Playoff â '+name+'</span>'
     +'<span class="pts">'+sc.pts+' pts</span>'
-    +(sc.penBonus>0?'<span class="sub" style="color:#a78bfa">+'+sc.penBonus+' bonus ⚽</span>':'')
+    +(sc.penBonus>0?'<span class="sub" style="color:#a78bfa">+'+sc.penBonus+' bonus â½</span>':'')
     +'<span class="sub" style="color:#22c55e;font-weight:700">Total playoff: '+(sc.pts+sc.penBonus)+' pts</span>'
     +'</div>';
 
-  var allRnds=ARNDS.concat([{t:'🏆 Final y 3er Puesto',ids:['final','tercero']}]);
+  var allRnds=ARNDS.concat([{t:'ð Final y 3er Puesto',ids:['final','tercero']}]);
   allRnds.forEach(function(r){
     var rRows=sc.rows.filter(function(row){return r.ids.indexOf(row.mid)>=0 && (row.hasAct||row.hasPred);});
     if(!rRows.some(function(row){return row.hasAct;})) return;
@@ -1350,16 +1350,16 @@ function renderPlayoffPronostico(name) {
     rRows.forEach(function(row){
       var ht=aTeam(row.mid,true), at=aTeam(row.mid,false);
       var predStr=row.hasPred?row.pH+'-'+row.pA:'?';
-      var actStr =row.hasAct ?row.aH+'-'+row.aA:'—';
-      var ppPWstr=row.ppPW?'<br><span style="font-size:.62rem">🏅'+withFlag(row.ppPW)+'</span>':'';
-      var apPWstr=row.apPW?'<br><span style="font-size:.62rem">🏅'+withFlag(row.apPW)+'</span>':'';
+      var actStr =row.hasAct ?row.aH+'-'+row.aA:'â';
+      var ppPWstr=row.ppPW?'<br><span style="font-size:.62rem">ð'+withFlag(row.ppPW)+'</span>':'';
+      var apPWstr=row.apPW?'<br><span style="font-size:.62rem">ð'+withFlag(row.apPW)+'</span>':'';
       var total=(row.matchPts||0)+(row.penPts||0);
       var ptsCol=total>=8?'#a78bfa':total>=5?'#22c55e':total>=3?'#fbbf24':total>=1?'#94a3b8':'#475569';
       var rowBg =total>=8?'background:#1e0f3a':total>=5?'background:#052e16':total>=3?'background:#1c1408':'';
       var ptsStr=(row.hasAct&&row.hasPred)?String(total):'';
       var penBadge='';
       if(row.hasAct&&row.hasPred&&row.penPts>0){
-        penBadge='<br><span style="font-size:.6rem;background:#4c1d95;color:#c4b5fd;border-radius:3px;padding:1px 4px">⚽+'+row.penPts+'</span>';
+        penBadge='<br><span style="font-size:.6rem;background:#4c1d95;color:#c4b5fd;border-radius:3px;padding:1px 4px">â½+'+row.penPts+'</span>';
       }
       h+='<div class="gr-match" style="'+rowBg+'">'
         +'<div class="gr-home" style="flex:1;flex-direction:column;align-items:flex-start;gap:1px">'
@@ -1374,9 +1374,9 @@ function renderPlayoffPronostico(name) {
     h+='</div></div>';
   });
   h+='<div class="note" style="font-size:.7rem;margin-top:6px">'
-    +'✅ Ganador +3 · 🏠 Gol local exacto +1 · 🚌 Gol visitante exacto +1 · '
-    +'🎯 Exacto total = 5 pts · '
-    +'<span style="color:#a78bfa">⚽ Penales (ganador ✓) +3 bonus</span></div>';
+    +'â Ganador +3 Â· ð  Gol local exacto +1 Â· ð Gol visitante exacto +1 Â· '
+    +'ð¯ Exacto total = 5 pts Â· '
+    +'<span style="color:#a78bfa">â½ Penales (ganador â) +3 bonus</span></div>';
   return h;
 }
 
@@ -1388,27 +1388,27 @@ function roundStateBanner(k, label) {
   var openLabel=ROUND_OPEN_LABEL[k]||'';
   if(state==='open'){
     return '<div style="display:flex;align-items:center;gap:10px;background:#0f172a;border:1px solid #334155;border-radius:8px;padding:9px 14px;margin-bottom:10px">'
-      +'<span style="font-size:1.1rem">⏳</span>'
+      +'<span style="font-size:1.1rem">â³</span>'
       +'<div>'
-      +'<div style="color:#22c55e;font-weight:700;font-size:.82rem">'+label+' — abierto</div>'
-      +'<div style="color:#64748b;font-size:.7rem">Cierra el '+closeLabel+(cd?' · <strong style="color:#fbbf24">Faltan '+cd+'</strong>':'')+'</div>'
+      +'<div style="color:#22c55e;font-weight:700;font-size:.82rem">'+label+' â abierto</div>'
+      +'<div style="color:#64748b;font-size:.7rem">Cierra el '+closeLabel+(cd?' Â· <strong style="color:#fbbf24">Faltan '+cd+'</strong>':'')+'</div>'
       +'</div>'
       +'</div>';
   }
   if(state==='closed'){
     return '<div style="display:flex;align-items:center;gap:10px;background:#0f172a;border:1px solid #475569;border-radius:8px;padding:9px 14px;margin-bottom:10px">'
-      +'<span style="font-size:1.1rem">🔒</span>'
+      +'<span style="font-size:1.1rem">ð</span>'
       +'<div>'
-      +'<div style="color:#f59e0b;font-weight:700;font-size:.82rem">'+label+' — cerrado</div>'
-      +'<div style="color:#64748b;font-size:.7rem">El plazo venció el '+closeLabel+'. Solo visualización.</div>'
+      +'<div style="color:#f59e0b;font-weight:700;font-size:.82rem">'+label+' â cerrado</div>'
+      +'<div style="color:#64748b;font-size:.7rem">El plazo venciÃ³ el '+closeLabel+'. Solo visualizaciÃ³n.</div>'
       +'</div>'
       +'</div>';
   }
-  // locked (todavía no habilitado)
+  // locked (todavÃ­a no habilitado)
   return '<div style="display:flex;align-items:center;gap:10px;background:#0f172a;border:1px dashed #334155;border-radius:8px;padding:9px 14px;margin-bottom:10px;opacity:.7">'
-    +'<span style="font-size:1.1rem">🔐</span>'
+    +'<span style="font-size:1.1rem">ð</span>'
     +'<div>'
-    +'<div style="color:#94a3b8;font-weight:700;font-size:.82rem">'+label+' — bloqueado</div>'
+    +'<div style="color:#94a3b8;font-weight:700;font-size:.82rem">'+label+' â bloqueado</div>'
     +'<div style="color:#475569;font-size:.7rem">Se habilita el '+openLabel+' (al cerrar la ronda anterior)</div>'
     +'</div>'
     +'</div>';
@@ -1417,7 +1417,7 @@ function roundStateBanner(k, label) {
 function renderPBracket(name){
   var locked=isLocked(name);
 
-  // ── Barra de lock manual ───────────────────────────────────────────────────
+  // ââ Barra de lock manual âââââââââââââââââââââââââââââââââââââââââââââââââââ
   var lockBar='';
   if(locked){
     var openRound=PRNDS.find(function(r){ return getRoundState(r.k)==='open'; });
@@ -1426,20 +1426,20 @@ function renderPBracket(name){
       var sealedRound=isSealedForRound(name, openRound.k);
       if(sealedRound){
         lockBar='<div class="lock-bar">'
-          +'<div class="lock-badge" style="color:#a78bfa">🔒 '+roundLabel+' — sellado</div>'
-          +'<div class="lock-sub">Pronóstico guardado. Nadie puede ver tus picks hasta que cierre el plazo.</div>'
+          +'<div class="lock-badge" style="color:#a78bfa">ð '+roundLabel+' â sellado</div>'
+          +'<div class="lock-sub">PronÃ³stico guardado. Nadie puede ver tus picks hasta que cierre el plazo.</div>'
           +'</div>';
       } else {
         lockBar='<div class="lock-bar">'
-          +'<div class="lock-badge" style="color:#60a5fa">✏️ '+roundLabel+' — en curso</div>'
-          +'<div class="lock-sub" style="margin-bottom:10px">Una vez que guardés y bloqueés, tus picks quedan fijos y nadie puede verlos hasta el cierre del plazo.</div>'
-          +'<button class="lock-btn" onclick="lockCurRound(\''+esc(name)+'\')" style="background:#7c3aed">🔒 Guardar y bloquear picks de '+roundLabel+'</button>'
+          +'<div class="lock-badge" style="color:#60a5fa">âï¸ '+roundLabel+' â en curso</div>'
+          +'<div class="lock-sub" style="margin-bottom:10px">Una vez que guardÃ©s y bloqueÃ©s, tus picks quedan fijos y nadie puede verlos hasta el cierre del plazo.</div>'
+          +'<button class="lock-btn" onclick="lockCurRound(\''+esc(name)+'\')" style="background:#7c3aed">ð Guardar y bloquear picks de '+roundLabel+'</button>'
           +'</div>';
       }
     } else {
       lockBar='<div class="lock-bar locked">'
-        +'<div class="lock-badge">🔒 Pronóstico guardado y bloqueado</div>'
-        +'<div class="lock-sub">Solo podés visualizarlo. No se puede modificar.</div>'
+        +'<div class="lock-badge">ð PronÃ³stico guardado y bloqueado</div>'
+        +'<div class="lock-sub">Solo podÃ©s visualizarlo. No se puede modificar.</div>'
         +'</div>';
     }
   } else {
@@ -1448,28 +1448,28 @@ function renderPBracket(name){
       var roundLabelNew=openRoundNew.t.replace(/^[^\s]+\s/,'');
       var sealedNew=isSealedForRound(name, openRoundNew.k);
       lockBar='<div class="lock-bar">'
-        +'<div class="lock-sub" style="margin-bottom:10px">Guardá y bloqueá tus picks de esta ronda para que nadie los vea hasta el cierre del plazo.</div>'
+        +'<div class="lock-sub" style="margin-bottom:10px">GuardÃ¡ y bloqueÃ¡ tus picks de esta ronda para que nadie los vea hasta el cierre del plazo.</div>'
         +(sealedNew
-          ? '<div class="lock-badge" style="color:#a78bfa;margin-bottom:8px">🔒 '+roundLabelNew+' — picks sellados</div>'
-          : '<button class="lock-btn" onclick="lockCurRound(\''+esc(name)+'\')" style="background:#7c3aed;margin-bottom:8px">🔒 Guardar y bloquear picks de '+roundLabelNew+'</button>'
+          ? '<div class="lock-badge" style="color:#a78bfa;margin-bottom:8px">ð '+roundLabelNew+' â picks sellados</div>'
+          : '<button class="lock-btn" onclick="lockCurRound(\''+esc(name)+'\')" style="background:#7c3aed;margin-bottom:8px">ð Guardar y bloquear picks de '+roundLabelNew+'</button>'
         )
-        +'<button class="lock-btn" onclick="lockPlayer(\''+esc(name)+'\')">🔒 Bloquear pronóstico completo (todas las rondas)</button>'
+        +'<button class="lock-btn" onclick="lockPlayer(\''+esc(name)+'\')">ð Bloquear pronÃ³stico completo (todas las rondas)</button>'
         +'</div>';
     } else {
       lockBar='<div class="lock-bar">'
-        +'<div class="lock-sub" style="margin-bottom:10px">Completá todo tu bracket antes de guardar. Una vez guardado no se puede editar.</div>'
-        +'<button class="lock-btn" onclick="lockPlayer(\''+esc(name)+'\')">🔒 Guardar y bloquear mi pronóstico</button>'
+        +'<div class="lock-sub" style="margin-bottom:10px">CompletÃ¡ todo tu bracket antes de guardar. Una vez guardado no se puede editar.</div>'
+        +'<button class="lock-btn" onclick="lockPlayer(\''+esc(name)+'\')">ð Guardar y bloquear mi pronÃ³stico</button>'
         +'</div>';
     }
   }
   var h=(locked
-    ? '<div class="note"><strong>'+name+'</strong> — pronóstico guardado. Solo visualización.</div>'
-    : '<div class="note"><strong>'+name+'</strong> — completá tu bracket ronda a ronda. Cada ronda se habilita cuando termina la anterior.</div>'
+    ? '<div class="note"><strong>'+name+'</strong> â pronÃ³stico guardado. Solo visualizaciÃ³n.</div>'
+    : '<div class="note"><strong>'+name+'</strong> â completÃ¡ tu bracket ronda a ronda. Cada ronda se habilita cuando termina la anterior.</div>'
   );
 
   PRNDS.forEach(function(r){
     var roundState=getRoundState(r.k);
-    // Si la ronda está abierta, siempre editable (ignora el lock del jugador de rondas anteriores)
+    // Si la ronda estÃ¡ abierta, siempre editable (ignora el lock del jugador de rondas anteriores)
     var state=(locked && roundState!=='open') ? 'closed' : roundState;
     h+='<p class="rnd-title gap">'+r.t+'</p>';
     h+=roundStateBanner(r.k, r.t.replace(/^[^\s]+\s/,''));
@@ -1477,7 +1477,7 @@ function renderPBracket(name){
     if(state==='locked'){
       // Placeholder grayed-out cards
       r.ids.forEach(function(id){
-        h+='<div class="mc" style="opacity:.35;pointer-events:none"><div class="mc-id">'+id.toUpperCase()+' 🔐</div>'
+        h+='<div class="mc" style="opacity:.35;pointer-events:none"><div class="mc-id">'+id.toUpperCase()+' ð</div>'
           +'<div class="mc-row"><span class="mn tbd">Por definir</span></div>'
           +'<div class="mc-row"><span class="mn tbd">Por definir</span></div></div>';
       });
@@ -1488,7 +1488,7 @@ function renderPBracket(name){
         r.ids.forEach(function(id){
           h+='<div class="mc" style="border-color:#7c3aed44"><div class="mc-id">'+id.toUpperCase()+'</div>'
             +'<div class="mc-row" style="justify-content:center;padding:14px 8px">'
-            +'<span style="color:#a78bfa;font-size:.75rem;text-align:center">🔒 Picks ocultos<br>'
+            +'<span style="color:#a78bfa;font-size:.75rem;text-align:center">ð Picks ocultos<br>'
             +'<span style="color:#64748b;font-size:.68rem">Visible el '+closeStr+'</span></span>'
             +'</div></div>';
         });
@@ -1506,46 +1506,46 @@ function renderPBracket(name){
   // Final y 3er puesto
   var finalState=locked ? 'closed' : getRoundState('final');
   var terceroState=locked ? 'closed' : getRoundState('tercero');
-  h+='<p class="rnd-title gap">🏆 Final y 3er Puesto</p>';
+  h+='<p class="rnd-title gap">ð Final y 3er Puesto</p>';
   h+=roundStateBanner('final','Final y 3er puesto');
   h+='<div class="final-grid">';
   if(finalState==='locked'){
-    h+='<div><div class="fl">🏆 FINAL</div><div class="mc" style="opacity:.35;pointer-events:none"><div class="mc-id">FINAL 🔐</div><div class="mc-row"><span class="mn tbd">Por definir</span></div><div class="mc-row"><span class="mn tbd">Por definir</span></div></div></div>'
-     +'<div><div class="fl">🥉 3ER PUESTO</div><div class="mc" style="opacity:.35;pointer-events:none"><div class="mc-id">TERCERO 🔐</div><div class="mc-row"><span class="mn tbd">Por definir</span></div><div class="mc-row"><span class="mn tbd">Por definir</span></div></div></div>';
+    h+='<div><div class="fl">ð FINAL</div><div class="mc" style="opacity:.35;pointer-events:none"><div class="mc-id">FINAL ð</div><div class="mc-row"><span class="mn tbd">Por definir</span></div><div class="mc-row"><span class="mn tbd">Por definir</span></div></div></div>'
+     +'<div><div class="fl">ð¥ 3ER PUESTO</div><div class="mc" style="opacity:.35;pointer-events:none"><div class="mc-id">TERCERO ð</div><div class="mc-row"><span class="mn tbd">Por definir</span></div><div class="mc-row"><span class="mn tbd">Por definir</span></div></div></div>';
   } else if(finalState==='open'){
-    h+='<div><div class="fl">🏆 FINAL</div>'+playerCard('final',name)+'</div>'
-     +'<div><div class="fl">🥉 3ER PUESTO</div>'+playerCard('tercero',name)+'</div>';
+    h+='<div><div class="fl">ð FINAL</div>'+playerCard('final',name)+'</div>'
+     +'<div><div class="fl">ð¥ 3ER PUESTO</div>'+playerCard('tercero',name)+'</div>';
   } else {
-    h+='<div><div class="fl">🏆 FINAL</div>'+playerCardRO('final',name)+'</div>'
-     +'<div><div class="fl">🥉 3ER PUESTO</div>'+playerCardRO('tercero',name)+'</div>';
+    h+='<div><div class="fl">ð FINAL</div>'+playerCardRO('final',name)+'</div>'
+     +'<div><div class="fl">ð¥ 3ER PUESTO</div>'+playerCardRO('tercero',name)+'</div>';
   }
   h+='</div>';
   h+=lockBar;
   document.getElementById('pbracket').innerHTML=h;
 }
 
-// ── Render: Resultados (todo el bracket en una sola página) ──────────────────
+// ââ Render: Resultados (todo el bracket en una sola pÃ¡gina) ââââââââââââââââââ
 var ARNDS=[
-  {t:'⚽ Dieciseisavos de Final',ids:['r32-1','r32-2','r32-3','r32-4','r32-5','r32-6','r32-7','r32-8','r32-9','r32-10','r32-11','r32-12','r32-13','r32-14','r32-15','r32-16']},
-  {t:'🎯 Octavos de Final',ids:['r16-1','r16-2','r16-3','r16-4','r16-5','r16-6','r16-7','r16-8']},
-  {t:'🏅 Cuartos de Final',ids:['qf-1','qf-2','qf-3','qf-4']},
-  {t:'🌟 Semifinales',ids:['sf-1','sf-2']},
+  {t:'â½ Dieciseisavos de Final',ids:['r32-1','r32-2','r32-3','r32-4','r32-5','r32-6','r32-7','r32-8','r32-9','r32-10','r32-11','r32-12','r32-13','r32-14','r32-15','r32-16']},
+  {t:'ð¯ Octavos de Final',ids:['r16-1','r16-2','r16-3','r16-4','r16-5','r16-6','r16-7','r16-8']},
+  {t:'ð Cuartos de Final',ids:['qf-1','qf-2','qf-3','qf-4']},
+  {t:'ð Semifinales',ids:['sf-1','sf-2']},
 ];
 
-// ── Read-only result card ─────────────────────────────────────────────────────
+// ââ Read-only result card âââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function resultCard(mid){
   var ht=aTeam(mid,true), at=aTeam(mid,false);
   if(!pred[mid]) pred[mid]={h:'',a:'',ht:ht,at:at,pw:null,pl:null};
   else {pred[mid].ht=ht; pred[mid].at=at;}
   var p=pred[mid];
   var hi=parseInt(p.h), ai=parseInt(p.a);
-  var htbd=ht==='— Por definir —', atbd=at==='— Por definir —';
+  var htbd=ht==='â Por definir â', atbd=at==='â Por definir â';
   var win='';
   if(!isNaN(hi)&&!isNaN(ai)){if(hi>ai)win=ht;else if(ai>hi)win=at;else win=p.pw||'';}
-  var sH=!isNaN(hi)?String(p.h):'—', sA=!isNaN(ai)?String(p.a):'—';
+  var sH=!isNaN(hi)?String(p.h):'â', sA=!isNaN(ai)?String(p.a):'â';
   var pen='';
   if(!isNaN(hi)&&!isNaN(ai)&&hi===ai&&p.pw&&!htbd&&!atbd){
-    pen='<div class="pen-row" style="opacity:.7">⚽ Penales: <strong style="color:#fef3c7">'+withFlag(p.pw)+'</strong></div>';
+    pen='<div class="pen-row" style="opacity:.7">â½ Penales: <strong style="color:#fef3c7">'+withFlag(p.pw)+'</strong></div>';
   }
   var htD=htbd?'Por definir':withFlag(ht), atD=atbd?'Por definir':withFlag(at);
   return '<div class="mc result"><div class="mc-id">'+mid.toUpperCase()+'</div>'
@@ -1556,7 +1556,7 @@ function resultCard(mid){
     +pen+'</div>';
 }
 
-// ── Admin ─────────────────────────────────────────────────────────────────────
+// ââ Admin âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function toggleAdmin(){
   if(adminMode){ exitAdmin(); return; }
   var modal=document.getElementById('admin-modal');
@@ -1582,9 +1582,9 @@ function adminLogin(){
 }
 function adminSave(){
   localStorage.setItem(KEY, JSON.stringify(pred));
-  // Toast de confirmación
+  // Toast de confirmaciÃ³n
   var t=document.createElement('div');
-  t.textContent='✅ Resultados guardados';
+  t.textContent='â Resultados guardados';
   t.style.cssText='position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#166534;color:#bbf7d0;padding:10px 22px;border-radius:10px;font-weight:700;font-size:.9rem;z-index:9999;box-shadow:0 4px 16px #0008;pointer-events:none;transition:opacity .4s';
   document.body.appendChild(t);
   setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 400); }, 1800);
@@ -1600,10 +1600,10 @@ function updateGear(){
   btn.style.color=adminMode?'#fbbf24':'';
   btn.style.background=adminMode?'#1c1408':'';
   btn.style.borderColor=adminMode?'#f59e0b':'';
-  btn.title=adminMode?'Admin activo — click para salir':'Admin';
+  btn.title=adminMode?'Admin activo â click para salir':'Admin';
 }
 
-// ── Grupos results (admin editable / read-only from R[] + M[]) ───────────────
+// ââ Grupos results (admin editable / read-only from R[] + M[]) âââââââââââââââ
 function renderGruposResultados(){
   if(!M||!R){
     return '<div class="note">Datos de fase de grupos no disponibles.</div>';
@@ -1637,7 +1637,7 @@ function renderGruposResultados(){
           +'<div class="gr-home"><span class="gr-home-txt">'+withFlag(m.home)+'</span></div>'
           +'<div class="gr-score-ctr" style="display:flex;align-items:center;gap:3px">'
             +'<input type="number" min="0" max="20" style="'+inpStyle+'" value="'+vH+'" oninput="rSave('+m.mn+',\'h\',this.value)">'
-            +'<span style="color:#64748b">–</span>'
+            +'<span style="color:#64748b">â</span>'
             +'<input type="number" min="0" max="20" style="'+inpStyle+'" value="'+vA+'" oninput="rSave('+m.mn+',\'a\',this.value)">'
           +'</div>'
           +'<div class="gr-away"><span class="gr-away-txt">'+withFlag(m.away)+'</span></div>'
@@ -1649,7 +1649,7 @@ function renderGruposResultados(){
         cards+='<div class="gr-match">'
           +'<span class="gr-num">'+(i+1)+'</span>'
           +'<div class="gr-home"><span class="gr-home-txt">'+withFlag(m.home)+'</span></div>'
-          +'<div class="gr-score-ctr" style="color:'+scoreColor+'">'+m.actH+'–'+m.actA+'</div>'
+          +'<div class="gr-score-ctr" style="color:'+scoreColor+'">'+m.actH+'â'+m.actA+'</div>'
           +'<div class="gr-away"><span class="gr-away-txt">'+withFlag(m.away)+'</span></div>'
           +'</div>';
       } else {
@@ -1667,8 +1667,8 @@ function renderGruposResultados(){
 
   var adminBar = adminMode
     ? '<div class="admin-bar active">'
-      +'<span class="admin-label">✏️ <strong>Modo admin activo</strong> — ingresá resultados de grupos</span>'
-      +'<button class="admin-btn" onclick="adminSave()" style="background:#166534;border-color:#16a34a;margin-right:6px">💾 Guardar</button>'
+      +'<span class="admin-label">âï¸ <strong>Modo admin activo</strong> â ingresÃ¡ resultados de grupos</span>'
+      +'<button class="admin-btn" onclick="adminSave()" style="background:#166534;border-color:#16a34a;margin-right:6px">ð¾ Guardar</button>'
       +'<button class="admin-btn" onclick="exitAdmin()">Salir</button>'
       +'</div>'
     : '';
@@ -1680,16 +1680,16 @@ function renderGruposResultados(){
   return adminBar+summary+cards;
 }
 
-// ── Playoff bracket (read-only / admin editable) ──────────────────────────────
+// ââ Playoff bracket (read-only / admin editable) ââââââââââââââââââââââââââââââ
 function renderPlayoffResultados(){
   var adminBar = adminMode
     ? '<div class="admin-bar active">'
-      +'<span class="admin-label">✏️ <strong>Modo admin activo</strong> — podés ingresar resultados</span>'
-      +'<button class="admin-btn" onclick="adminSave()" style="background:#166534;border-color:#16a34a;margin-right:6px">💾 Guardar</button>'
-      +'<button class="admin-btn exit" onclick="exitAdmin()">✕ Salir del modo admin</button>'
+      +'<span class="admin-label">âï¸ <strong>Modo admin activo</strong> â podÃ©s ingresar resultados</span>'
+      +'<button class="admin-btn" onclick="adminSave()" style="background:#166534;border-color:#16a34a;margin-right:6px">ð¾ Guardar</button>'
+      +'<button class="admin-btn exit" onclick="exitAdmin()">â Salir del modo admin</button>'
       +'</div>'
     : '<div class="admin-bar">'
-      +'<span class="admin-label">📋 Solo lectura — los resultados se cargan al finalizar cada partido. Usá el ⚙️ del menú para ingresar como admin.</span>'
+      +'<span class="admin-label">ð Solo lectura â los resultados se cargan al finalizar cada partido. UsÃ¡ el âï¸ del menÃº para ingresar como admin.</span>'
       +'</div>';
 
   var h=adminBar;
@@ -1698,10 +1698,10 @@ function renderPlayoffResultados(){
     r.ids.forEach(function(id){ h += adminMode ? adminCard(id) : resultCard(id); });
     h+='</div>';
   });
-  h+='<p class="rnd-title gap">🏆 Final y 3er Puesto</p>'
+  h+='<p class="rnd-title gap">ð Final y 3er Puesto</p>'
     +'<div class="final-grid">'
-    +'<div><div class="fl">🏆 FINAL</div>'+(adminMode?adminCard('final'):resultCard('final'))+'</div>'
-    +'<div><div class="fl">🥉 3ER PUESTO</div>'+(adminMode?adminCard('tercero'):resultCard('tercero'))+'</div>'
+    +'<div><div class="fl">ð FINAL</div>'+(adminMode?adminCard('final'):resultCard('final'))+'</div>'
+    +'<div><div class="fl">ð¥ 3ER PUESTO</div>'+(adminMode?adminCard('tercero'):resultCard('tercero'))+'</div>'
     +'</div>';
   return h;
 }
@@ -1714,15 +1714,15 @@ function switchResTab(tab){
   renderResContent();
 }
 
-// ── Extras: tabla de todos los jugadores ─────────────────────────────────────
+// ââ Extras: tabla de todos los jugadores âââââââââââââââââââââââââââââââââââââ
 function renderExtrasResultados(){
   var act = bonusData.actual || {};
   var pnames = players.map(function(p){return p.name;});
 
   var adminBar = adminMode
-    ? '<div class="admin-bar active"><span class="admin-label">✏️ <strong>Modo admin activo</strong> — ingresá los resultados reales cuando estén confirmados</span>'
-      +'<button class="admin-btn exit" onclick="exitAdmin()">✕ Salir</button></div>'
-    : '<div class="admin-bar"><span class="admin-label">⭐ Pronósticos especiales — puntos adicionales al final del torneo. Usá ⚙️ para cargar resultados.</span></div>';
+    ? '<div class="admin-bar active"><span class="admin-label">âï¸ <strong>Modo admin activo</strong> â ingresÃ¡ los resultados reales cuando estÃ©n confirmados</span>'
+      +'<button class="admin-btn exit" onclick="exitAdmin()">â Salir</button></div>'
+    : '<div class="admin-bar"><span class="admin-label">â­ PronÃ³sticos especiales â puntos adicionales al final del torneo. UsÃ¡ âï¸ para cargar resultados.</span></div>';
 
   var h = adminBar;
 
@@ -1738,18 +1738,18 @@ function renderExtrasResultados(){
   h+='<th style="color:#f59e0b">Bonus</th></tr></thead><tbody>';
 
   // Actual results row (admin editable)
-  h+='<tr class="actual-row"><td>✅ Resultado real</td>';
+  h+='<tr class="actual-row"><td>â Resultado real</td>';
   BONUS_CATS.forEach(function(c){
     if(adminMode){
-      h+='<td><input class="bonus-input" placeholder="—" value="'+esc(act[c.k]||'')+'" '
+      h+='<td><input class="bonus-input" placeholder="â" value="'+esc(act[c.k]||'')+'" '
         +'oninput="saveActual(\''+c.k+'\',this.value)"></td>';
     } else {
       h+='<td>'+(act[c.k]?withFlag(act[c.k]):'<span style="color:#334155">Pendiente</span>')+'</td>';
     }
   });
-  h+='<td>—</td></tr>';
+  h+='<td>â</td></tr>';
 
-  // Player rows — picks come from P_raw (live source)
+  // Player rows â picks come from P_raw (live source)
   pnames.forEach(function(name){
     var picks = getPicksFromPRaw(name);
     var bonus = getBonusScore(name);
@@ -1761,11 +1761,11 @@ function renderExtrasResultados(){
       var cellColor = correct?'#22c55e':wrong?'#ef4444':'';
       h+='<td style="color:'+cellColor+'">'
         +(pick
-          ? withFlag(pick)+(act[c.k]?'<br><span style="font-size:.62rem">'+(correct?'✓ +'+c.pts+'pts':'✗')+'</span>':'')
-          : '<span style="color:#334155">—</span>')
+          ? withFlag(pick)+(act[c.k]?'<br><span style="font-size:.62rem">'+(correct?'â +'+c.pts+'pts':'â')+'</span>':'')
+          : '<span style="color:#334155">â</span>')
         +'</td>';
     });
-    h+='<td style="color:#f59e0b;font-weight:800">'+(bonus>0?'+'+bonus:'–')+'</td></tr>';
+    h+='<td style="color:#f59e0b;font-weight:800">'+(bonus>0?'+'+bonus:'â')+'</td></tr>';
   });
 
   h+='</tbody></table></div>';
@@ -1782,54 +1782,54 @@ function renderResContent(){
 
 function renderBracket(){
   var tabs='<div class="pro-tabs">'
-    +'<button class="proto-tab res-tab'+(resSubTab==='grupos'?' on':'')+'" data-tab="grupos" onclick="switchResTab(\'grupos\')">📊 Fase de Grupos</button>'
-    +'<button class="proto-tab res-tab'+(resSubTab==='playoff'?' on':'')+'" data-tab="playoff" onclick="switchResTab(\'playoff\')">🏆 Playoff</button>'
-    +'<button class="proto-tab res-tab'+(resSubTab==='extras'?' on':'')+'" data-tab="extras" onclick="switchResTab(\'extras\')" style="color:#f59e0b">⭐ Extras</button>'
+    +'<button class="proto-tab res-tab'+(resSubTab==='grupos'?' on':'')+'" data-tab="grupos" onclick="switchResTab(\'grupos\')">ð Fase de Grupos</button>'
+    +'<button class="proto-tab res-tab'+(resSubTab==='playoff'?' on':'')+'" data-tab="playoff" onclick="switchResTab(\'playoff\')">ð Playoff</button>'
+    +'<button class="proto-tab res-tab'+(resSubTab==='extras'?' on':'')+'" data-tab="extras" onclick="switchResTab(\'extras\')" style="color:#f59e0b">â­ Extras</button>'
     +'</div>'
     +'<div id="res-content"></div>';
   document.getElementById('panel-resultados').innerHTML=tabs;
   renderResContent();
 }
 
-// ── Fixture schedule ──────────────────────────────────────────────────────────
+// ââ Fixture schedule ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 var SCHEDULE = [
-  // 16avos de Final (M73–M88) — horarios en ART (ET + 1h)
+  // 16avos de Final (M73âM88) â horarios en ART (ET + 1h)
   {date:'Dom 28 Jun', matches:[
-    {id:'r32-1',  time:'16:00', venue:'Los Ángeles'}           // 13:00 ET
+    {id:'r32-1',  time:'16:00', venue:'Los Ãngeles'}           // 13:00 ET
   ]},
   {date:'Lun 29 Jun', matches:[
-    {id:'r32-4',  time:'14:00', venue:'Houston'},              // 11:00 ET — Brasil vs Japón (CONFIRMADO)
+    {id:'r32-4',  time:'14:00', venue:'Houston'},              // 11:00 ET â Brasil vs JapÃ³n (CONFIRMADO)
     {id:'r32-2',  time:'17:30', venue:'Foxborough'},           // 14:30 ET
-    {id:'r32-3',  time:'22:00', venue:'Monterrey'}             // 19:00 ET — Países Bajos vs Marruecos (CONFIRMADO)
+    {id:'r32-3',  time:'22:00', venue:'Monterrey'}             // 19:00 ET â PaÃ­ses Bajos vs Marruecos (CONFIRMADO)
   ]},
   {date:'Mar 30 Jun', matches:[
     {id:'r32-6',  time:'14:00', venue:'Arlington'},            // 11:00 ET
     {id:'r32-5',  time:'18:00', venue:'Nueva Jersey'},         // 15:00 ET
-    {id:'r32-7',  time:'22:00', venue:'Ciudad de México'}      // 19:00 ET
+    {id:'r32-7',  time:'22:00', venue:'Ciudad de MÃ©xico'}      // 19:00 ET
   ]},
-  {date:'Mié 1 Jul', matches:[
+  {date:'MiÃ© 1 Jul', matches:[
     {id:'r32-8',  time:'13:00', venue:'Atlanta'},              // 12:00 ET
     {id:'r32-10', time:'17:00', venue:'Seattle'},              // 16:00 ET
-    {id:'r32-9',  time:'21:00', venue:'Santa Clara'}           // 20:00 ET — EEUU vs Bosnia (CONFIRMADO)
+    {id:'r32-9',  time:'21:00', venue:'Santa Clara'}           // 20:00 ET â EEUU vs Bosnia (CONFIRMADO)
   ]},
   {date:'Jue 2 Jul', matches:[
-    {id:'r32-12', time:'16:00', venue:'Los Ángeles'},          // 15:00 ET
+    {id:'r32-12', time:'16:00', venue:'Los Ãngeles'},          // 15:00 ET
     {id:'r32-11', time:'20:00', venue:'Toronto'}               // 19:00 ET
   ]},
   {date:'Vie 3 Jul', matches:[
     {id:'r32-13', time:'00:00', venue:'Vancouver'},            // 23:00 ET (madrugada)
     {id:'r32-16', time:'15:00', venue:'Arlington'},            // 14:00 ET
     {id:'r32-14', time:'19:00', venue:'Miami'},                // 18:00 ET
-    {id:'r32-15', time:'22:30', venue:'Kansas City'},          // 19:30 ET — Colombia vs Ghana
+    {id:'r32-15', time:'22:30', venue:'Kansas City'},          // 19:30 ET â Colombia vs Ghana
   ]},
   // 8vos de Final (R16)
-  {date:'Sáb 4 Jul', matches:[
+  {date:'SÃ¡b 4 Jul', matches:[
     {id:'r16-2',  time:'14:00', venue:'NRG Stadium, Houston'},
     {id:'r16-1',  time:'18:00', venue:'Lincoln Financial Field, Philadelphia'}
   ]},
   {date:'Dom 5 Jul', matches:[
     {id:'r16-5',  time:'17:00', venue:'MetLife Stadium, New York/NJ'},
-    {id:'r16-6',  time:'21:00', venue:'Estadio Azteca, México'}
+    {id:'r16-6',  time:'21:00', venue:'Estadio Azteca, MÃ©xico'}
   ]},
   {date:'Lun 6 Jul', matches:[
     {id:'r16-3',  time:'16:00', venue:'AT&T Stadium, Dallas'},
@@ -1841,24 +1841,24 @@ var SCHEDULE = [
   ]},
   // Cuartos de Final
   {date:'Vie 11 Jul', matches:[
-    {id:'qf-1',   time:'—', venue:'Por definir'},
-    {id:'qf-2',   time:'—', venue:'Por definir'}
+    {id:'qf-1',   time:'â', venue:'Por definir'},
+    {id:'qf-2',   time:'â', venue:'Por definir'}
   ]},
-  {date:'Sáb 12 Jul', matches:[
-    {id:'qf-3',   time:'—', venue:'Por definir'},
-    {id:'qf-4',   time:'—', venue:'Por definir'}
+  {date:'SÃ¡b 12 Jul', matches:[
+    {id:'qf-3',   time:'â', venue:'Por definir'},
+    {id:'qf-4',   time:'â', venue:'Por definir'}
   ]},
   // Semifinales
   {date:'Mar 15 Jul', matches:[
-    {id:'sf-1',   time:'—', venue:'Por definir'}
+    {id:'sf-1',   time:'â', venue:'Por definir'}
   ]},
-  {date:'Mié 16 Jul', matches:[
-    {id:'sf-2',   time:'—', venue:'Por definir'}
+  {date:'MiÃ© 16 Jul', matches:[
+    {id:'sf-2',   time:'â', venue:'Por definir'}
   ]},
   // Final y 3er Puesto
   {date:'Dom 19 Jul', matches:[
-    {id:'tercero',time:'—', venue:'MetLife Stadium, NJ'},
-    {id:'final',  time:'—', venue:'MetLife Stadium, NJ'}
+    {id:'tercero',time:'â', venue:'MetLife Stadium, NJ'},
+    {id:'final',  time:'â', venue:'MetLife Stadium, NJ'}
   ]}
 ];
 
@@ -1874,7 +1874,7 @@ function rndLabel(id){
 }
 
 function renderFixture(){
-  var h='<p style="font-size:.72rem;color:#475569;margin-bottom:14px">⏰ Horarios en hora argentina (ART, UTC−3)</p>';
+  var h='<p style="font-size:.72rem;color:#475569;margin-bottom:14px">â° Horarios en hora argentina (ART, UTCâ3)</p>';
   SCHEDULE.forEach(function(day){
     h+='<p class="fix-date-hdr">'+day.date+'</p><div class="fix-list">';
     day.matches.forEach(function(m){
@@ -1883,12 +1883,12 @@ function renderFixture(){
       var hi=parseInt(p.h), ai=parseInt(p.a);
       var hasScore=!isNaN(hi)&&!isNaN(ai);
       var win=hasScore?(hi>ai?ht:ai>hi?at:p.pw||''):'';
-      var htbd=ht==='— Por definir —', atbd=at==='— Por definir —';
+      var htbd=ht==='â Por definir â', atbd=at==='â Por definir â';
 
       var scoreOrVs='';
       if(hasScore){
         scoreOrVs='<span class="fix-sc'+(win===ht?' win':'')+'">'+p.h+'</span>'
-          +'<span style="color:#475569;font-size:.7rem;width:10px;text-align:center">–</span>'
+          +'<span style="color:#475569;font-size:.7rem;width:10px;text-align:center">â</span>'
           +'<span class="fix-sc'+(win===at?' win':'')+'">'+p.a+'</span>';
       } else {
         scoreOrVs='<span class="fix-vs">vs</span>';
@@ -1896,7 +1896,7 @@ function renderFixture(){
 
       var fixPen='';
       if(hasScore&&hi===ai&&p.pw&&!htbd&&!atbd){
-        fixPen='<div class="pen-row" style="opacity:.7">⚽ Penales: <strong style="color:#fef3c7">'+withFlag(p.pw)+'</strong></div>';
+        fixPen='<div class="pen-row" style="opacity:.7">â½ Penales: <strong style="color:#fef3c7">'+withFlag(p.pw)+'</strong></div>';
       }
 
       h+='<div class="fix-card'+(hasScore?' played':'')+'">'
@@ -1908,7 +1908,7 @@ function renderFixture(){
         +'<span class="fix-team fix-team-r'+(atbd?' tbd':win===at?' win':'')+'" title="'+(atbd?'':at)+'">'+(atbd?'Por definir':withFlag(at))+'</span>'
         +'</div>'
         +fixPen
-        +'<span class="fix-venue">📍 '+m.venue+'</span>'
+        +'<span class="fix-venue">ð '+m.venue+'</span>'
         +'</div>';
     });
     h+='</div>';
@@ -1926,10 +1926,10 @@ function renderAll(){
 
 init();
 
-// ── Splash / anuncio ─────────────────────────────────────────────────────────
+// ââ Splash / anuncio âââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 (function(){
   var SPLASH_KEY = 'splash_playoff_v1';
-  // Mostrar siempre (no solo una vez) — cambiar a sessionStorage para una sola vez por sesión
+  // Mostrar siempre (no solo una vez) â cambiar a sessionStorage para una sola vez por sesiÃ³n
   var overlay = document.createElement('div');
   overlay.id = 'splash-overlay';
   overlay.style.cssText = [
@@ -1950,7 +1950,7 @@ init();
   ].join(';');
 
   var close = document.createElement('div');
-  close.textContent = '✕';
+  close.textContent = 'â';
   close.style.cssText = [
     'position:absolute','top:14px','right:18px',
     'color:#fff','font-size:26px','font-weight:700',
@@ -1958,7 +1958,7 @@ init();
   ].join(';');
 
   var hint = document.createElement('div');
-  hint.textContent = 'Tocá en cualquier lugar para continuar';
+  hint.textContent = 'TocÃ¡ en cualquier lugar para continuar';
   hint.style.cssText = [
     'position:absolute','bottom:18px','left:50%',
     'transform:translateX(-50%)',
