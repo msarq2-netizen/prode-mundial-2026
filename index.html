@@ -603,6 +603,16 @@ function isSealed(name) {
   return now < ROUND_DEADLINES.r32;
 }
 
+// Devuelve true si el jugador selló sus picks para una ronda específica
+// y el plazo de esa ronda aún no venció → oculta a otros jugadores
+function isSealedForRound(name, roundKey) {
+  var pp = pPred[name] || {};
+  var flag = pp['_locked_' + roundKey] === '1' ||
+             localStorage.getItem(KEY + '_locked_' + roundKey + '_' + name) === '1';
+  if (!flag) return false;
+  var dl = ROUND_DEADLINES[roundKey];
+  return dl ? new Date() < dl : false;
+}
 function lockPlayer(name) {
   if (!confirm('¿Seguro que querés sellar tu pronóstico?\n\n' +
     'Una vez sellado NO vas a poder editarlo más.\n' +
@@ -625,6 +635,23 @@ function saveCurRound(name) {
   t.style.cssText='position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#1d4ed8;color:#bfdbfe;padding:10px 22px;border-radius:10px;font-weight:700;font-size:.9rem;z-index:9999;box-shadow:0 4px 16px #0008;pointer-events:none;transition:opacity .4s';
   document.body.appendChild(t);
   setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 400); }, 1800);
+}
+function lockCurRound(name) {
+  var openRound = PRNDS.find(function(r){ return getRoundState(r.k) === 'open'; });
+  if (!openRound) return;
+  var roundLabel = openRound.t.replace(/^[^\s]+\s/, '');
+  if (!confirm('¿Sellar tus picks de ' + roundLabel + '?\n\nOtros jugadores no podrán ver tus pronósticos hasta que cierre el plazo.\n\nJugador: ' + name)) return;
+  if (!pPred[name]) pPred[name] = {};
+  pPred[name]['_locked_' + openRound.k] = '1';
+  localStorage.setItem(KEY + '_locked_' + openRound.k + '_' + name, '1');
+  localStorage.setItem(KEY + '_' + name, JSON.stringify(pPred[name]));
+  syncToSheets(name);
+  renderProContent();
+  var t = document.createElement('div');
+  t.textContent = '🔒 ' + roundLabel + ' sellado';
+  t.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#7c3aed;color:#ede9fe;padding:10px 22px;border-radius:10px;font-weight:700;font-size:.9rem;z-index:9999;box-shadow:0 4px 16px #0008;pointer-events:none;transition:opacity .4s';
+  document.body.appendChild(t);
+  setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 400); }, 2000);
 }
 
 // ── Group standings ───────────────────────────────────────────────────────────
@@ -1393,15 +1420,25 @@ function renderPBracket(name){
   // ── Barra de lock manual ───────────────────────────────────────────────────
   var lockBar='';
   if(locked){
-    // ¿Hay alguna ronda actualmente abierta? Si es así, mostrar botón de guardado para esa ronda
     var openRound=PRNDS.find(function(r){ return getRoundState(r.k)==='open'; });
     if(openRound){
-      var roundLabel=openRound.t.replace(/^[^\s]+\s/,''); // ej: "Octavos de Final"
-      lockBar='<div class="lock-bar">'
-        +'<div class="lock-badge" style="color:#60a5fa">✏️ '+roundLabel+' — en curso</div>'
-        +'<div class="lock-sub" style="margin-bottom:10px">Tus pronósticos de esta ronda se guardan automáticamente. Usá el botón para confirmar y sincronizar.</div>'
-        +'<button class="lock-btn" onclick="saveCurRound(\''+esc(name)+'\')" style="background:#1d4ed8">💾 Guardar pronósticos de '+roundLabel+'</button>'
-        +'</div>';
+      var roundLabel=openRound.t.replace(/^[^\s]+\s/,'');
+      var sealedRound=isSealedForRound(name, openRound.k);
+      if(sealedRound){
+        lockBar='<div class="lock-bar">'
+          +'<div class="lock-badge" style="color:#a78bfa">🔒 '+roundLabel+' — sellado</div>'
+          +'<div class="lock-sub">Tus picks están protegidos. Nadie puede verlos hasta que cierre el plazo.</div>'
+          +'</div>';
+      } else {
+        lockBar='<div class="lock-bar">'
+          +'<div class="lock-badge" style="color:#60a5fa">✏️ '+roundLabel+' — en curso</div>'
+          +'<div class="lock-sub" style="margin-bottom:10px">Sellá para ocultar tus picks a otros jugadores hasta el cierre del plazo.</div>'
+          +'<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">'
+          +'<button class="lock-btn" onclick="lockCurRound(\''+esc(name)+'\')" style="background:#7c3aed;flex:1;min-width:160px">🔒 Sellar picks de '+roundLabel+'</button>'
+          +'<button class="lock-btn" onclick="saveCurRound(\''+esc(name)+'\')" style="background:#1d4ed8;flex:1;min-width:120px">💾 Solo guardar</button>'
+          +'</div>'
+          +'</div>';
+      }
     } else {
       lockBar='<div class="lock-bar locked">'
         +'<div class="lock-badge">🔒 Pronóstico guardado y bloqueado</div>'
@@ -1409,12 +1446,25 @@ function renderPBracket(name){
         +'</div>';
     }
   } else {
-    lockBar='<div class="lock-bar">'
-      +'<div class="lock-sub" style="margin-bottom:10px">Completá todo tu bracket antes de guardar. Una vez guardado no se puede editar.</div>'
-      +'<button class="lock-btn" onclick="lockPlayer(\''+esc(name)+'\')">🔒 Guardar y bloquear mi pronóstico</button>'
-      +'</div>';
+    var openRoundNew=PRNDS.find(function(r){ return getRoundState(r.k)==='open'; });
+    if(openRoundNew){
+      var roundLabelNew=openRoundNew.t.replace(/^[^\s]+\s/,'');
+      var sealedNew=isSealedForRound(name, openRoundNew.k);
+      lockBar='<div class="lock-bar">'
+        +'<div class="lock-sub" style="margin-bottom:10px">Completá tu bracket y guardálo. Una vez bloqueado el pronóstico general, no se puede editar lo ya cargado.</div>'
+        +(sealedNew
+          ? '<div class="lock-badge" style="color:#a78bfa;margin-bottom:10px">🔒 '+roundLabelNew+' — picks sellados</div>'
+          : '<button class="lock-btn" onclick="lockCurRound(\''+esc(name)+'\')" style="background:#7c3aed;margin-bottom:8px">🔒 Sellar picks de '+roundLabelNew+'</button>'
+        )
+        +'<button class="lock-btn" onclick="lockPlayer(\''+esc(name)+'\')">🔒 Guardar y bloquear pronóstico completo</button>'
+        +'</div>';
+    } else {
+      lockBar='<div class="lock-bar">'
+        +'<div class="lock-sub" style="margin-bottom:10px">Completá todo tu bracket antes de guardar. Una vez guardado no se puede editar.</div>'
+        +'<button class="lock-btn" onclick="lockPlayer(\''+esc(name)+'\')">🔒 Guardar y bloquear mi pronóstico</button>'
+        +'</div>';
+    }
   }
-
   var h=(locked
     ? '<div class="note"><strong>'+name+'</strong> — pronóstico guardado. Solo visualización.</div>'
     : '<div class="note"><strong>'+name+'</strong> — completá tu bracket ronda a ronda. Cada ronda se habilita cuando termina la anterior.</div>'
@@ -1435,7 +1485,19 @@ function renderPBracket(name){
           +'<div class="mc-row"><span class="mn tbd">Por definir</span></div></div>';
       });
     } else if(state==='open'){
-      r.ids.forEach(function(id){ h+=playerCard(id,name); });
+      var isOwnerDev=!!localStorage.getItem(KEY + '_' + name);
+      if(!isOwnerDev && isSealedForRound(name, r.k)){
+        var closeStr=ROUND_CLOSE_LABEL[r.k]||'el cierre del plazo';
+        r.ids.forEach(function(id){
+          h+='<div class="mc" style="border-color:#7c3aed44"><div class="mc-id">'+id.toUpperCase()+'</div>'
+            +'<div class="mc-row" style="justify-content:center;padding:14px 8px">'
+            +'<span style="color:#a78bfa;font-size:.75rem;text-align:center">🔒 Picks sellados<br>'
+            +'<span style="color:#64748b;font-size:.68rem">Visible el '+closeStr+'</span></span>'
+            +'</div></div>';
+        });
+      } else {
+        r.ids.forEach(function(id){ h+=playerCard(id,name); });
+      }
     } else { // closed
       r.ids.forEach(function(id){ h+=playerCardRO(id,name); });
     }
