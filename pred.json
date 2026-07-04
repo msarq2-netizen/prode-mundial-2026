@@ -13,4 +13,6 @@
   "r32-11": {"h": 2, "a": 1, "ht": "Portugal", "at": "Croacia", "pw": null, "pl": null},
   "r32-13": {"h": 2, "a": 0, "ht": "Suiza", "at": "Argelia", "pw": null, "pl": null},
   "r32-16": {"h": 1, "a": 1, "ht": "Australia", "at": "Egipto", "pw": "Egipto", "pl": "Australia"}
+,
+  "r32-14": {"h": 3, "a": 2, "ht": "Argentina", "at": "Cabo Verde", "pw": null, "pl": null}
 }
