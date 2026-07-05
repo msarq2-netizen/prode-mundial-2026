@@ -18,5 +18,6 @@
   "r16-8": {"h": null, "a": null, "ht": "Suiza", "at": "Colombia", "pw": null, "pl": null},
   "r16-2": {"h": 0, "a": 3, "ht": "Canadá", "at": "Marruecos", "pw": null, "pl": null},
   "r16-2": {"h": 0, "a": 3, "ht": "Canadá", "at": "Marruecos", "pw": null, "pl": null},
-  "r16-1": {"h": 0, "a": 1, "ht": "Paraguay", "at": "Francia", "pw": null, "pl": null}
+  "r16-1": {"h": 0, "a": 1, "ht": "Paraguay", "at": "Francia", "pw": null, "pl": null},
+  "r16-5": {"h": 1, "a": 2, "ht": "Brasil", "at": "Noruega", "pw": null, "pl": null}
 }
