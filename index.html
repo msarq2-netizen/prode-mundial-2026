@@ -774,7 +774,7 @@ function aLsr(mid){
   var h=parseInt(p.h),a=parseInt(p.a); if(isNaN(h)||isNaN(a)) return null;
   return h>a?p.at:a>h?p.ht:p.pl||null;
 }
-function activeIds(r){return r.ids.filter(function(id){var m=MATCHES[id];if(!m||!m.hp)return true;return aWin(m.hp)!==null&&aWin(m.ap)!==null;});}
+function activeIds(r){return r.ids.filter(function(id){var m=DEF[id];if(!m||!m.hp)return true;return aWin(m.hp)!==null&&aWin(m.ap)!==null;});}
 function rSave(mn, side, val){
   var ri = (mn-1)*2 + (side==='h'?0:1);
   var v = (val===''||val===null) ? null : parseInt(val);
