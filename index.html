@@ -774,6 +774,7 @@ function aLsr(mid){
   var h=parseInt(p.h),a=parseInt(p.a); if(isNaN(h)||isNaN(a)) return null;
   return h>a?p.at:a>h?p.ht:p.pl||null;
 }
+function activeIds(r){return r.ids.filter(function(id){var m=MATCHES[id];if(!m||!m.hp)return true;return aWin(m.hp)!==null&&aWin(m.ap)!==null;});}
 function rSave(mn, side, val){
   var ri = (mn-1)*2 + (side==='h'?0:1);
   var v = (val===''||val===null) ? null : parseInt(val);
@@ -1239,7 +1240,7 @@ function renderGruposContent(name){
 var PRNDS=[
   {k:'r32',t:'⚽ Dieciseisavos de Final',ids:['r32-1','r32-2','r32-3','r32-4','r32-5','r32-6','r32-7','r32-8','r32-9','r32-10','r32-11','r32-12','r32-13','r32-14','r32-15','r32-16']},
   {k:'r16',t:'🎯 Octavos de Final',ids:['r16-1','r16-2','r16-3','r16-4','r16-5','r16-6','r16-7','r16-8']},
-  {k:'qf', t:'🏅 Cuartos de Final',ids:['qf-1','qf-3']},
+  {k:'qf', t:'🏅 Cuartos de Final',ids:['qf-1','qf-2','qf-3','qf-4']},
   {k:'sf', t:'🌟 Semifinales',ids:['sf-1','sf-2']},
 ];
 
@@ -1287,7 +1288,7 @@ function calcPlayoffScore(name) {
   var pts = 0, exact = 0, corr = 0, penBonus = 0;
   var rows = [];
   var allMids = [];
-  ARNDS.forEach(function(r){ r.ids.forEach(function(id){ allMids.push(id); }); });
+  ARNDS.forEach(function(r){ activeIds(r).forEach(function(id){ allMids.push(id); }); });
   allMids.push('final','tercero');
 
   allMids.forEach(function(mid) {
@@ -1477,7 +1478,7 @@ function renderPBracket(name){
     h+='<div class="bk-grid">';
     if(state==='locked'){
       // Placeholder grayed-out cards
-      r.ids.forEach(function(id){
+      activeIds(r).forEach(function(id){
         h+='<div class="mc" style="opacity:.35;pointer-events:none"><div class="mc-id">'+id.toUpperCase()+' 🔐</div>'
           +'<div class="mc-row"><span class="mn tbd">Por definir</span></div>'
           +'<div class="mc-row"><span class="mn tbd">Por definir</span></div></div>';
@@ -1486,7 +1487,7 @@ function renderPBracket(name){
       var isOwnerDev=!!localStorage.getItem(KEY + '_' + name);
       if(!isOwnerDev){
         var closeStr=ROUND_CLOSE_LABEL[r.k]||'el cierre del plazo';
-        r.ids.forEach(function(id){
+        activeIds(r).forEach(function(id){
           h+='<div class="mc" style="border-color:#7c3aed44"><div class="mc-id">'+id.toUpperCase()+'</div>'
             +'<div class="mc-row" style="justify-content:center;padding:14px 8px">'
             +'<span style="color:#a78bfa;font-size:.75rem;text-align:center">🔒 Picks ocultos<br>'
@@ -1494,12 +1495,12 @@ function renderPBracket(name){
             +'</div></div>';
         });
       } else if(isSealedForRound(name, r.k)){
-        r.ids.forEach(function(id){ h+=playerCardRO(id,name); });
+        activeIds(r).forEach(function(id){ h+=playerCardRO(id,name); });
       } else {
-        r.ids.forEach(function(id){ h+=playerCard(id,name); });
+        activeIds(r).forEach(function(id){ h+=playerCard(id,name); });
       }
     } else { // closed
-      r.ids.forEach(function(id){ h+=playerCardRO(id,name); });
+      activeIds(r).forEach(function(id){ h+=playerCardRO(id,name); });
     }
     h+='</div>';
   });
@@ -1529,7 +1530,7 @@ function renderPBracket(name){
 var ARNDS=[
   {t:'⚽ Dieciseisavos de Final',ids:['r32-1','r32-2','r32-3','r32-4','r32-5','r32-6','r32-7','r32-8','r32-9','r32-10','r32-11','r32-12','r32-13','r32-14','r32-15','r32-16']},
   {t:'🎯 Octavos de Final',ids:['r16-1','r16-2','r16-3','r16-4','r16-5','r16-6','r16-7','r16-8']},
-  {t:'🏅 Cuartos de Final',ids:['qf-1','qf-3']},
+  {t:'🏅 Cuartos de Final',ids:['qf-1','qf-2','qf-3','qf-4']},
   {t:'🌟 Semifinales',ids:['sf-1','sf-2']},
 ];
 
@@ -1696,7 +1697,7 @@ function renderPlayoffResultados(){
   var h=adminBar;
   ARNDS.forEach(function(r){
     h+='<p class="rnd-title gap">'+r.t+'</p><div class="bk-grid">';
-    r.ids.forEach(function(id){ h += adminMode ? adminCard(id) : resultCard(id); });
+    activeIds(r).forEach(function(id){ h += adminMode ? adminCard(id) : resultCard(id); });
     h+='</div>';
   });
   h+='<p class="rnd-title gap">🏆 Final y 3er Puesto</p>'
