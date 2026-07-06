@@ -1017,11 +1017,12 @@ function renderStandings() {
   var hasBonus = hasBonusPicks();
 
   // Enrich players with bonus pts, playoff pts, and re-sort
+  var SCORE_ADJ={'Maximiliano Suarez':-3};
   var enriched = players.map(function(p){
     var b = getBonusScore(p.name);
     var pl = calcPlayoffScore(p.name);
     var plPts = pl.pts + pl.penBonus;
-    return Object.assign({}, p, {bonus:b, plPts:plPts, plExact:pl.exact, plCorr:pl.corr, total:(p.pts||0)+b+plPts});
+    return Object.assign({}, p, {bonus:b, plPts:plPts, plExact:pl.exact, plCorr:pl.corr, total:(p.pts||0)+b+plPts+(SCORE_ADJ[p.name]||0)});
   });
   enriched.sort(function(a,b){ return (b.total-a.total)||(b.exact-a.exact)||(b.corr-a.corr); });
   var hasPlayoff = enriched.some(function(p){ return p.plPts>0; });
