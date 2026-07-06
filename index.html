@@ -869,20 +869,20 @@ function playerCard(mid, name) {
   var ht=pTeam(mid,true,name), at=pTeam(mid,false,name);
   if(!pp[mid]) pp[mid]={h:'',a:'',ht,at,pw:null,pl:null};
   else {pp[mid].ht=ht;pp[mid].at=at;}
-  var p=pp[mid]; var en=esc(name);
+  var p=pp[mid]; var dHt=DEF[mid]&&DEF[mid].hp?aTeam(mid,true):ht; var dAt=DEF[mid]&&DEF[mid].hp?aTeam(mid,false):at; var en=esc(name);
   var locked=isLocked(name);
   // Si el partido ya fue jugado → solo lectura, independientemente del lock del jugador
   if(isMatchPlayed(mid)){
-    return cardReadOnly(mid,ht,at,p.h,p.a,p.pw);
+    return cardReadOnly(mid,dHt,dAt,p.h,p.a,p.pw);
   }
   // Si la ronda está abierta, ignorar el lock (permite editar nueva ronda aunque hayan sellado la anterior)
   var rndKey=mid.replace(/-\d+$/,'');
   var rndOpen=getRoundState(rndKey)==='open';
   if(locked && !rndOpen){
     // Read-only version
-    return cardReadOnly(mid,ht,at,p.h,p.a,p.pw);
+    return cardReadOnly(mid,dHt,dAt,p.h,p.a,p.pw);
   }
-  return card(mid,ht,at,p.h,p.a,p.pw,
+  return card(mid,dHt,dAt,p.h,p.a,p.pw,
     'pSave(\''+en+'\',\''+esc(mid)+'\',\'h\',this.value)',
     'pSave(\''+en+'\',\''+esc(mid)+'\',\'a\',this.value)',
     'pPW(\''+en+'\',\''+esc(mid)+'\',\''+esc(ht)+'\')',
@@ -896,7 +896,8 @@ function playerCardRO(mid, name) {
   if(!pp[mid]) pp[mid]={h:'',a:'',ht,at,pw:null,pl:null};
   else {pp[mid].ht=ht;pp[mid].at=at;}
   var p=pp[mid];
-  return cardReadOnly(mid,ht,at,p.h,p.a,p.pw);
+  var dHt=DEF[mid]&&DEF[mid].hp?aTeam(mid,true):ht; var dAt=DEF[mid]&&DEF[mid].hp?aTeam(mid,false):at;
+  return cardReadOnly(mid,dHt,dAt,p.h,p.a,p.pw);
 }
 
 function cardReadOnly(mid,ht,at,hv,av,pw){
