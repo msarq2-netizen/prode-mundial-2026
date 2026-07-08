@@ -1312,7 +1312,7 @@ function calcPlayoffScore(name) {
     // Ganador solo cuenta si el tipo de resultado coincide (empate vs. victoria directa)
     var aIsDraw = (aH === aA);
     var pIsDraw = (pH === pA);
-    var winOk  = (aIsDraw && pIsDraw) || !!(aWin && pWin && aWin===pWin && !aIsDraw && !pIsDraw);
+    var winOk  = !!(aWin && pWin && aWin===pWin && aIsDraw===pIsDraw) || (aIsDraw && pIsDraw && mid.indexOf('r32-')<0);
     var homeOk = (pH===aH);
     var awayOk = (pA===aA);
     var matchPts = (winOk?3:0) + (homeOk?1:0) + (awayOk?1:0);
