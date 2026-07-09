@@ -842,8 +842,15 @@ function pPW(name,mid,team){
   if(!pPred[name]) pPred[name]={};
   var pm=pPred[name];
   if(!pm[mid]) pm[mid]={h:'',a:'',ht:pTeam(mid,true,name),at:pTeam(mid,false,name),pw:null,pl:null};
-  pm[mid].pw=(pm[mid].pw===team)?null:team;
-  pm[mid].pl=pm[mid].pw?(pm[mid].pw===pm[mid].ht?pm[mid].at:pm[mid].ht):null;
+  var resolved=team;
+  if(team==='h') resolved=(pm[mid].ht&&pm[mid].ht!=='— Por definir —')?pm[mid].ht:'h';
+  if(team==='a') resolved=(pm[mid].at&&pm[mid].at!=='— Por definir —')?pm[mid].at:'a';
+  var cur=pm[mid].pw;
+  var sameH=(cur==='h'||cur===pm[mid].ht), sameA=(cur==='a'||cur===pm[mid].at);
+  var toggle=(team==='h'&&sameH)||(team==='a'&&sameA)||(cur===resolved);
+  pm[mid].pw=toggle?null:resolved;
+  var pwTeam=(pm[mid].pw==='h')?pm[mid].ht:(pm[mid].pw==='a')?pm[mid].at:pm[mid].pw;
+  pm[mid].pl=pwTeam?(pwTeam===pm[mid].ht?pm[mid].at:pm[mid].ht):null;
   localStorage.setItem(KEY+'_'+name,JSON.stringify(pm));
   syncToSheets(name);
   renderProContent();
@@ -885,8 +892,8 @@ function playerCard(mid, name) {
   return card(mid,dHt,dAt,p.h,p.a,p.pw,
     'pSave(\''+en+'\',\''+esc(mid)+'\',\'h\',this.value)',
     'pSave(\''+en+'\',\''+esc(mid)+'\',\'a\',this.value)',
-    'pPW(\''+en+'\',\''+esc(mid)+'\',\''+esc(ht)+'\')',
-    'pPW(\''+en+'\',\''+esc(mid)+'\',\''+esc(at)+'\')');
+    'pPW(\''+en+'\',\''+esc(mid)+'\',' + "'h'"),
+    'pPW(\''+en+'\',\''+esc(mid)+'\',' + "'a'"));
 }
 
 // Read-only playerCard (used when r32 is auto-locked but player hasn't manually locked)
@@ -904,12 +911,13 @@ function cardReadOnly(mid,ht,at,hv,av,pw){
   var hi=parseInt(hv),ai=parseInt(av);
   var htbd=ht==='— Por definir —',atbd=at==='— Por definir —';
   var win='';
-  if(!isNaN(hi)&&!isNaN(ai)){if(hi>ai)win=ht;else if(ai>hi)win=at;else win=pw||'';}
+  if(!isNaN(hi)&&!isNaN(ai)){if(hi>ai)win=ht;else if(ai>hi)win=at;else win=(pw==='h'?ht:pw==='a'?at:pw)||'';}
   var scoreH=(!isNaN(hi)?hv:'—'), scoreA=(!isNaN(ai)?av:'—');
   var htD=htbd?'Por definir':withFlag(ht), atD=atbd?'Por definir':withFlag(at);
   var pen='';
-  if(!isNaN(hi)&&!isNaN(ai)&&hi===ai&&pw&&!htbd&&!atbd){
-    pen='<div class="pen-row" style="opacity:.7">⚽ Penales: <strong style="color:#fef3c7">'+withFlag(pw)+'</strong></div>';
+  if(!isNaN(hi)&&!isNaN(ai)&&hi===ai&&pw){
+    var pwDisplay=pw==='h'?htD:pw==='a'?atD:withFlag(pw);
+    pen='<div class="pen-row" style="opacity:.7">⚽ Penales: <strong style="color:#fef3c7">'+pwDisplay+'</strong></div>';
   }
   return '<div class="mc" style="opacity:.85"><div class="mc-id">'+mid.toUpperCase()+' 🔒</div>'
     +'<div class="mc-row"><span class="mn'+(htbd?' tbd':win===ht?' win':'')+'" title="'+ht+'">'+htD+'</span>'
@@ -924,13 +932,14 @@ function card(mid,ht,at,hv,av,pw,onH,onA,onPH,onPA) {
   var isDraw=!isNaN(hi)&&!isNaN(ai)&&hi===ai;
   var htbd=ht==='— Por definir —', atbd=at==='— Por definir —';
   var win='';
-  if(!isNaN(hi)&&!isNaN(ai)){if(hi>ai)win=ht;else if(ai>hi)win=at;else win=pw||'';}
+  if(!isNaN(hi)&&!isNaN(ai)){if(hi>ai)win=ht;else if(ai>hi)win=at;else win=(pw==='h'?ht:pw==='a'?at:pw)||'';}
   var htD=htbd?'Por definir':withFlag(ht), atD=atbd?'Por definir':withFlag(at);
   var pen='';
   if(isDraw){
+    var pwH=pw===ht||pw==='h', pwA=pw===at||pw==='a';
     pen='<div class="pen-row">⚽ Penales:'
-      +'<button class="pb'+(pw===ht?' on':'')+'" onclick="'+onPH+'" title="'+ht+'">'+htD+'</button>'
-      +'<button class="pb'+(pw===at?' on':'')+'" onclick="'+onPA+'" title="'+at+'">'+atD+'</button>'
+      +'<button class="pb'+(pwH?' on':'')+'" onclick="'+onPH+'" title="'+ht+'">'+htD+'</button>'
+      +'<button class="pb'+(pwA?' on':'')+'" onclick="'+onPA+'" title="'+at+'">'+atD+'</button>'
       +'</div>';
   }
   return '<div class="mc"><div class="mc-id">'+mid.toUpperCase()+'</div>'
@@ -1304,7 +1313,8 @@ function calcPlayoffScore(name) {
     if (!hasPred || !hasAct) { rows.push({mid,hasPred,hasAct,matchPts:0,penPts:0}); return; }
 
     var aWin = aH>aA ? ap.ht : aA>aH ? ap.at : (ap.pw||null);
-    var pWin = pH>pA ? pp.ht : pA>pH ? pp.at : (pp.pw||null);
+    var resolvedPPW=(pp.pw==='h')?pp.ht:(pp.pw==='a')?pp.at:pp.pw;
+    var pWin = pH>pA ? pp.ht : pA>pH ? pp.at : (resolvedPPW||null);
 
     // Nuevo sistema:
     // +3 ganador correcto, +1 marcador local exacto, +1 marcador visitante exacto
@@ -1321,7 +1331,7 @@ function calcPlayoffScore(name) {
 
     var aIsPen = (aH===aA) && !!ap.pw;
     var pIsPen = (pH===pA) && !!pp.pw;
-    var penPts = (pIsPen && aIsPen && pp.pw===ap.pw) ? 3 : 0;
+    var penPts = (pIsPen && aIsPen && resolvedPPW===ap.pw) ? 3 : 0;
     penBonus += penPts;
 
     rows.push({mid,hasPred,hasAct,pH,pA,aH,aA,pWin,aWin,matchPts,penPts,
