@@ -889,7 +889,7 @@ function playerCard(mid, name) {
     // Read-only version
     return cardReadOnly(mid,dHt,dAt,p.h,p.a,p.pw);
   }
-  return card(mid,ht,at,p.h,p.a,p.pw,
+  return card(mid,dHt,dAt,p.h,p.a,p.pw,
     'pSave(\''+en+'\',\''+esc(mid)+'\',\'h\',this.value)',
     'pSave(\''+en+'\',\''+esc(mid)+'\',\'a\',this.value)',
     'pPW(\''+en+'\',\''+esc(mid)+'\',\'h\')',
