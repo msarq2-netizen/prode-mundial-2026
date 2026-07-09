@@ -23,5 +23,6 @@
   "r16-6": {"h": 2, "a": 3, "ht": "México", "at": "Inglaterra", "pw": null, "pl": null},
   "r16-3": {"h": 0, "a": 1, "ht": "Portugal", "at": "España", "pw": null, "pl": null},
   "r16-4": {"h": 1, "a": 4, "ht": "Estados Unidos", "at": "Bélgica", "pw": null, "pl": null},
-  "r16-7": {"h": 3, "a": 2, "ht": "Argentina", "at": "Egipto", "pw": null, "pl": null}
+  "r16-7": {"h": 3, "a": 2, "ht": "Argentina", "at": "Egipto", "pw": null, "pl": null},
+  "qf-1": {"h": 2, "a": 0, "ht": "Francia", "at": "Marruecos", "pw": null, "pl": null}
 }
