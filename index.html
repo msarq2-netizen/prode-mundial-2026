@@ -927,10 +927,10 @@ function card(mid,ht,at,hv,av,pw,onH,onA,onPH,onPA) {
   if(!isNaN(hi)&&!isNaN(ai)){if(hi>ai)win=ht;else if(ai>hi)win=at;else win=pw||'';}
   var htD=htbd?'Por definir':withFlag(ht), atD=atbd?'Por definir':withFlag(at);
   var pen='';
-  if(isDraw&&!htbd&&!atbd){
+  if(isDraw){
     pen='<div class="pen-row">⚽ Penales:'
-      +'<button class="pb'+(pw===ht?' on':'')+'" onclick="'+onPH+'" title="'+ht+'">'+withFlag(ht)+'</button>'
-      +'<button class="pb'+(pw===at?' on':'')+'" onclick="'+onPA+'" title="'+at+'">'+withFlag(at)+'</button>'
+      +'<button class="pb'+(pw===ht?' on':'')+'" onclick="'+onPH+'" title="'+ht+'">'+htD+'</button>'
+      +'<button class="pb'+(pw===at?' on':'')+'" onclick="'+onPA+'" title="'+at+'">'+atD+'</button>'
       +'</div>';
   }
   return '<div class="mc"><div class="mc-id">'+mid.toUpperCase()+'</div>'
