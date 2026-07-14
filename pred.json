@@ -27,5 +27,6 @@
   "qf-1": {"h": 2, "a": 0, "ht": "Francia", "at": "Marruecos", "pw": null, "pl": null},
   "qf-2": {"h": 2, "a": 1, "ht": "España", "at": "Bélgica", "pw": null, "pl": null},
   "qf-3": {"h": 1, "a": 2, "ht": "Noruega", "at": "Inglaterra", "pw": null, "pl": null},
-  "qf-4": {"h": 3, "a": 1, "ht": "Argentina", "at": "Suiza", "pw": null, "pl": null}
+  "qf-4": {"h": 3, "a": 1, "ht": "Argentina", "at": "Suiza", "pw": null, "pl": null},
+  "sf-1": {"h": 0, "a": 2, "ht": "Francia", "at": "España", "pw": null, "pl": null}
 }
