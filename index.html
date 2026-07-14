@@ -836,27 +836,27 @@ function pSave(name,mid,side,val){
   clearTimeout(rt); rt=setTimeout(function(){renderProContent();},600);
 }
 function pPW(name,mid,team){
-  if(isMatchPlayed(mid)) return;  // partido ya jugado: no se puede editar
-  // Si la ronda está abierta, permitir guardar aunque el jugador haya bloqueado (nueva ronda)
+  if(isMatchPlayed(mid)) return;
   var _rk2=mid&&mid.replace(/-\d+$/,''); if(_rk2&&getRoundState(_rk2)!=='open') return;
   if(!pPred[name]) pPred[name]={};
   var pm=pPred[name];
   if(!pm[mid]) pm[mid]={h:'',a:'',ht:pTeam(mid,true,name),at:pTeam(mid,false,name),pw:null,pl:null};
+  var d=DEF[mid];
+  var eHt=(d&&d.hp&&aTeam(mid,true))||pm[mid].ht;
+  var eAt=(d&&d.hp&&aTeam(mid,false))||pm[mid].at;
   var resolved=team;
-  if(team==='h') resolved=(pm[mid].ht&&pm[mid].ht!=='— Por definir —')?pm[mid].ht:'h';
-  if(team==='a') resolved=(pm[mid].at&&pm[mid].at!=='— Por definir —')?pm[mid].at:'a';
+  if(team==='h') resolved=(eHt&&eHt!=='\u2014 Por definir \u2014')?eHt:'h';
+  if(team==='a') resolved=(eAt&&eAt!=='\u2014 Por definir \u2014')?eAt:'a';
   var cur=pm[mid].pw;
-  var sameH=(cur==='h'||cur===pm[mid].ht), sameA=(cur==='a'||cur===pm[mid].at);
+  var sameH=(cur==='h'||cur===eHt), sameA=(cur==='a'||cur===eAt);
   var toggle=(team==='h'&&sameH)||(team==='a'&&sameA)||(cur===resolved);
   pm[mid].pw=toggle?null:resolved;
-  var pwTeam=(pm[mid].pw==='h')?pm[mid].ht:(pm[mid].pw==='a')?pm[mid].at:pm[mid].pw;
-  pm[mid].pl=pwTeam?(pwTeam===pm[mid].ht?pm[mid].at:pm[mid].ht):null;
+  var pwTeam=(pm[mid].pw==='h')?eHt:(pm[mid].pw==='a')?eAt:pm[mid].pw;
+  pm[mid].pl=pwTeam?(pwTeam===eHt?eAt:eHt):null;
   localStorage.setItem(KEY+'_'+name,JSON.stringify(pm));
   syncToSheets(name);
   renderProContent();
 }
-
-// ── Card builders ─────────────────────────────────────────────────────────────
 function esc(s){ return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
 
 function adminCard(mid) {
