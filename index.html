@@ -1517,8 +1517,8 @@ function renderPBracket(name){
   });
 
   // Final y 3er puesto
-  var finalState=locked ? 'closed' : getRoundState('final');
-  var terceroState=locked ? 'closed' : getRoundState('tercero');
+  var finalState=getRoundState('final');
+  var terceroState=getRoundState('tercero');
   h+='<p class="rnd-title gap">🏆 Final y 3er Puesto</p>';
   h+=roundStateBanner('final','Final y 3er puesto');
   h+='<div class="final-grid">';
