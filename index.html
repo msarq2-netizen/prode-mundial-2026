@@ -651,7 +651,20 @@ function lockCurRound(name) {
   t.textContent = '🔒 ' + roundLabel + ' sellado';
   t.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#7c3aed;color:#ede9fe;padding:10px 22px;border-radius:10px;font-weight:700;font-size:.9rem;z-index:9999;box-shadow:0 4px 16px #0008;pointer-events:none;transition:opacity .4s';
   document.body.appendChild(t);
-  setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 400); }, 2000);
+  setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 400); 
+function lockFinalRound(name){
+  if(!confirm('¿Sellar tus picks de la Final y 3er Puesto?\n\nOtros jugadores no podrán ver tus picks antes del partido.')) return;
+  if(!pPred[name]) pPred[name]={};
+  pPred[name]['_locked_final']='1';
+  localStorage.setItem(KEY+'_locked_final_'+name,'1');
+  localStorage.setItem(KEY+'_'+name,JSON.stringify(pPred[name]));
+  syncToSheets(name);
+  renderProContent();
+  var t=document.createElement('div');
+  t.textContent='🔒 Picks de la Final sellados';
+  t.style.cssText='position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#7c3aed;color:#ede9fe;padding:10px 22px;border-radius:10px;font-weight:700;z-index:9999;box-shadow:0 4px 16px #0008;pointer-events:none;transition:opacity .4s';
+  document.body.appendChild(t);
+  setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove();},400);},2000);
 }
 
 // ── Group standings ───────────────────────────────────────────────────────────
@@ -1716,6 +1729,13 @@ function renderPlayoffResultados(){
     +'<div><div class="fl">🏆 FINAL</div>'+(adminMode?adminCard('final'):resultCard('final'))+'</div>'
     +'<div><div class="fl">🥉 3ER PUESTO</div>'+(adminMode?adminCard('tercero'):resultCard('tercero'))+'</div>'
     +'</div>';
+  if(finalState==='open'){
+    if(isSealedForRound(name,'final')){
+      h+='<div class="locked-label" style="margin-top:8px;text-align:center">🔒 Picks de la Final sellados</div>';
+    } else {
+      h+='<button class="lock-btn" style="margin-top:8px;width:100%" onclick="lockFinalRound(\''+esc(name)+'\')">🔒 Guardar y bloquear picks de la Final</button>';
+    }
+  }
   return h;
 }
 
