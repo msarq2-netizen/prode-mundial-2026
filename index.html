@@ -637,7 +637,7 @@ function saveCurRound(name) {
   setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 400); }, 1800);
 }
 function lockCurRound(name) {
-  var openRound = PRNDS.find(function(r){ return getRoundState(r.k) === 'open'; });
+  var openRound = PRNDS.find(function(r){ return getRoundState(r.k) === 'open'; })||(getRoundState('final')==='open'?{k:'final',t:'la Final'}:null);
   if (!openRound) return;
   var roundLabel = openRound.t.replace(/^[^\s]+\s/, '');
   if (!confirm('¿Sellar tus picks de ' + roundLabel + '?\n\nOtros jugadores no podrán ver tus pronósticos hasta que cierre el plazo.\n\nJugador: ' + name)) return;
@@ -652,20 +652,6 @@ function lockCurRound(name) {
   t.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#7c3aed;color:#ede9fe;padding:10px 22px;border-radius:10px;font-weight:700;font-size:.9rem;z-index:9999;box-shadow:0 4px 16px #0008;pointer-events:none;transition:opacity .4s';
   document.body.appendChild(t);
   setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 400); }, 2000);
-}
-function lockFinalRound(name){
-  if(!confirm('¿Sellar tus picks de la Final y 3er Puesto?\n\nOtros jugadores no podrán ver tus picks antes del partido.')) return;
-  if(!pPred[name]) pPred[name]={};
-  pPred[name]['_locked_final']='1';
-  localStorage.setItem(KEY+'_locked_final_'+name,'1');
-  localStorage.setItem(KEY+'_'+name,JSON.stringify(pPred[name]));
-  syncToSheets(name);
-  renderProContent();
-  var t=document.createElement('div');
-  t.textContent='🔒 Picks de la Final sellados';
-  t.style.cssText='position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#7c3aed;color:#ede9fe;padding:10px 22px;border-radius:10px;font-weight:700;z-index:9999;box-shadow:0 4px 16px #0008;pointer-events:none;transition:opacity .4s';
-  document.body.appendChild(t);
-  setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove();},400);},2000);
 }
 
 // ── Group standings ───────────────────────────────────────────────────────────
@@ -1447,7 +1433,7 @@ function renderPBracket(name){
   // ── Barra de lock manual ───────────────────────────────────────────────────
   var lockBar='';
   if(locked){
-    var openRound=PRNDS.find(function(r){ return getRoundState(r.k)==='open'; });
+    var openRound=PRNDS.find(function(r){ return getRoundState(r.k)==='open'; })||(getRoundState('final')==='open'?{k:'final',t:'la Final'}:null);
     if(openRound){
       var roundLabel=openRound.t.replace(/^[^\s]+\s/,'');
       var sealedRound=isSealedForRound(name, openRound.k);
@@ -1470,7 +1456,7 @@ function renderPBracket(name){
         +'</div>';
     }
   } else {
-    var openRoundNew=PRNDS.find(function(r){ return getRoundState(r.k)==='open'; });
+    var openRoundNew=PRNDS.find(function(r){ return getRoundState(r.k)==='open'; })||(getRoundState('final')==='open'?{k:'final',t:'la Final'}:null);
     if(openRoundNew){
       var roundLabelNew=openRoundNew.t.replace(/^[^\s]+\s/,'');
       var sealedNew=isSealedForRound(name, openRoundNew.k);
@@ -1547,13 +1533,6 @@ function renderPBracket(name){
      +'<div><div class="fl">🥉 3ER PUESTO</div>'+playerCardRO('tercero',name)+'</div>';
   }
   h+='</div>';
-  if(finalState==='open'){
-    if(isSealedForRound(name,'final')){
-      h+='<div class="locked-label" style="margin-top:8px;text-align:center">&#128274; Picks de la Final sellados</div>';
-    } else {
-      h+='<button class="lock-btn" style="margin-top:8px;width:100%" onclick="lockFinalRound(\''+esc(name)+'\')">&amp;#128274; Guardar y bloquear picks de la Final</button>';
-    }
-  }
   h+=lockBar;
   document.getElementById('pbracket').innerHTML=h;
 }
@@ -1737,11 +1716,6 @@ function renderPlayoffResultados(){
     +'<div><div class="fl">🏆 FINAL</div>'+(adminMode?adminCard('final'):resultCard('final'))+'</div>'
     +'<div><div class="fl">🥉 3ER PUESTO</div>'+(adminMode?adminCard('tercero'):resultCard('tercero'))+'</div>'
     +'</div>';
-  return h;
-}
-
-function switchRe   }
-  }
   return h;
 }
 
