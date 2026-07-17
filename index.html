@@ -651,7 +651,8 @@ function lockCurRound(name) {
   t.textContent = '🔒 ' + roundLabel + ' sellado';
   t.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#7c3aed;color:#ede9fe;padding:10px 22px;border-radius:10px;font-weight:700;font-size:.9rem;z-index:9999;box-shadow:0 4px 16px #0008;pointer-events:none;transition:opacity .4s';
   document.body.appendChild(t);
-  setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 400); 
+  setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 400); }, 2000);
+}
 function lockFinalRound(name){
   if(!confirm('¿Sellar tus picks de la Final y 3er Puesto?\n\nOtros jugadores no podrán ver tus picks antes del partido.')) return;
   if(!pPred[name]) pPred[name]={};
