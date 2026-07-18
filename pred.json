@@ -1,33 +1,250 @@
 {
-  "r32-1": {"h": 0, "a": 1, "ht": "Sudáfrica", "at": "Canadá", "pw": null, "pl": null},
-  "r32-4": {"h": 2, "a": 1, "ht": "Brasil", "at": "Japón", "pw": null, "pl": null},
-  "r32-2": {"h": 1, "a": 1, "ht": "Alemania", "at": "Paraguay", "pw": "Paraguay", "pl": "Alemania"},
-  "r32-3": {"h": 1, "a": 1, "ht": "Países Bajos", "at": "Marruecos", "pw": "Marruecos", "pl": "Países Bajos"},
-  "r32-6": {"h": 1, "a": 2, "ht": "Costa de Marfil", "at": "Noruega", "pw": null, "pl": null},
-  "r32-5": {"h": 3, "a": 0, "ht": "Francia", "at": "Suecia", "pw": null, "pl": null},
-  "r32-7": {"h": 2, "a": 0, "ht": "México", "at": "Ecuador", "pw": null, "pl": null},
-  "r32-8": {"h": 2, "a": 1, "ht": "Inglaterra", "at": "Congo DR", "pw": null, "pl": null},
-  "r32-10": {"h": 3, "a": 2, "ht": "Bélgica", "at": "Senegal", "pw": null, "pl": null},
-  "r32-9": {"h": 2, "a": 0, "ht": "Estados Unidos", "at": "Bosnia y Herzegovina", "pw": null, "pl": null},
-  "r32-12": {"h": 3, "a": 0, "ht": "España", "at": "Austria", "pw": null, "pl": null},
-  "r32-11": {"h": 2, "a": 1, "ht": "Portugal", "at": "Croacia", "pw": null, "pl": null},
-  "r32-13": {"h": 2, "a": 0, "ht": "Suiza", "at": "Argelia", "pw": null, "pl": null},
-  "r32-16": {"h": 1, "a": 1, "ht": "Australia", "at": "Egipto", "pw": "Egipto", "pl": "Australia"},
-  "r32-14": {"h": 3, "a": 2, "ht": "Argentina", "at": "Cabo Verde", "pw": null, "pl": null},
-  "r32-15": {"h": 1, "a": 0, "ht": "Colombia", "at": "Ghana", "pw": null, "pl": null},
-  "r16-8": {"h": 0, "a": 0, "ht": "Suiza", "at": "Colombia", "pw": "Suiza", "pl": null},
-  "r16-2": {"h": 0, "a": 3, "ht": "Canadá", "at": "Marruecos", "pw": null, "pl": null},
-  "r16-2": {"h": 0, "a": 3, "ht": "Canadá", "at": "Marruecos", "pw": null, "pl": null},
-  "r16-1": {"h": 0, "a": 1, "ht": "Paraguay", "at": "Francia", "pw": null, "pl": null},
-  "r16-5": {"h": 1, "a": 2, "ht": "Brasil", "at": "Noruega", "pw": null, "pl": null},
-  "r16-6": {"h": 2, "a": 3, "ht": "México", "at": "Inglaterra", "pw": null, "pl": null},
-  "r16-3": {"h": 0, "a": 1, "ht": "Portugal", "at": "España", "pw": null, "pl": null},
-  "r16-4": {"h": 1, "a": 4, "ht": "Estados Unidos", "at": "Bélgica", "pw": null, "pl": null},
-  "r16-7": {"h": 3, "a": 2, "ht": "Argentina", "at": "Egipto", "pw": null, "pl": null},
-  "qf-1": {"h": 2, "a": 0, "ht": "Francia", "at": "Marruecos", "pw": null, "pl": null},
-  "qf-2": {"h": 2, "a": 1, "ht": "España", "at": "Bélgica", "pw": null, "pl": null},
-  "qf-3": {"h": 1, "a": 2, "ht": "Noruega", "at": "Inglaterra", "pw": null, "pl": null},
-  "qf-4": {"h": 3, "a": 1, "ht": "Argentina", "at": "Suiza", "pw": null, "pl": null},
-  "sf-1": {"h": 0, "a": 2, "ht": "Francia", "at": "España", "pw": null, "pl": null},
-  "sf-2": {"h": 1, "a": 2, "ht": "Inglaterra", "at": "Argentina", "pw": null, "pl": null}
+  "r32-1": {
+    "h": 0,
+    "a": 1,
+    "ht": "Sudáfrica",
+    "at": "Canadá",
+    "pw": null,
+    "pl": null
+  },
+  "r32-4": {
+    "h": 2,
+    "a": 1,
+    "ht": "Brasil",
+    "at": "Japón",
+    "pw": null,
+    "pl": null
+  },
+  "r32-2": {
+    "h": 1,
+    "a": 1,
+    "ht": "Alemania",
+    "at": "Paraguay",
+    "pw": "Paraguay",
+    "pl": "Alemania"
+  },
+  "r32-3": {
+    "h": 1,
+    "a": 1,
+    "ht": "Países Bajos",
+    "at": "Marruecos",
+    "pw": "Marruecos",
+    "pl": "Países Bajos"
+  },
+  "r32-6": {
+    "h": 1,
+    "a": 2,
+    "ht": "Costa de Marfil",
+    "at": "Noruega",
+    "pw": null,
+    "pl": null
+  },
+  "r32-5": {
+    "h": 3,
+    "a": 0,
+    "ht": "Francia",
+    "at": "Suecia",
+    "pw": null,
+    "pl": null
+  },
+  "r32-7": {
+    "h": 2,
+    "a": 0,
+    "ht": "México",
+    "at": "Ecuador",
+    "pw": null,
+    "pl": null
+  },
+  "r32-8": {
+    "h": 2,
+    "a": 1,
+    "ht": "Inglaterra",
+    "at": "Congo DR",
+    "pw": null,
+    "pl": null
+  },
+  "r32-10": {
+    "h": 3,
+    "a": 2,
+    "ht": "Bélgica",
+    "at": "Senegal",
+    "pw": null,
+    "pl": null
+  },
+  "r32-9": {
+    "h": 2,
+    "a": 0,
+    "ht": "Estados Unidos",
+    "at": "Bosnia y Herzegovina",
+    "pw": null,
+    "pl": null
+  },
+  "r32-12": {
+    "h": 3,
+    "a": 0,
+    "ht": "España",
+    "at": "Austria",
+    "pw": null,
+    "pl": null
+  },
+  "r32-11": {
+    "h": 2,
+    "a": 1,
+    "ht": "Portugal",
+    "at": "Croacia",
+    "pw": null,
+    "pl": null
+  },
+  "r32-13": {
+    "h": 2,
+    "a": 0,
+    "ht": "Suiza",
+    "at": "Argelia",
+    "pw": null,
+    "pl": null
+  },
+  "r32-16": {
+    "h": 1,
+    "a": 1,
+    "ht": "Australia",
+    "at": "Egipto",
+    "pw": "Egipto",
+    "pl": "Australia"
+  },
+  "r32-14": {
+    "h": 3,
+    "a": 2,
+    "ht": "Argentina",
+    "at": "Cabo Verde",
+    "pw": null,
+    "pl": null
+  },
+  "r32-15": {
+    "h": 1,
+    "a": 0,
+    "ht": "Colombia",
+    "at": "Ghana",
+    "pw": null,
+    "pl": null
+  },
+  "r16-8": {
+    "h": 0,
+    "a": 0,
+    "ht": "Suiza",
+    "at": "Colombia",
+    "pw": "Suiza",
+    "pl": null
+  },
+  "r16-2": {
+    "h": 0,
+    "a": 3,
+    "ht": "Canadá",
+    "at": "Marruecos",
+    "pw": null,
+    "pl": null
+  },
+  "r16-1": {
+    "h": 0,
+    "a": 1,
+    "ht": "Paraguay",
+    "at": "Francia",
+    "pw": null,
+    "pl": null
+  },
+  "r16-5": {
+    "h": 1,
+    "a": 2,
+    "ht": "Brasil",
+    "at": "Noruega",
+    "pw": null,
+    "pl": null
+  },
+  "r16-6": {
+    "h": 2,
+    "a": 3,
+    "ht": "México",
+    "at": "Inglaterra",
+    "pw": null,
+    "pl": null
+  },
+  "r16-3": {
+    "h": 0,
+    "a": 1,
+    "ht": "Portugal",
+    "at": "España",
+    "pw": null,
+    "pl": null
+  },
+  "r16-4": {
+    "h": 1,
+    "a": 4,
+    "ht": "Estados Unidos",
+    "at": "Bélgica",
+    "pw": null,
+    "pl": null
+  },
+  "r16-7": {
+    "h": 3,
+    "a": 2,
+    "ht": "Argentina",
+    "at": "Egipto",
+    "pw": null,
+    "pl": null
+  },
+  "qf-1": {
+    "h": 2,
+    "a": 0,
+    "ht": "Francia",
+    "at": "Marruecos",
+    "pw": null,
+    "pl": null
+  },
+  "qf-2": {
+    "h": 2,
+    "a": 1,
+    "ht": "España",
+    "at": "Bélgica",
+    "pw": null,
+    "pl": null
+  },
+  "qf-3": {
+    "h": 1,
+    "a": 2,
+    "ht": "Noruega",
+    "at": "Inglaterra",
+    "pw": null,
+    "pl": null
+  },
+  "qf-4": {
+    "h": 3,
+    "a": 1,
+    "ht": "Argentina",
+    "at": "Suiza",
+    "pw": null,
+    "pl": null
+  },
+  "sf-1": {
+    "h": 0,
+    "a": 2,
+    "ht": "Francia",
+    "at": "España",
+    "pw": null,
+    "pl": null
+  },
+  "sf-2": {
+    "h": 1,
+    "a": 2,
+    "ht": "Inglaterra",
+    "at": "Argentina",
+    "pw": null,
+    "pl": null
+  },
+  "tercero": {
+    "h": 4,
+    "a": 6,
+    "ht": "Francia",
+    "at": "Inglaterra",
+    "pw": null,
+    "pl": null
+  }
 }
