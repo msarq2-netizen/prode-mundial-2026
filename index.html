@@ -379,6 +379,12 @@ async function init() {
     // Merge server playoff results (pred.json) → fuente de verdad para todos los dispositivos
     Object.keys(predJ).forEach(function(k){ pred[k] = predJ[k]; });
     localStorage.setItem(KEY, JSON.stringify(pred));
+    // Merge bonus actual answers from pred.json → fuente de verdad para todos
+    if (predJ.bonusActual) {
+      if (!bonusData.actual) bonusData.actual = {};
+      Object.assign(bonusData.actual, predJ.bonusActual);
+      saveBonus();
+    }
 
     M = extractArr(pageHtml, 'var M=');
     if (!M) throw new Error('No se pudo leer M[]');
