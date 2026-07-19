@@ -255,9 +255,9 @@
     "pw": null,
     "pl": null
   },
-  "bonus": {
-    "champion": "España",
-    "runner": "Argentina",
+  "bonusActual": {
+    "champ": "España",
+    "sub": "Argentina",
     "third": "Inglaterra",
     "scorer": "Mbappe"
   }
