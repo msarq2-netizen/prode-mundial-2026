@@ -246,5 +246,19 @@
     "at": "Inglaterra",
     "pw": null,
     "pl": null
+  },
+  "final": {
+    "h": 1,
+    "a": 0,
+    "ht": "España",
+    "at": "Argentina",
+    "pw": null,
+    "pl": null
+  },
+  "bonus": {
+    "champion": "España",
+    "runner": "Argentina",
+    "third": "Inglaterra",
+    "scorer": "Mbappe"
   }
 }
