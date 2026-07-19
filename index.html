@@ -993,7 +993,7 @@ function thirdsHtml() {
 // ── Bonus helpers ─────────────────────────────────────────────────────────────
 // picks vienen de P_raw (datos en vivo del sitio), solo "actual" va a localStorage
 function saveBonus(){ localStorage.setItem(BONUS_KEY, JSON.stringify(bonusData)); }
-function cmpNorm(a,b){ return !!(a&&b&&a.trim().toLowerCase()===b.trim().toLowerCase()); }
+function cmpNorm(a,b){ if(!a||!b) return false; var na=a.trim().toLowerCase(),nb=b.trim().toLowerCase(); return na===nb||na.includes(nb)||nb.includes(na); }
 
 function getPicksFromPRaw(name){
   if(!P_raw||!NAMES_raw) return {};
